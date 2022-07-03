@@ -1,0 +1,3 @@
+[submodule "spleen"]
+	path = extra/spleen
+	url = https://github.com/fcambus/spleen
