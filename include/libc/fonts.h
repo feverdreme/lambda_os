@@ -1,11 +1,8 @@
 #ifndef FONTS_H
 #define FONTS_H
 
-// idea: use csv/pillow python script to generate bitmap font
-// TODO: establish a naming convention
-
 /*
-FONT PROTOCOL (TEMP)
+FONT PROTOCOL (TEMP) DEPRECATED SPEC
 
 Note: when filesystems go online, this spec will change
 
@@ -16,20 +13,35 @@ That font headerfile along with this one will be included as the font, an an ext
 This font api can then be used to handle fonts but DRAWING fonts is up to the tty handler
 */
 
-typedef char fontchar[8][8];
+// font chars will be serialized bitmaps. Since we can't store all the data in an int, we will use short[] and jsut have an implementation detail to not read past
 
-// Currently only supports 0x21 to 0x5A
-struct font {
-    // int support_low;
-    // int support_high;
-    const fontchar *data[0x5A - 0x21]; 
-    int kerning;
-};
+typedef struct {
+    int fc_width;
+    int fc_height;
+    short* const data;
+} fontchar;
 
-void register_char(char c, const fontchar *fc, struct font* f);
+typedef struct {
+    int fc_width;
+    int fc_height;
+    fontchar data[128];
+} font;
 
-// Interfacing with strings
-const fontchar* char_to_fontchar(char c, struct font *fnt);
+// TODO: doxygen?
+/**
+ * @brief Interface to map chars to fontchars without directly accessing the data member
+ * @param c ASCII Character to be converted
+ * @param fnt Which font to use
+ * @return Pointer to the fontchar in a font's array
+*/
+fontchar* char_to_fontchar(char c, font *fnt);
+
+/**
+ * @brief Translates a complete string to a font.
+ * @param sbuf A null-terminated string as input
+ * @param outbuf A pointer to an array of fontchar pointers. This function will write to the array with the pointers to its chars
+ * @param fnt The font to use
+ */
 void translate_string(char *sbuf, fontchar **outbuf, struct font* fnt);
 
 #endif
