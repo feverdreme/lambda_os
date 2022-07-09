@@ -11,7 +11,7 @@ class Fontchar:
         self.dim = tuple(map(int, data.pop('BBX').split(' ')[:2]))
         self.encoding = int(data.pop('ENCODING'))
         self.data = data
-        self.bitmap = list(map(lambda x: f'0x{x}', bitmap))
+        self.bitmap = list(map(lambda x: f'0x{x}' if x != '00' else '0x0', bitmap))
     
     def get_bmap_string(self) -> str:
         return '{' + ', '.join(
@@ -66,10 +66,41 @@ struct font {name} = {{
 }};
 
 #endif""")
+
+def generate_asm(name: str, extracted_chars: list[Fontchar]):
+    base_fc = extracted_chars[0]
+    db_contents = [f'__{name}_char_{i}: db 0 ; Not printable' for i in range(128)]
+    NEWLINE = '\n'
+    mov_template = f'\tlea eax, __{name}_char_%d\n\tmov [{name}_font_data + %d], eax'
+
+    for ec in extracted_chars:
+        db_contents[ec.encoding] = f"__{name}_char_{ec.encoding}:\n\tdb 0x1\n\t{'db ' + ', '.join(ec.bitmap)}"
+
+    return f"""
+; {name} font declaration
+; This standard allows c to extern this and reinterpret this as a c-defined struct
+
+init_{name}_font:
+\tmov {name}_font, {base_fc.dim[0]}
+\tmov [{name}_font + 1], {base_fc.dim[1]}
+{NEWLINE.join([mov_template % (i, i) for i in range(128)])}
+
+{name}_font:
+\tdb 0, 0 ; width and height
+\t\t{name}_font_data: times 128 db 0 ; pointer array
+
+{NEWLINE.join(db_contents)}
+"""
     
 if __name__ == "__main__":
     fcontents = get_file_contents("../spleen/spleen-5x8.bdf")
     extracted_chars = sorted(extract_chars(fcontents), key=Fontchar.get_encoding)
     extracted_chars = list(filter(lambda x: x.encoding <= 127, extracted_chars))
 
-    generate_hfile("spleen_font", "../../include/fonts/spleen.h", extracted_chars)
+    fname = "../../include/fonts/spleen.asm"
+
+    # generate_hfile("spleen_font", "../../include/fonts/spleen.h", extracted_chars)
+    text = generate_asm("spleen", extracted_chars)
+
+    with open(fname, 'w+') as f:
+        f.write(text)
