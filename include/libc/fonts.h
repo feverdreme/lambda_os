@@ -2,29 +2,17 @@
 #define FONTS_H
 
 #include <libc/typedef.h>
-/*
-FONT PROTOCOL (TEMP) DEPRECATED SPEC
 
-Note: when filesystems go online, this spec will change
-
-Raw data for fonts will be declared in a headerfile. It will include this fonts.h headerfile for type declarations.
-Each character will be defined as a `const fontchar`. It will then create a font and initialize the const fontchar pointers.
-(PENDING) A font registration handler to be implemented
-That font headerfile along with this one will be included as the font, an an extern declaration to the fontname will be added. 
-This font api can then be used to handle fonts but DRAWING fonts is up to the tty handler
-*/
+extern void init_spleen_font();
+extern struct font spleen_font; // should this be void* ? and then reinterpret later?
 
 // font chars will be serialized bitmaps. Since we can't store all the data in a byte-sized char, we will use int[] and jsut have an implementation detail to not read past
-
-struct fontchar {
-    bool is_printable;
-    byte* const data;
-};
+typedef byte* fontchar;
 
 struct font {
-    int fc_width;
-    int fc_height;
-    fontchar data[128];
+    byte fc_width;
+    byte fc_height;
+    fontchar *data[128];
 };
 
 // TODO: doxygen?
@@ -42,6 +30,6 @@ fontchar* char_to_fontchar(char c, struct font *fnt);
  * @param outbuf A pointer to an array of fontchar pointers. This function will write to the array with the pointers to its chars
  * @param fnt The font to use
  */
-void translate_string(char *sbuf, struct fontchar **outbuf, struct font* fnt);
+void translate_string(char *sbuf, fontchar **outbuf, struct font* fnt);
 
 #endif
