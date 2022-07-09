@@ -1,6 +1,7 @@
 #ifndef FONTS_H
 #define FONTS_H
 
+#include <libc/typedef.h>
 /*
 FONT PROTOCOL (TEMP) DEPRECATED SPEC
 
@@ -13,19 +14,18 @@ That font headerfile along with this one will be included as the font, an an ext
 This font api can then be used to handle fonts but DRAWING fonts is up to the tty handler
 */
 
-// font chars will be serialized bitmaps. Since we can't store all the data in an int, we will use short[] and jsut have an implementation detail to not read past
+// font chars will be serialized bitmaps. Since we can't store all the data in a byte-sized char, we will use int[] and jsut have an implementation detail to not read past
 
-typedef struct {
-    int fc_width;
-    int fc_height;
-    short* const data;
-} fontchar;
+struct fontchar {
+    bool is_printable;
+    byte* const data;
+};
 
-typedef struct {
+struct font {
     int fc_width;
     int fc_height;
     fontchar data[128];
-} font;
+};
 
 // TODO: doxygen?
 /**
@@ -34,7 +34,7 @@ typedef struct {
  * @param fnt Which font to use
  * @return Pointer to the fontchar in a font's array
 */
-fontchar* char_to_fontchar(char c, font *fnt);
+fontchar* char_to_fontchar(char c, struct font *fnt);
 
 /**
  * @brief Translates a complete string to a font.
@@ -42,6 +42,6 @@ fontchar* char_to_fontchar(char c, font *fnt);
  * @param outbuf A pointer to an array of fontchar pointers. This function will write to the array with the pointers to its chars
  * @param fnt The font to use
  */
-void translate_string(char *sbuf, fontchar **outbuf, struct font* fnt);
+void translate_string(char *sbuf, struct fontchar **outbuf, struct font* fnt);
 
 #endif
