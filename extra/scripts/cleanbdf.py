@@ -69,12 +69,14 @@ struct font {name} = {{
 
 def generate_asm(name: str, extracted_chars: list[Fontchar]):
     base_fc = extracted_chars[0]
-    db_contents = [f'__{name}_char_{i}: db 0 ; Not printable' for i in range(128)]
+    db_contents = []
+    ptr_contents = []
     NEWLINE = '\n'
-    mov_template = f'\tlea eax, __{name}_char_%d\n\tmov [{name}_font_data + %d], eax'
+    MOV_TEMPLATE = f'\tlea eax, __{name}_char_%d\n\tmov [{name}_font_data + %d], eax'
 
     for ec in extracted_chars:
-        db_contents[ec.encoding] = f"__{name}_char_{ec.encoding}:\n\tdb 0x1\n\t{'db ' + ', '.join(ec.bitmap)}"
+        db_contents.append(f"__{name}_char_{ec.encoding}:\n\t{'db ' + ', '.join(ec.bitmap)}")
+        ptr_contents.append(MOV_TEMPLATE % (ec.encoding, ec.encoding))
 
     return f"""
 ; {name} font declaration
@@ -83,11 +85,11 @@ def generate_asm(name: str, extracted_chars: list[Fontchar]):
 init_{name}_font:
 \tmov {name}_font, {base_fc.dim[0]}
 \tmov [{name}_font + 1], {base_fc.dim[1]}
-{NEWLINE.join([mov_template % (i, i) for i in range(128)])}
+{NEWLINE.join(ptr_contents)}
 
 {name}_font:
 \tdb 0, 0 ; width and height
-\t\t{name}_font_data: times 128 db 0 ; pointer array
+\t{name}_font_data: times 128 db 0 ; pointer array
 
 {NEWLINE.join(db_contents)}
 """
