@@ -1,7 +1,7 @@
+# DEPRECATED 
+
 from dataclasses import dataclass
 import re
-from tarfile import ENCODING
-
 @dataclass
 class bdf_font_char:
     dim: tuple[int, int]
@@ -48,6 +48,8 @@ def parse_chars(raw: str):
 
 
 if __name__ == "__main__":
+    print("Warning: Deprecated. Exiting..."); exit()
+    
     file_contents = retrieve_font("../spleen/spleen-5x8.bdf")
     file_lines = file_contents.splitlines(keepends=False)
 
