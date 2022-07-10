@@ -13,11 +13,6 @@ class Fontchar:
         self.data = data
         self.bitmap = list(map(lambda x: f'0x{x}' if x != '00' else '0x0', bitmap))
     
-    def get_bmap_string(self) -> str:
-        return '{' + ', '.join(
-            ['0x0' if c == '0x00' else c.rstrip('0') for c in self.bitmap]
-        ) + '}'
-    
     @staticmethod
     def get_encoding(obj) -> int:
         return obj.encoding
@@ -39,33 +34,6 @@ def extract_chars(raw: str):
         cbmap = cbmap.rstrip("ENDCHAR\n").split()
 
         yield Fontchar(cdata, cbmap)
-
-def generate_hfile(name: str, fname: str, extracted_chars: list[Fontchar]):
-    base_fc = extracted_chars[0]
-    contents = ['{false, {0}}' for _ in range(128)]
-    NEWLINE = '\n'
-
-    for ec in extracted_chars:
-        contents[ec.encoding] = '{true, ' + ec.get_bmap_string() + '}'
-    
-    contents = map(lambda x: ' ' * 4 * 2 + x, contents)
-
-    with open(fname, 'w+') as wfile:
-        wfile.write(f"""\
-#ifndef {name.upper()}_H
-#define {name.upper()}_H
-
-#include <libc/fonts.h>
-
-struct font {name} = {{
-    {base_fc.dim[0]},
-    {base_fc.dim[1]},
-    {{
-{(',' + NEWLINE).join(contents)}
-    }}
-}};
-
-#endif""")
 
 def generate_asm(name: str, extracted_chars: list[Fontchar]):
     base_fc = extracted_chars[0]
