@@ -3,10 +3,10 @@
 ; This standard allows c to extern this and reinterpret this as a c-defined struct
 
 init_spleen_font:
-	mov spleen_font, 5
-	mov [spleen_font + 1], 8
+	mov byte [spleen_font], 5
+	mov byte [spleen_font + 1], 8
 	lea eax, __spleen_char_32
-	mov [spleen_font_data + 32], eax
+	mov byte [spleen_font_data + 32], eax
 	lea eax, __spleen_char_33
 	mov [spleen_font_data + 33], eax
 	lea eax, __spleen_char_34
