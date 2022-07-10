@@ -1,7 +1,7 @@
 #include <libc/fonts.h>
 #include <libc/string.h>
 #include <libc/typedef.h>
-// #include "graphics/putpixel.h"
+#include "graphics/putpixel.h"
 // #include "graphics/puts.h"
 // #include <fonts/standard.h>
 // #include <fonts/std_font.font.c>
@@ -17,9 +17,9 @@ void main() {
     const char* src = "Helo my name is ell Jeffrey\0";
     const char* s = "ell\0";
 
-    // if (finds(src, s) != strend(src)){
-    //     putrect(40, 30, 60, 120, 4);
-    // }
+    if (finds(src, s) != strend(src)){
+        putrect(40, 30, 60, 120, 4);
+    }
 
     // putc(A);
     // putc(B);
