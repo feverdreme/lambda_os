@@ -1,1 +1,0 @@
-typedef char p_char[8][8];
