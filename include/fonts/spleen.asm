@@ -3,198 +3,198 @@
 ; This standard allows c to extern this and reinterpret this as a c-defined struct
 
 init_spleen_font:
-	mov byte [spleen_font], 5
+	mov byte spleen_font, 5
 	mov byte [spleen_font + 1], 8
 	lea eax, __spleen_char_32
 	mov byte [spleen_font_data + 32], eax
 	lea eax, __spleen_char_33
-	mov [spleen_font_data + 33], eax
+	mov byte [spleen_font_data + 33], eax
 	lea eax, __spleen_char_34
-	mov [spleen_font_data + 34], eax
+	mov byte [spleen_font_data + 34], eax
 	lea eax, __spleen_char_35
-	mov [spleen_font_data + 35], eax
+	mov byte [spleen_font_data + 35], eax
 	lea eax, __spleen_char_36
-	mov [spleen_font_data + 36], eax
+	mov byte [spleen_font_data + 36], eax
 	lea eax, __spleen_char_37
-	mov [spleen_font_data + 37], eax
+	mov byte [spleen_font_data + 37], eax
 	lea eax, __spleen_char_38
-	mov [spleen_font_data + 38], eax
+	mov byte [spleen_font_data + 38], eax
 	lea eax, __spleen_char_39
-	mov [spleen_font_data + 39], eax
+	mov byte [spleen_font_data + 39], eax
 	lea eax, __spleen_char_40
-	mov [spleen_font_data + 40], eax
+	mov byte [spleen_font_data + 40], eax
 	lea eax, __spleen_char_41
-	mov [spleen_font_data + 41], eax
+	mov byte [spleen_font_data + 41], eax
 	lea eax, __spleen_char_42
-	mov [spleen_font_data + 42], eax
+	mov byte [spleen_font_data + 42], eax
 	lea eax, __spleen_char_43
-	mov [spleen_font_data + 43], eax
+	mov byte [spleen_font_data + 43], eax
 	lea eax, __spleen_char_44
-	mov [spleen_font_data + 44], eax
+	mov byte [spleen_font_data + 44], eax
 	lea eax, __spleen_char_45
-	mov [spleen_font_data + 45], eax
+	mov byte [spleen_font_data + 45], eax
 	lea eax, __spleen_char_46
-	mov [spleen_font_data + 46], eax
+	mov byte [spleen_font_data + 46], eax
 	lea eax, __spleen_char_47
-	mov [spleen_font_data + 47], eax
+	mov byte [spleen_font_data + 47], eax
 	lea eax, __spleen_char_48
-	mov [spleen_font_data + 48], eax
+	mov byte [spleen_font_data + 48], eax
 	lea eax, __spleen_char_49
-	mov [spleen_font_data + 49], eax
+	mov byte [spleen_font_data + 49], eax
 	lea eax, __spleen_char_50
-	mov [spleen_font_data + 50], eax
+	mov byte [spleen_font_data + 50], eax
 	lea eax, __spleen_char_51
-	mov [spleen_font_data + 51], eax
+	mov byte [spleen_font_data + 51], eax
 	lea eax, __spleen_char_52
-	mov [spleen_font_data + 52], eax
+	mov byte [spleen_font_data + 52], eax
 	lea eax, __spleen_char_53
-	mov [spleen_font_data + 53], eax
+	mov byte [spleen_font_data + 53], eax
 	lea eax, __spleen_char_54
-	mov [spleen_font_data + 54], eax
+	mov byte [spleen_font_data + 54], eax
 	lea eax, __spleen_char_55
-	mov [spleen_font_data + 55], eax
+	mov byte [spleen_font_data + 55], eax
 	lea eax, __spleen_char_56
-	mov [spleen_font_data + 56], eax
+	mov byte [spleen_font_data + 56], eax
 	lea eax, __spleen_char_57
-	mov [spleen_font_data + 57], eax
+	mov byte [spleen_font_data + 57], eax
 	lea eax, __spleen_char_58
-	mov [spleen_font_data + 58], eax
+	mov byte [spleen_font_data + 58], eax
 	lea eax, __spleen_char_59
-	mov [spleen_font_data + 59], eax
+	mov byte [spleen_font_data + 59], eax
 	lea eax, __spleen_char_60
-	mov [spleen_font_data + 60], eax
+	mov byte [spleen_font_data + 60], eax
 	lea eax, __spleen_char_61
-	mov [spleen_font_data + 61], eax
+	mov byte [spleen_font_data + 61], eax
 	lea eax, __spleen_char_62
-	mov [spleen_font_data + 62], eax
+	mov byte [spleen_font_data + 62], eax
 	lea eax, __spleen_char_63
-	mov [spleen_font_data + 63], eax
+	mov byte [spleen_font_data + 63], eax
 	lea eax, __spleen_char_64
-	mov [spleen_font_data + 64], eax
+	mov byte [spleen_font_data + 64], eax
 	lea eax, __spleen_char_65
-	mov [spleen_font_data + 65], eax
+	mov byte [spleen_font_data + 65], eax
 	lea eax, __spleen_char_66
-	mov [spleen_font_data + 66], eax
+	mov byte [spleen_font_data + 66], eax
 	lea eax, __spleen_char_67
-	mov [spleen_font_data + 67], eax
+	mov byte [spleen_font_data + 67], eax
 	lea eax, __spleen_char_68
-	mov [spleen_font_data + 68], eax
+	mov byte [spleen_font_data + 68], eax
 	lea eax, __spleen_char_69
-	mov [spleen_font_data + 69], eax
+	mov byte [spleen_font_data + 69], eax
 	lea eax, __spleen_char_70
-	mov [spleen_font_data + 70], eax
+	mov byte [spleen_font_data + 70], eax
 	lea eax, __spleen_char_71
-	mov [spleen_font_data + 71], eax
+	mov byte [spleen_font_data + 71], eax
 	lea eax, __spleen_char_72
-	mov [spleen_font_data + 72], eax
+	mov byte [spleen_font_data + 72], eax
 	lea eax, __spleen_char_73
-	mov [spleen_font_data + 73], eax
+	mov byte [spleen_font_data + 73], eax
 	lea eax, __spleen_char_74
-	mov [spleen_font_data + 74], eax
+	mov byte [spleen_font_data + 74], eax
 	lea eax, __spleen_char_75
-	mov [spleen_font_data + 75], eax
+	mov byte [spleen_font_data + 75], eax
 	lea eax, __spleen_char_76
-	mov [spleen_font_data + 76], eax
+	mov byte [spleen_font_data + 76], eax
 	lea eax, __spleen_char_77
-	mov [spleen_font_data + 77], eax
+	mov byte [spleen_font_data + 77], eax
 	lea eax, __spleen_char_78
-	mov [spleen_font_data + 78], eax
+	mov byte [spleen_font_data + 78], eax
 	lea eax, __spleen_char_79
-	mov [spleen_font_data + 79], eax
+	mov byte [spleen_font_data + 79], eax
 	lea eax, __spleen_char_80
-	mov [spleen_font_data + 80], eax
+	mov byte [spleen_font_data + 80], eax
 	lea eax, __spleen_char_81
-	mov [spleen_font_data + 81], eax
+	mov byte [spleen_font_data + 81], eax
 	lea eax, __spleen_char_82
-	mov [spleen_font_data + 82], eax
+	mov byte [spleen_font_data + 82], eax
 	lea eax, __spleen_char_83
-	mov [spleen_font_data + 83], eax
+	mov byte [spleen_font_data + 83], eax
 	lea eax, __spleen_char_84
-	mov [spleen_font_data + 84], eax
+	mov byte [spleen_font_data + 84], eax
 	lea eax, __spleen_char_85
-	mov [spleen_font_data + 85], eax
+	mov byte [spleen_font_data + 85], eax
 	lea eax, __spleen_char_86
-	mov [spleen_font_data + 86], eax
+	mov byte [spleen_font_data + 86], eax
 	lea eax, __spleen_char_87
-	mov [spleen_font_data + 87], eax
+	mov byte [spleen_font_data + 87], eax
 	lea eax, __spleen_char_88
-	mov [spleen_font_data + 88], eax
+	mov byte [spleen_font_data + 88], eax
 	lea eax, __spleen_char_89
-	mov [spleen_font_data + 89], eax
+	mov byte [spleen_font_data + 89], eax
 	lea eax, __spleen_char_90
-	mov [spleen_font_data + 90], eax
+	mov byte [spleen_font_data + 90], eax
 	lea eax, __spleen_char_91
-	mov [spleen_font_data + 91], eax
+	mov byte [spleen_font_data + 91], eax
 	lea eax, __spleen_char_92
-	mov [spleen_font_data + 92], eax
+	mov byte [spleen_font_data + 92], eax
 	lea eax, __spleen_char_93
-	mov [spleen_font_data + 93], eax
+	mov byte [spleen_font_data + 93], eax
 	lea eax, __spleen_char_94
-	mov [spleen_font_data + 94], eax
+	mov byte [spleen_font_data + 94], eax
 	lea eax, __spleen_char_95
-	mov [spleen_font_data + 95], eax
+	mov byte [spleen_font_data + 95], eax
 	lea eax, __spleen_char_96
-	mov [spleen_font_data + 96], eax
+	mov byte [spleen_font_data + 96], eax
 	lea eax, __spleen_char_97
-	mov [spleen_font_data + 97], eax
+	mov byte [spleen_font_data + 97], eax
 	lea eax, __spleen_char_98
-	mov [spleen_font_data + 98], eax
+	mov byte [spleen_font_data + 98], eax
 	lea eax, __spleen_char_99
-	mov [spleen_font_data + 99], eax
+	mov byte [spleen_font_data + 99], eax
 	lea eax, __spleen_char_100
-	mov [spleen_font_data + 100], eax
+	mov byte [spleen_font_data + 100], eax
 	lea eax, __spleen_char_101
-	mov [spleen_font_data + 101], eax
+	mov byte [spleen_font_data + 101], eax
 	lea eax, __spleen_char_102
-	mov [spleen_font_data + 102], eax
+	mov byte [spleen_font_data + 102], eax
 	lea eax, __spleen_char_103
-	mov [spleen_font_data + 103], eax
+	mov byte [spleen_font_data + 103], eax
 	lea eax, __spleen_char_104
-	mov [spleen_font_data + 104], eax
+	mov byte [spleen_font_data + 104], eax
 	lea eax, __spleen_char_105
-	mov [spleen_font_data + 105], eax
+	mov byte [spleen_font_data + 105], eax
 	lea eax, __spleen_char_106
-	mov [spleen_font_data + 106], eax
+	mov byte [spleen_font_data + 106], eax
 	lea eax, __spleen_char_107
-	mov [spleen_font_data + 107], eax
+	mov byte [spleen_font_data + 107], eax
 	lea eax, __spleen_char_108
-	mov [spleen_font_data + 108], eax
+	mov byte [spleen_font_data + 108], eax
 	lea eax, __spleen_char_109
-	mov [spleen_font_data + 109], eax
+	mov byte [spleen_font_data + 109], eax
 	lea eax, __spleen_char_110
-	mov [spleen_font_data + 110], eax
+	mov byte [spleen_font_data + 110], eax
 	lea eax, __spleen_char_111
-	mov [spleen_font_data + 111], eax
+	mov byte [spleen_font_data + 111], eax
 	lea eax, __spleen_char_112
-	mov [spleen_font_data + 112], eax
+	mov byte [spleen_font_data + 112], eax
 	lea eax, __spleen_char_113
-	mov [spleen_font_data + 113], eax
+	mov byte [spleen_font_data + 113], eax
 	lea eax, __spleen_char_114
-	mov [spleen_font_data + 114], eax
+	mov byte [spleen_font_data + 114], eax
 	lea eax, __spleen_char_115
-	mov [spleen_font_data + 115], eax
+	mov byte [spleen_font_data + 115], eax
 	lea eax, __spleen_char_116
-	mov [spleen_font_data + 116], eax
+	mov byte [spleen_font_data + 116], eax
 	lea eax, __spleen_char_117
-	mov [spleen_font_data + 117], eax
+	mov byte [spleen_font_data + 117], eax
 	lea eax, __spleen_char_118
-	mov [spleen_font_data + 118], eax
+	mov byte [spleen_font_data + 118], eax
 	lea eax, __spleen_char_119
-	mov [spleen_font_data + 119], eax
+	mov byte [spleen_font_data + 119], eax
 	lea eax, __spleen_char_120
-	mov [spleen_font_data + 120], eax
+	mov byte [spleen_font_data + 120], eax
 	lea eax, __spleen_char_121
-	mov [spleen_font_data + 121], eax
+	mov byte [spleen_font_data + 121], eax
 	lea eax, __spleen_char_122
-	mov [spleen_font_data + 122], eax
+	mov byte [spleen_font_data + 122], eax
 	lea eax, __spleen_char_123
-	mov [spleen_font_data + 123], eax
+	mov byte [spleen_font_data + 123], eax
 	lea eax, __spleen_char_124
-	mov [spleen_font_data + 124], eax
+	mov byte [spleen_font_data + 124], eax
 	lea eax, __spleen_char_125
-	mov [spleen_font_data + 125], eax
+	mov byte [spleen_font_data + 125], eax
 	lea eax, __spleen_char_126
-	mov [spleen_font_data + 126], eax
+	mov byte [spleen_font_data + 126], eax
 
 spleen_font:
 	db 0, 0 ; width and height
