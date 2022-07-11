@@ -39,7 +39,6 @@ def generate_asm(name: str, extracted_chars: list[Fontchar]):
     base_fc = extracted_chars[0]
     db_contents = []
     ptr_contents = []
-    NEWLINE = '\n'
     MOV_TEMPLATE = f"""\
 \tlea ebx, __{name}_char_%d
 \tmov [{name}_font_data + %d], ebx"""
@@ -47,21 +46,33 @@ def generate_asm(name: str, extracted_chars: list[Fontchar]):
     for ec in extracted_chars:
         db_contents.append(f"__{name}_char_{ec.encoding}:\n\t{'db ' + ', '.join(ec.bitmap)}")
         ptr_contents.append(MOV_TEMPLATE % (ec.encoding, ec.encoding))
+    
+    ptr_contents = '\n'.join(ptr_contents)
+    db_contents = '\n'.join(db_contents)
 
     return f"""
 ; {name} font declaration
 ; This standard allows c to extern this and reinterpret this as a c-defined struct
+[bits 32]
 
-init_{name}_font:
-\tmov byte [{name}_font], {base_fc.dim[0]}
-\tmov byte [{name}_font + 1], {base_fc.dim[1]}
-{NEWLINE.join(ptr_contents)}
+section .text
 
-{name}_font:
+global _init_{name}_font
+_init_{name}_font:
+\tmov byte [_{name}_font], {base_fc.dim[0]}
+\tmov byte [_{name}_font + 1], {base_fc.dim[1]}
+{ptr_contents}
+
+ret
+
+section .data
+
+global _{name}_font
+_{name}_font:
 \tdb 0, 0 ; width and height
 \t{name}_font_data: times 128 dd 0 ; pointer array (32bit)
 
-{NEWLINE.join(db_contents)}
+{db_contents}
 """
     
 if __name__ == "__main__":

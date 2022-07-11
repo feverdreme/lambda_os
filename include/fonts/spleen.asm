@@ -1,10 +1,14 @@
 
 ; spleen font declaration
 ; This standard allows c to extern this and reinterpret this as a c-defined struct
+[bits 32]
 
-init_spleen_font:
-	mov byte [spleen_font], 5
-	mov byte [spleen_font + 1], 8
+section .text
+
+global _init_spleen_font
+_init_spleen_font:
+	mov byte [_spleen_font], 5
+	mov byte [_spleen_font + 1], 8
 	lea ebx, __spleen_char_32
 	mov [spleen_font_data + 32], ebx
 	lea ebx, __spleen_char_33
@@ -196,7 +200,12 @@ init_spleen_font:
 	lea ebx, __spleen_char_126
 	mov [spleen_font_data + 126], ebx
 
-spleen_font:
+ret
+
+section .data
+
+global _spleen_font
+_spleen_font:
 	db 0, 0 ; width and height
 	spleen_font_data: times 128 dd 0 ; pointer array (32bit)
 
