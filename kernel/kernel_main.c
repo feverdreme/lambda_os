@@ -1,4 +1,4 @@
-// #include <libc/fonts.h>
+#include <libc/fonts.h>
 #include <libc/string.h>
 #include <libc/typedef.h>
 #include "graphics/putpixel.h"
