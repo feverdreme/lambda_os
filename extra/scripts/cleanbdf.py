@@ -40,7 +40,9 @@ def generate_asm(name: str, extracted_chars: list[Fontchar]):
     db_contents = []
     ptr_contents = []
     NEWLINE = '\n'
-    MOV_TEMPLATE = f'\tlea eax, __{name}_char_%d\n\tmov byte [{name}_font_data + %d], eax'
+    MOV_TEMPLATE = f"""\
+\tlea ebx, __{name}_char_%d
+\tmov [{name}_font_data + %d], ebx"""
 
     for ec in extracted_chars:
         db_contents.append(f"__{name}_char_{ec.encoding}:\n\t{'db ' + ', '.join(ec.bitmap)}")
@@ -51,13 +53,13 @@ def generate_asm(name: str, extracted_chars: list[Fontchar]):
 ; This standard allows c to extern this and reinterpret this as a c-defined struct
 
 init_{name}_font:
-\tmov byte {name}_font, {base_fc.dim[0]}
+\tmov byte [{name}_font], {base_fc.dim[0]}
 \tmov byte [{name}_font + 1], {base_fc.dim[1]}
 {NEWLINE.join(ptr_contents)}
 
 {name}_font:
 \tdb 0, 0 ; width and height
-\t{name}_font_data: times 128 db 0 ; pointer array
+\t{name}_font_data: times 128 dd 0 ; pointer array (32bit)
 
 {NEWLINE.join(db_contents)}
 """
