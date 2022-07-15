@@ -2,6 +2,7 @@
 #include <libc/string.h>
 #include <libc/typedef.h>
 #include "graphics/putpixel.h"
+#include "afterboot/gdt.h"
 // #include "graphics/puts.h"
 // #include <fonts/standard.h>
 // #include <fonts/std_font.font.c>
@@ -12,6 +13,7 @@
 // everything is gonna be volatile lol
 
 void main() {
+    gdt_install();
     // char* msg = "32 BIT MODE LETS GO\n\tOh my god it supports\nnewline.\0";
     // puts(msg, strlen(msg));
     const char* src = "Helo my name is ell Jeffrey\0";
@@ -20,6 +22,8 @@ void main() {
     if (finds(src, s) != strend(src)){
         putrect(40, 30, 60, 120, 4);
     }
+
+    _init_spleen_font();
 
     // putc(A);
     // putc(B);
