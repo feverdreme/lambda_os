@@ -3,9 +3,6 @@
 
 #include <libc/typedef.h>
 
-extern void init_spleen_font();
-extern struct font spleen_font; // should this be void* ? and then reinterpret later?
-
 // font chars will be serialized bitmaps. Since we can't store all the data in a byte-sized char, we will use int[] and jsut have an implementation detail to not read past
 typedef byte* fontchar;
 
@@ -16,6 +13,10 @@ struct font {
 };
 
 // TODO: doxygen?
+
+extern void _init_spleen_font();
+extern struct font spleen_font; // should this be void* ? and then reinterpret later?
+
 /**
  * @brief Interface to map chars to fontchars without directly accessing the data member
  * @param c ASCII Character to be converted

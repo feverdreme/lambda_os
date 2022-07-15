@@ -1,5 +1,5 @@
 // TODO: Add makefile support
-#include <fonts/standard.h>
+// #include <fonts/standard.h>
 #include "putpixel.h"
 
 typedef struct {
@@ -9,7 +9,7 @@ typedef struct {
 
 cursor Cursor = {0, 0, 1, 1, 2};
 
-void putc(p_char c) {
+void putc(char** c) {
     for (int row=0; row<8; row++) {
         for (int col=0; col<8; col++) {
             if (c[row][col] != '#') continue;
