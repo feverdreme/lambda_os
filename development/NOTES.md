@@ -11,3 +11,6 @@
   - gh actions also i think
   - <https://stackoverflow.com/questions/65820/unit-testing-c-code>
 - .vscode configs
+- GDT code from 
+  <http://www.osdever.net/bkerndev/Docs/gdt.htm>
+  
