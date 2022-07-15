@@ -23,14 +23,15 @@ extern struct font spleen_font; // should this be void* ? and then reinterpret l
  * @param fnt Which font to use
  * @return Pointer to the fontchar in a font's array
 */
-fontchar* char_to_fontchar(char c, struct font *fnt);
+fontchar* ctofc(char c, struct font *fnt);
 
 /**
  * @brief Translates a complete string to a font.
  * @param sbuf A null-terminated string as input
  * @param outbuf A pointer to an array of fontchar pointers. This function will write to the array with the pointers to its chars
+ * @param outbuf_len Length of outbuf
  * @param fnt The font to use
  */
-void translate_string(char *sbuf, struct fontchar **outbuf, struct font* fnt);
+void translate_string(char *sbuf, fontchar **outbuf, size_t outbuf_len, struct font* fnt);
 
 #endif
