@@ -63,7 +63,7 @@ section .data
 
 global _{name}_font
 _{name}_font:
-\tdb 0, 0 ; width and height
+\tdb 5, 8 ; width and height; deprecated actually
 \t{name}_font_data:
 
 {db_contents}
