@@ -7,7 +7,7 @@ section .data
 
 global _spleen_font
 _spleen_font:
-	db 0, 0 ; width and height
+	db 5, 8 ; width and height; deprecated actually
 	spleen_font_data:
 
 
