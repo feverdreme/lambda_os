@@ -7,23 +7,23 @@
 typedef byte* fontchar;
 
 struct font {
-    byte fc_width;
-    byte fc_height;
-    fontchar *data[128];
+    int fc_width;
+    int fc_height;
+    fontchar data[128];
 };
 
 // TODO: doxygen?
 
+extern struct font _spleen_font; // should this be void* ? and then reinterpret later?
 extern void _init_spleen_font();
-extern struct font spleen_font; // should this be void* ? and then reinterpret later?
 
 /**
  * @brief Interface to map chars to fontchars without directly accessing the data member
  * @param c ASCII Character to be converted
  * @param fnt Which font to use
- * @return Pointer to the fontchar in a font's array
+ * @return Pointer to the fontchar in memory
 */
-fontchar* ctofc(char c, struct font *fnt);
+fontchar ctofc(char c, struct font *fnt);
 
 /**
  * @brief Translates a complete string to a font.
