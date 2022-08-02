@@ -1,30 +1,35 @@
 // TODO: Add makefile support
-#include <fonts/standard.h>
+// #include <fonts/standard.h>
+#include <libc/fonts.h>
+#include <stdbool.h>
 #include "putpixel.h"
+#include "puts.h"
 
-typedef struct {
-    int x, y, w, h;
-    int kerning;
-} cursor;
+struct Cursor cursor = {0, 0, 1};
 
-cursor Cursor = {0, 0, 1, 1, 2};
+int putc(char c, struct font *fnt) {
+    fontchar fc = ctofc(c, fnt);
 
-void putc(p_char c) {
-    for (int row=0; row<8; row++) {
-        for (int col=0; col<8; col++) {
-            if (c[row][col] != '#') continue;
+    if (c == '\n') {
+        cursor.x = 0;
+        cursor.y += 8;
+        return 0;
+    }
+    if (fc == 0) return 1;
 
-            putrect(Cursor.x + Cursor.w * col,
-                    Cursor.y + Cursor.h * row,
-                    Cursor.w,
-                    Cursor.h,
-                    15);
+    for (int row = 0; row < fnt->fc_height; row++) {
+        for (int col = 0; col < fnt->fc_width; col++) {          
+            // FIXME: Only works with bitmaps fonts with 16bit widths at most
+            int drawbit = fc[row] & (1 << (8 - col));
+            if (drawbit) putpixel(cursor.x + col, cursor.y + row, 2);
         }
     }
 
-    Cursor.x += Cursor.kerning + 8 * Cursor.w;
+    cursor.x = (cursor.x + 5) % 320;
+    if (cursor.x == 0) cursor.y += 8 + cursor.kerning;
+    else cursor.x += cursor.kerning;
 }
 
-// void puts(char *c) {
-
-// }
+void puts(char *c, struct font *fnt) {
+    for (; *c != '\0'; c++) putc(*c, fnt);
+}
