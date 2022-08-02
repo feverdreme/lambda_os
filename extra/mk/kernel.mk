@@ -8,6 +8,8 @@ KERNEL_AFTERBOOT_O := $(patsubst %.asm,%.o,$(KERNEL_AFTERBOOT_SRC))
 ############################################################################
 # KERNEL BUILD
 kernel: kernel_entry kernel_main kernel_graphics kernel_afterboot
+	$(LD) -Ttext 0x1000 bin/kernel_entry.o bin/objects/*.o -o bin/kernel.elf --oformat elf32-i386
+	$(OBJCOPY) -O binary bin/kernel.elf bin/kernel.bin 
 
 kernel_entry:
 	$(ASM) -f elf kernel/kernel_entry.asm -o bin/kernel_entry.o
