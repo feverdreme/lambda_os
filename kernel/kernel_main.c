@@ -19,7 +19,7 @@
 
 void main() {
     gdt_install();
-    _init_spleen_font();
+    init_spleen_font();
     // char* msg = "32 BIT MODE LETS GO\n\tOh my god it supports\nnewline.\0";
     // puts(msg, strlen(msg));
 
@@ -38,7 +38,7 @@ void main() {
     // puts("\n", &_spleen_font);
 
     // puts("Marc@lambda_os$ whoami\n> Our esteemed dean of students", &_spleen_font);
-    puts("Guess who has all the fonts correct... this guy!\nIt even supports newline\nAnd numbers... 123456789\nAnd symbols... -[@$(*%^&(#:>:}>", &_spleen_font);
+    puts("Guess who has all the fonts correct... this guy!\nIt even supports newline\nAnd numbers... 123456789\nAnd symbols... -[@$(*%^&(#:>:}>", &spleen_font);
 
     // struct font *fnt = &_spleen_font;
     // // char c = 'A';

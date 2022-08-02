@@ -14,8 +14,8 @@ struct font {
 
 // TODO: doxygen?
 
-extern struct font _spleen_font; // should this be void* ? and then reinterpret later?
-extern void _init_spleen_font();
+extern struct font spleen_font; // should this be void* ? and then reinterpret later?
+extern void init_spleen_font();
 
 /**
  * @brief Interface to map chars to fontchars without directly accessing the data member

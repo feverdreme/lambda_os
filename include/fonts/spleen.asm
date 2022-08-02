@@ -3,10 +3,10 @@
 ; This standard allows c to extern this and reinterpret this as a c-defined struct
 [bits 32]
 section .text
-global _init_spleen_font
-_init_spleen_font:
-	mov dword [_spleen_font], 5
-	mov dword [_spleen_font + 4], 8
+global init_spleen_font
+init_spleen_font:
+	mov dword [spleen_font], 5
+	mov dword [spleen_font + 4], 8
 	mov ebx, __spleen_char_32
 	mov [spleen_font_data + 128], ebx
 	mov ebx, __spleen_char_33
@@ -199,8 +199,8 @@ _init_spleen_font:
 	mov [spleen_font_data + 504], ebx
 ret
 section .data
-global _spleen_font
-_spleen_font:
+global spleen_font
+spleen_font:
 	dd 0, 0 ; width and height
 	spleen_font_data: times 128 dd 0 ; pointer array (32bit)
 __spleen_char_32:

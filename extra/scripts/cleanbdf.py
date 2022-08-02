@@ -89,15 +89,15 @@ def generate_asm2(name: str, extracted_chars: list[Fontchar]):
 ; This standard allows c to extern this and reinterpret this as a c-defined struct
 [bits 32]
 section .text
-global _init_{name}_font
-_init_{name}_font:
-\tmov dword [_{name}_font], {base_fc.dim[0]}
-\tmov dword [_{name}_font + 4], {base_fc.dim[1]}
+global init_{name}_font
+init_{name}_font:
+\tmov dword [{name}_font], {base_fc.dim[0]}
+\tmov dword [{name}_font + 4], {base_fc.dim[1]}
 {ptr_contents}
 ret
 section .data
-global _{name}_font
-_{name}_font:
+global {name}_font
+{name}_font:
 \tdd 0, 0 ; width and height
 \t{name}_font_data: times 128 dd 0 ; pointer array (32bit)
 {db_contents}
