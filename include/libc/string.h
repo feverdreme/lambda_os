@@ -17,4 +17,6 @@ const char* findc(const char* src, const char* c);
 // returns end of string (null byte) if not found
 const char* finds(const char* src, const char* s);
 
+void reverse(char* s, int len);
+
 #endif
