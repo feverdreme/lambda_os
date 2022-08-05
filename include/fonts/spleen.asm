@@ -2,213 +2,207 @@
 ; spleen font declaration
 ; This standard allows c to extern this and reinterpret this as a c-defined struct
 [bits 32]
-
 section .text
-
-global _init_spleen_font
-_init_spleen_font:
-	mov byte [_spleen_font], 5
-	mov byte [_spleen_font + 1], 8
-	lea ebx, __spleen_char_32
-	mov [spleen_font_data + 32], ebx
-	lea ebx, __spleen_char_33
-	mov [spleen_font_data + 33], ebx
-	lea ebx, __spleen_char_34
-	mov [spleen_font_data + 34], ebx
-	lea ebx, __spleen_char_35
-	mov [spleen_font_data + 35], ebx
-	lea ebx, __spleen_char_36
-	mov [spleen_font_data + 36], ebx
-	lea ebx, __spleen_char_37
-	mov [spleen_font_data + 37], ebx
-	lea ebx, __spleen_char_38
-	mov [spleen_font_data + 38], ebx
-	lea ebx, __spleen_char_39
-	mov [spleen_font_data + 39], ebx
-	lea ebx, __spleen_char_40
-	mov [spleen_font_data + 40], ebx
-	lea ebx, __spleen_char_41
-	mov [spleen_font_data + 41], ebx
-	lea ebx, __spleen_char_42
-	mov [spleen_font_data + 42], ebx
-	lea ebx, __spleen_char_43
-	mov [spleen_font_data + 43], ebx
-	lea ebx, __spleen_char_44
-	mov [spleen_font_data + 44], ebx
-	lea ebx, __spleen_char_45
-	mov [spleen_font_data + 45], ebx
-	lea ebx, __spleen_char_46
-	mov [spleen_font_data + 46], ebx
-	lea ebx, __spleen_char_47
-	mov [spleen_font_data + 47], ebx
-	lea ebx, __spleen_char_48
-	mov [spleen_font_data + 48], ebx
-	lea ebx, __spleen_char_49
-	mov [spleen_font_data + 49], ebx
-	lea ebx, __spleen_char_50
-	mov [spleen_font_data + 50], ebx
-	lea ebx, __spleen_char_51
-	mov [spleen_font_data + 51], ebx
-	lea ebx, __spleen_char_52
-	mov [spleen_font_data + 52], ebx
-	lea ebx, __spleen_char_53
-	mov [spleen_font_data + 53], ebx
-	lea ebx, __spleen_char_54
-	mov [spleen_font_data + 54], ebx
-	lea ebx, __spleen_char_55
-	mov [spleen_font_data + 55], ebx
-	lea ebx, __spleen_char_56
-	mov [spleen_font_data + 56], ebx
-	lea ebx, __spleen_char_57
-	mov [spleen_font_data + 57], ebx
-	lea ebx, __spleen_char_58
-	mov [spleen_font_data + 58], ebx
-	lea ebx, __spleen_char_59
-	mov [spleen_font_data + 59], ebx
-	lea ebx, __spleen_char_60
-	mov [spleen_font_data + 60], ebx
-	lea ebx, __spleen_char_61
-	mov [spleen_font_data + 61], ebx
-	lea ebx, __spleen_char_62
-	mov [spleen_font_data + 62], ebx
-	lea ebx, __spleen_char_63
-	mov [spleen_font_data + 63], ebx
-	lea ebx, __spleen_char_64
-	mov [spleen_font_data + 64], ebx
-	lea ebx, __spleen_char_65
-	mov [spleen_font_data + 65], ebx
-	lea ebx, __spleen_char_66
-	mov [spleen_font_data + 66], ebx
-	lea ebx, __spleen_char_67
-	mov [spleen_font_data + 67], ebx
-	lea ebx, __spleen_char_68
-	mov [spleen_font_data + 68], ebx
-	lea ebx, __spleen_char_69
-	mov [spleen_font_data + 69], ebx
-	lea ebx, __spleen_char_70
-	mov [spleen_font_data + 70], ebx
-	lea ebx, __spleen_char_71
-	mov [spleen_font_data + 71], ebx
-	lea ebx, __spleen_char_72
-	mov [spleen_font_data + 72], ebx
-	lea ebx, __spleen_char_73
-	mov [spleen_font_data + 73], ebx
-	lea ebx, __spleen_char_74
-	mov [spleen_font_data + 74], ebx
-	lea ebx, __spleen_char_75
-	mov [spleen_font_data + 75], ebx
-	lea ebx, __spleen_char_76
-	mov [spleen_font_data + 76], ebx
-	lea ebx, __spleen_char_77
-	mov [spleen_font_data + 77], ebx
-	lea ebx, __spleen_char_78
-	mov [spleen_font_data + 78], ebx
-	lea ebx, __spleen_char_79
-	mov [spleen_font_data + 79], ebx
-	lea ebx, __spleen_char_80
-	mov [spleen_font_data + 80], ebx
-	lea ebx, __spleen_char_81
-	mov [spleen_font_data + 81], ebx
-	lea ebx, __spleen_char_82
-	mov [spleen_font_data + 82], ebx
-	lea ebx, __spleen_char_83
-	mov [spleen_font_data + 83], ebx
-	lea ebx, __spleen_char_84
-	mov [spleen_font_data + 84], ebx
-	lea ebx, __spleen_char_85
-	mov [spleen_font_data + 85], ebx
-	lea ebx, __spleen_char_86
-	mov [spleen_font_data + 86], ebx
-	lea ebx, __spleen_char_87
-	mov [spleen_font_data + 87], ebx
-	lea ebx, __spleen_char_88
-	mov [spleen_font_data + 88], ebx
-	lea ebx, __spleen_char_89
-	mov [spleen_font_data + 89], ebx
-	lea ebx, __spleen_char_90
-	mov [spleen_font_data + 90], ebx
-	lea ebx, __spleen_char_91
-	mov [spleen_font_data + 91], ebx
-	lea ebx, __spleen_char_92
-	mov [spleen_font_data + 92], ebx
-	lea ebx, __spleen_char_93
-	mov [spleen_font_data + 93], ebx
-	lea ebx, __spleen_char_94
-	mov [spleen_font_data + 94], ebx
-	lea ebx, __spleen_char_95
-	mov [spleen_font_data + 95], ebx
-	lea ebx, __spleen_char_96
-	mov [spleen_font_data + 96], ebx
-	lea ebx, __spleen_char_97
-	mov [spleen_font_data + 97], ebx
-	lea ebx, __spleen_char_98
-	mov [spleen_font_data + 98], ebx
-	lea ebx, __spleen_char_99
-	mov [spleen_font_data + 99], ebx
-	lea ebx, __spleen_char_100
-	mov [spleen_font_data + 100], ebx
-	lea ebx, __spleen_char_101
-	mov [spleen_font_data + 101], ebx
-	lea ebx, __spleen_char_102
-	mov [spleen_font_data + 102], ebx
-	lea ebx, __spleen_char_103
-	mov [spleen_font_data + 103], ebx
-	lea ebx, __spleen_char_104
-	mov [spleen_font_data + 104], ebx
-	lea ebx, __spleen_char_105
-	mov [spleen_font_data + 105], ebx
-	lea ebx, __spleen_char_106
-	mov [spleen_font_data + 106], ebx
-	lea ebx, __spleen_char_107
-	mov [spleen_font_data + 107], ebx
-	lea ebx, __spleen_char_108
-	mov [spleen_font_data + 108], ebx
-	lea ebx, __spleen_char_109
-	mov [spleen_font_data + 109], ebx
-	lea ebx, __spleen_char_110
-	mov [spleen_font_data + 110], ebx
-	lea ebx, __spleen_char_111
-	mov [spleen_font_data + 111], ebx
-	lea ebx, __spleen_char_112
-	mov [spleen_font_data + 112], ebx
-	lea ebx, __spleen_char_113
-	mov [spleen_font_data + 113], ebx
-	lea ebx, __spleen_char_114
-	mov [spleen_font_data + 114], ebx
-	lea ebx, __spleen_char_115
-	mov [spleen_font_data + 115], ebx
-	lea ebx, __spleen_char_116
-	mov [spleen_font_data + 116], ebx
-	lea ebx, __spleen_char_117
-	mov [spleen_font_data + 117], ebx
-	lea ebx, __spleen_char_118
-	mov [spleen_font_data + 118], ebx
-	lea ebx, __spleen_char_119
-	mov [spleen_font_data + 119], ebx
-	lea ebx, __spleen_char_120
-	mov [spleen_font_data + 120], ebx
-	lea ebx, __spleen_char_121
-	mov [spleen_font_data + 121], ebx
-	lea ebx, __spleen_char_122
-	mov [spleen_font_data + 122], ebx
-	lea ebx, __spleen_char_123
-	mov [spleen_font_data + 123], ebx
-	lea ebx, __spleen_char_124
-	mov [spleen_font_data + 124], ebx
-	lea ebx, __spleen_char_125
-	mov [spleen_font_data + 125], ebx
-	lea ebx, __spleen_char_126
-	mov [spleen_font_data + 126], ebx
-
+global init_spleen_font
+init_spleen_font:
+	mov dword [spleen_font], 5
+	mov dword [spleen_font + 4], 8
+	mov ebx, __spleen_char_32
+	mov [spleen_font_data + 128], ebx
+	mov ebx, __spleen_char_33
+	mov [spleen_font_data + 132], ebx
+	mov ebx, __spleen_char_34
+	mov [spleen_font_data + 136], ebx
+	mov ebx, __spleen_char_35
+	mov [spleen_font_data + 140], ebx
+	mov ebx, __spleen_char_36
+	mov [spleen_font_data + 144], ebx
+	mov ebx, __spleen_char_37
+	mov [spleen_font_data + 148], ebx
+	mov ebx, __spleen_char_38
+	mov [spleen_font_data + 152], ebx
+	mov ebx, __spleen_char_39
+	mov [spleen_font_data + 156], ebx
+	mov ebx, __spleen_char_40
+	mov [spleen_font_data + 160], ebx
+	mov ebx, __spleen_char_41
+	mov [spleen_font_data + 164], ebx
+	mov ebx, __spleen_char_42
+	mov [spleen_font_data + 168], ebx
+	mov ebx, __spleen_char_43
+	mov [spleen_font_data + 172], ebx
+	mov ebx, __spleen_char_44
+	mov [spleen_font_data + 176], ebx
+	mov ebx, __spleen_char_45
+	mov [spleen_font_data + 180], ebx
+	mov ebx, __spleen_char_46
+	mov [spleen_font_data + 184], ebx
+	mov ebx, __spleen_char_47
+	mov [spleen_font_data + 188], ebx
+	mov ebx, __spleen_char_48
+	mov [spleen_font_data + 192], ebx
+	mov ebx, __spleen_char_49
+	mov [spleen_font_data + 196], ebx
+	mov ebx, __spleen_char_50
+	mov [spleen_font_data + 200], ebx
+	mov ebx, __spleen_char_51
+	mov [spleen_font_data + 204], ebx
+	mov ebx, __spleen_char_52
+	mov [spleen_font_data + 208], ebx
+	mov ebx, __spleen_char_53
+	mov [spleen_font_data + 212], ebx
+	mov ebx, __spleen_char_54
+	mov [spleen_font_data + 216], ebx
+	mov ebx, __spleen_char_55
+	mov [spleen_font_data + 220], ebx
+	mov ebx, __spleen_char_56
+	mov [spleen_font_data + 224], ebx
+	mov ebx, __spleen_char_57
+	mov [spleen_font_data + 228], ebx
+	mov ebx, __spleen_char_58
+	mov [spleen_font_data + 232], ebx
+	mov ebx, __spleen_char_59
+	mov [spleen_font_data + 236], ebx
+	mov ebx, __spleen_char_60
+	mov [spleen_font_data + 240], ebx
+	mov ebx, __spleen_char_61
+	mov [spleen_font_data + 244], ebx
+	mov ebx, __spleen_char_62
+	mov [spleen_font_data + 248], ebx
+	mov ebx, __spleen_char_63
+	mov [spleen_font_data + 252], ebx
+	mov ebx, __spleen_char_64
+	mov [spleen_font_data + 256], ebx
+	mov ebx, __spleen_char_65
+	mov [spleen_font_data + 260], ebx
+	mov ebx, __spleen_char_66
+	mov [spleen_font_data + 264], ebx
+	mov ebx, __spleen_char_67
+	mov [spleen_font_data + 268], ebx
+	mov ebx, __spleen_char_68
+	mov [spleen_font_data + 272], ebx
+	mov ebx, __spleen_char_69
+	mov [spleen_font_data + 276], ebx
+	mov ebx, __spleen_char_70
+	mov [spleen_font_data + 280], ebx
+	mov ebx, __spleen_char_71
+	mov [spleen_font_data + 284], ebx
+	mov ebx, __spleen_char_72
+	mov [spleen_font_data + 288], ebx
+	mov ebx, __spleen_char_73
+	mov [spleen_font_data + 292], ebx
+	mov ebx, __spleen_char_74
+	mov [spleen_font_data + 296], ebx
+	mov ebx, __spleen_char_75
+	mov [spleen_font_data + 300], ebx
+	mov ebx, __spleen_char_76
+	mov [spleen_font_data + 304], ebx
+	mov ebx, __spleen_char_77
+	mov [spleen_font_data + 308], ebx
+	mov ebx, __spleen_char_78
+	mov [spleen_font_data + 312], ebx
+	mov ebx, __spleen_char_79
+	mov [spleen_font_data + 316], ebx
+	mov ebx, __spleen_char_80
+	mov [spleen_font_data + 320], ebx
+	mov ebx, __spleen_char_81
+	mov [spleen_font_data + 324], ebx
+	mov ebx, __spleen_char_82
+	mov [spleen_font_data + 328], ebx
+	mov ebx, __spleen_char_83
+	mov [spleen_font_data + 332], ebx
+	mov ebx, __spleen_char_84
+	mov [spleen_font_data + 336], ebx
+	mov ebx, __spleen_char_85
+	mov [spleen_font_data + 340], ebx
+	mov ebx, __spleen_char_86
+	mov [spleen_font_data + 344], ebx
+	mov ebx, __spleen_char_87
+	mov [spleen_font_data + 348], ebx
+	mov ebx, __spleen_char_88
+	mov [spleen_font_data + 352], ebx
+	mov ebx, __spleen_char_89
+	mov [spleen_font_data + 356], ebx
+	mov ebx, __spleen_char_90
+	mov [spleen_font_data + 360], ebx
+	mov ebx, __spleen_char_91
+	mov [spleen_font_data + 364], ebx
+	mov ebx, __spleen_char_92
+	mov [spleen_font_data + 368], ebx
+	mov ebx, __spleen_char_93
+	mov [spleen_font_data + 372], ebx
+	mov ebx, __spleen_char_94
+	mov [spleen_font_data + 376], ebx
+	mov ebx, __spleen_char_95
+	mov [spleen_font_data + 380], ebx
+	mov ebx, __spleen_char_96
+	mov [spleen_font_data + 384], ebx
+	mov ebx, __spleen_char_97
+	mov [spleen_font_data + 388], ebx
+	mov ebx, __spleen_char_98
+	mov [spleen_font_data + 392], ebx
+	mov ebx, __spleen_char_99
+	mov [spleen_font_data + 396], ebx
+	mov ebx, __spleen_char_100
+	mov [spleen_font_data + 400], ebx
+	mov ebx, __spleen_char_101
+	mov [spleen_font_data + 404], ebx
+	mov ebx, __spleen_char_102
+	mov [spleen_font_data + 408], ebx
+	mov ebx, __spleen_char_103
+	mov [spleen_font_data + 412], ebx
+	mov ebx, __spleen_char_104
+	mov [spleen_font_data + 416], ebx
+	mov ebx, __spleen_char_105
+	mov [spleen_font_data + 420], ebx
+	mov ebx, __spleen_char_106
+	mov [spleen_font_data + 424], ebx
+	mov ebx, __spleen_char_107
+	mov [spleen_font_data + 428], ebx
+	mov ebx, __spleen_char_108
+	mov [spleen_font_data + 432], ebx
+	mov ebx, __spleen_char_109
+	mov [spleen_font_data + 436], ebx
+	mov ebx, __spleen_char_110
+	mov [spleen_font_data + 440], ebx
+	mov ebx, __spleen_char_111
+	mov [spleen_font_data + 444], ebx
+	mov ebx, __spleen_char_112
+	mov [spleen_font_data + 448], ebx
+	mov ebx, __spleen_char_113
+	mov [spleen_font_data + 452], ebx
+	mov ebx, __spleen_char_114
+	mov [spleen_font_data + 456], ebx
+	mov ebx, __spleen_char_115
+	mov [spleen_font_data + 460], ebx
+	mov ebx, __spleen_char_116
+	mov [spleen_font_data + 464], ebx
+	mov ebx, __spleen_char_117
+	mov [spleen_font_data + 468], ebx
+	mov ebx, __spleen_char_118
+	mov [spleen_font_data + 472], ebx
+	mov ebx, __spleen_char_119
+	mov [spleen_font_data + 476], ebx
+	mov ebx, __spleen_char_120
+	mov [spleen_font_data + 480], ebx
+	mov ebx, __spleen_char_121
+	mov [spleen_font_data + 484], ebx
+	mov ebx, __spleen_char_122
+	mov [spleen_font_data + 488], ebx
+	mov ebx, __spleen_char_123
+	mov [spleen_font_data + 492], ebx
+	mov ebx, __spleen_char_124
+	mov [spleen_font_data + 496], ebx
+	mov ebx, __spleen_char_125
+	mov [spleen_font_data + 500], ebx
+	mov ebx, __spleen_char_126
+	mov [spleen_font_data + 504], ebx
 ret
-
 section .data
-
-global _spleen_font
-_spleen_font:
-	db 0, 0 ; width and height
+global spleen_font
+spleen_font:
+	dd 0, 0 ; width and height
 	spleen_font_data: times 128 dd 0 ; pointer array (32bit)
-
 __spleen_char_32:
 	db 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 __spleen_char_33:

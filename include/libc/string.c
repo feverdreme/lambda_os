@@ -53,3 +53,17 @@ const char* finds(const char* src, const char* s) {
         }
     }
 }
+
+void reverse(char* str, int length)
+{
+    int start = 0;
+    int end = length -1;
+    while (start < end)
+    {
+        char* tmp = *(str + start);
+        *(str + start) = *(str + end);
+        *(str + end) = tmp;
+        start++;
+        end--;
+    }
+}
