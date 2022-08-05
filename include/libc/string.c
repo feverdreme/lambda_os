@@ -60,7 +60,7 @@ void reverse(char* str, int length)
     int end = length -1;
     while (start < end)
     {
-        char* tmp = *(str + start);
+        char tmp = *(str + start);
         *(str + start) = *(str + end);
         *(str + end) = tmp;
         start++;
