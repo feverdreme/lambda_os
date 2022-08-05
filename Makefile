@@ -22,3 +22,6 @@ include extra/mk/extra.mk
 
 clean:
 	rm bin/boot.bin bin/zero_padding.bin bin/kernel.bin bin/kernel_entry.o bin/objects/* kernel/**/*.o include/libc/*.o include/fonts/*.o 
+
+reset:
+	rm bin/kernel*.* bin/os.bin
