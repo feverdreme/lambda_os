@@ -1,7 +1,7 @@
 #include <libc/fonts.h>
 
 fontchar ctofc(char c, struct font *fnt) {
-    return fnt->data[c];
+    return fnt->data[(uint8_t)c];
 }
 
 void translate_string(char *sbuf, fontchar **outbuf, size_t outbuf_len, struct font* fnt) {
