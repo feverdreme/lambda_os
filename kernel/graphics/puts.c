@@ -28,6 +28,8 @@ int putc(char c, struct font *fnt) {
     cursor.x = (cursor.x + 5) % 320;
     if (cursor.x == 0) cursor.y += 8 + cursor.kerning;
     else cursor.x += cursor.kerning;
+
+    return 0;
 }
 
 void puts(char *c, struct font *fnt) {
