@@ -3,6 +3,7 @@
 #include <libc/typedef.h>
 #include "graphics/putpixel.h"
 #include "afterboot/gdt.h"
+#include "afterboot/idt.h"
 // #include "graphics/puts.h"
 #include <stdbool.h>
 #include "graphics/puts.h"
