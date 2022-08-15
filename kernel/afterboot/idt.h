@@ -34,9 +34,10 @@ struct idt_entry idt[256];
 struct idt_ptr idtp;
 
 // lidt instruction
-extern void register_idt();
+extern void idt_load();
 
-void idt_set_gate();
-void idt_install();
+void idt_set_gate(uint32_t offset, uint16_t seg_selector, enum idt_gate_type gate_type, uint8_t dpl, bool present);
+
+void idt_init();
 
 #endif
