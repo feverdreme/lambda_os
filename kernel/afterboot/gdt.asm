@@ -1,8 +1,8 @@
-[extern gp]
+[extern gdtp]
 
 global gdt_flush
 gdt_flush:
-    lgdt [gp]
+    lgdt [gdtp]
     mov ax, 0x10      ; 0x10 is the offset in the GDT to our data segment
     mov ds, ax
     mov es, ax

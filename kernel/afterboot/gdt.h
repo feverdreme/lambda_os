@@ -16,7 +16,7 @@ struct gdt_ptr {
 } __attribute__((packed));
 
 struct gdt_entry gdt[3];
-struct gdt_ptr gp;
+struct gdt_ptr gdtp;
 
 extern void gdt_flush();
 
@@ -45,8 +45,8 @@ void gdt_set_gate(int num, unsigned long base, unsigned long limit, unsigned cha
 void gdt_install()
 {
     /* Setup the GDT pointer and limit */
-    gp.gdt_size = (sizeof(struct gdt_entry) * 3) - 1;
-    gp.gdt_location = (struct gdt_entry*)&gdt;
+    gdtp.gdt_size = (sizeof(struct gdt_entry) * 3) - 1;
+    gdtp.gdt_location = (struct gdt_entry*)&gdt;
 
     /* Our NULL descriptor */
     gdt_set_gate(0, 0, 0, 0, 0);
