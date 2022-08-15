@@ -17,9 +17,15 @@ struct idt_type_attributes {
     int present : 1; // MUST BE 1 TO BE ACTIVE
 } __attribute__((packed));
 
+struct segment_selector {
+    int rpl : 2;
+    int ti : 1;
+    int index : 13;
+} __attribute__((packed));
+
 struct idt_entry {
     uint16_t offset_low;
-    uint16_t seg_selector;
+    struct segment_selector seg_selector;
     uint8_t reserved;
     struct idt_type_attributes type_attributes;
     uint16_t offset_high;
@@ -36,7 +42,7 @@ struct idt_ptr idtp;
 // lidt instruction
 extern void idt_load();
 
-void idt_set_gate(uint32_t offset, uint16_t seg_selector, enum idt_gate_type gate_type, uint8_t dpl, bool present);
+void idt_set_gate(uint8_t index, uint32_t offset, struct segment_selector seg_selector, enum idt_gate_type gate_type, uint8_t dpl, bool present);
 
 void idt_init();
 
