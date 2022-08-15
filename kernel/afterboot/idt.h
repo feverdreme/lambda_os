@@ -1,6 +1,8 @@
 #ifndef IDT_H
 #define IDT_H
 
+#include <stdbool.h>
+
 // interrupt gate descriptor type
 enum igt_gate_type {
     task = 0x5,
