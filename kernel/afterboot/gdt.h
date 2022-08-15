@@ -18,7 +18,7 @@ struct gdt_ptr {
 struct gdt_entry gdt[3];
 struct gdt_ptr gp;
 
-extern void _gdt_flush();
+extern void gdt_flush();
 
 // Declared because this will only ever be used once
 void gdt_set_gate(int num, unsigned long base, unsigned long limit, unsigned char access, unsigned char gran)
@@ -58,7 +58,7 @@ void gdt_install()
     gdt_set_gate(2, 0, 0xFFFFFFFF, 0x92, 0xCF);
 
     /* Flush out the old GDT and install the new changes! */
-    _gdt_flush();
+    gdt_flush();
 }
 
 #endif
