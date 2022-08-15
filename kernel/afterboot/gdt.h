@@ -11,8 +11,8 @@ struct gdt_entry {
 } __attribute__((packed));
 
 struct gdt_ptr {
-    uint16_t limit;
-    struct gdt_entry* base;
+    uint16_t gdt_size;
+    struct gdt_entry* gdt_location;
 } __attribute__((packed));
 
 struct gdt_entry gdt[3];
@@ -45,8 +45,8 @@ void gdt_set_gate(int num, unsigned long base, unsigned long limit, unsigned cha
 void gdt_install()
 {
     /* Setup the GDT pointer and limit */
-    gp.limit = (sizeof(struct gdt_entry) * 3) - 1;
-    gp.base = (struct gdt_entry*)&gdt;
+    gp.gdt_size = (sizeof(struct gdt_entry) * 3) - 1;
+    gp.gdt_location = (struct gdt_entry*)&gdt;
 
     /* Our NULL descriptor */
     gdt_set_gate(0, 0, 0, 0, 0);
