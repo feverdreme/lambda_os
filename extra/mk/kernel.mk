@@ -3,7 +3,7 @@ KERNEL_GRAPHICS_O := $(patsubst %.c,%.o,$(KERNEL_GRAPHICS_SRC))
 
 KERNEL_AFTERBOOT_ASM_SRC := $(wildcard kernel/afterboot/*.asm)
 KERNEL_AFTERBOOT_ASM_O := $(patsubst %.asm,%.asm.o,$(KERNEL_AFTERBOOT_ASM_SRC))
-KERNEL_AFTERBOOT_C_SRC := $(wildcard kernel/afterboot/*.asm)
+KERNEL_AFTERBOOT_C_SRC := $(wildcard kernel/afterboot/*.c)
 KERNEL_AFTERBOOT_C_O := $(patsubst %.c,%.c.o,$(KERNEL_AFTERBOOT_C_SRC))
 
 .PHONY: kernel kernel_entry kernel_graphics kernel_main 
