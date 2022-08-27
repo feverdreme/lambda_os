@@ -20,6 +20,7 @@
 
 void main() {
     gdt_install();
+    idt_load();
     init_spleen_font();
     // char* msg = "32 BIT MODE LETS GO\n\tOh my god it supports\nnewline.\0";
     // puts(msg, strlen(msg));
