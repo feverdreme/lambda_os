@@ -4,8 +4,6 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-extern struct gdt_entry gdt[3];
-
 // interrupt gate descriptor type
 enum idt_gate_type {
     task = 0x5,
@@ -21,11 +19,6 @@ struct segment_selector {
     int ti : 1;
     int index : 13;
 } __attribute__((packed));
-
-enum seg_selectors {
-    GDT_CS_0 = (uint16_t)(&gdt[1] << 3 + 0b100);
-    GDT_DS_0 = (uint16_t)(&gdt[2] << 3 + 0b100);
-};
 
 struct idt_type_attributes {
     int gate_type : 4;
