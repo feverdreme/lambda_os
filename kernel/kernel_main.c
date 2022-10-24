@@ -1,12 +1,21 @@
 #include <libc/fonts.h>
 #include <libc/string.h>
 #include <libc/typedef.h>
+
+#if 0
+#include "kernel/graphics/putpixel.h"
+#include "kernel/afterboot/gdt.h"
+#include "kernel/afterboot/idt.h"
+#include "kernel/graphics/puts.h"
+#else
 #include "graphics/putpixel.h"
 #include "afterboot/gdt.h"
 #include "afterboot/idt.h"
+#include "graphics/puts.h"
+
+#endif
 // #include "graphics/puts.h"
 #include <stdbool.h>
-#include "graphics/puts.h"
 // #include <fonts/standard.h>
 // #include <fonts/std_font.font.c>
 // #include <libc/DEPREACTED_puts.h>
