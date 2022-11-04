@@ -18,7 +18,7 @@ struct gdt_ptr {
 struct gdt_entry gdt[3];
 struct gdt_ptr gp;
 
-extern void _gdt_flush();
+void _gdt_flush();
 
 // Declared because this will only ever be used once
 void gdt_set_gate(int num, unsigned long base, unsigned long limit, unsigned char access, unsigned char gran)
@@ -42,8 +42,7 @@ void gdt_set_gate(int num, unsigned long base, unsigned long limit, unsigned cha
 *  finally call gdt_flush() in our assembler file in order
 *  to tell the processor where the new GDT is and update the
 *  new segment registers */
-void gdt_install()
-{
+void gdt_install() {
     /* Setup the GDT pointer and limit */
     gp.limit = (sizeof(struct gdt_entry) * 3) - 1;
     gp.base = (struct gdt_entry*)&gdt;
