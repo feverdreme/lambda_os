@@ -3,14 +3,14 @@
 #include <libc/typedef.h>
 
 #if 0
-#include "kernel/graphics/putpixel.h"
-#include "kernel/afterboot/gdt.h"
-#include "kernel/afterboot/idt.h"
-#include "kernel/graphics/puts.h"
+#include "graphics/putpixel.h"
+#include "gdt/gdt.h"
+#include "idt/idt.h"
+#include "graphics/puts.h"
 #else
 #include "graphics/putpixel.h"
-#include "afterboot/gdt.h"
-#include "afterboot/idt.h"
+#include "gdt/gdt.h"
+#include "idt/idt.h"
 #include "graphics/puts.h"
 
 #endif
