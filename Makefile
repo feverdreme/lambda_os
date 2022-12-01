@@ -27,7 +27,7 @@ OBJCOPY := i686-elf-objcopy
 KERNEL_SPECIAL_O = kernel/kernel_entry.asm.o kernel/kernel_main.c.o 
 
 GENERAL_ASMC_DIRS =
-GENERAL_ASMC_DIRS += kernel/idt kernel/gdt kernel/graphics
+GENERAL_ASMC_DIRS += kernel/arch/idt kernel/arch/gdt kernel/graphics
 GENERAL_ASMC_DIRS += include/libc include/fonts
 
 GENERAL_ASM_SRC := $(foreach dir, $(GENERAL_ASMC_DIRS), $(wildcard $(dir)/*.asm))
