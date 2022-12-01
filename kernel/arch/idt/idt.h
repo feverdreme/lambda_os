@@ -44,7 +44,7 @@ struct idt_entry idt[256];
 struct idt_ptr idtp;
 
 // lidt instruction
-extern void idt_load();
+void idt_load();
 
 void idt_set_gate(uint8_t index, uint32_t offset, struct segment_selector seg, idt_gate_type_t gate_type, uint8_t dpl, uint8_t present) {
     struct idt_entry *gate = &(idt[index]);
@@ -61,8 +61,12 @@ void idt_set_gate(uint8_t index, uint32_t offset, struct segment_selector seg, i
     gate->seg_selector = seg;
 }
 
+// extern void* isr_stub_table[];
+
 void idt_init() {
     // set the gates
+    // idtp.idt_size = sizeof(struct idt_entry) * 256 - 1;
+    // idtp.idt_location = &idt;
 
     // prepare for lidt
     idt_load();

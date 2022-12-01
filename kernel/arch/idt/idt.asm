@@ -6,3 +6,6 @@ section .text
 global idt_load
 idt_load:
     lidt [idtp]
+    ; sti
+
+    ret
