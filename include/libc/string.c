@@ -67,3 +67,22 @@ void reverse(char* str, int length)
         end--;
     }
 }
+
+void itoa(int x, char* buf) {
+    static const char* lookup = "0123456789";
+
+    if (x < 1) {
+        *buf = '-';
+        x *= -1;
+        buf++;
+    }
+
+    char* start = buf;
+    while (x != 0) {
+        *buf = lookup[x % 10];
+        x /= 10;
+        buf++;
+    }
+
+    reverse(start, buf - start);
+}
