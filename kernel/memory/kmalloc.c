@@ -6,9 +6,8 @@ const uint32_t MAXMEM = 0x10000;
 
 uint32_t memused = 0;
 uint32_t memleft = MAXMEM;
-
-struct memblock* MEMROOT; 
-struct memblock* last_block;
+mblockptr_t MEMROOT; 
+mblockptr_t last_block;
 
 void init_mem_model() {
     // dirty memory setup at the address
@@ -21,7 +20,7 @@ void init_mem_model() {
     last_block = MEMROOT;
 }
 
-struct memblock* kmalloc(uint32_t req_size) {
+mblockptr_t kmalloc(uint32_t req_size) {
     if (req_size > memleft) return -1;
 
     // create a new block

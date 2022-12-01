@@ -14,13 +14,15 @@ typedef struct memblock {
     uint32_t addr_loc;
     uint32_t chunk_size;
     void* data;
-} memblock_t;
+} mblock_t;
 
-extern struct memblock* MEMROOT;
-extern struct memblock* last_block;
+typedef mblock_t* mblockptr_t;
+
+extern mblockptr_t MEMROOT;
+extern mblockptr_t last_block;
 
 void init_mem_model();
-struct memblock* kmalloc(uint32_t req_size);
-void kfree(struct memblock* block);
+mblockptr_t kmalloc(uint32_t req_size);
+void kfree(mblockptr_t block);
 
 #endif
