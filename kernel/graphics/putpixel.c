@@ -2,7 +2,7 @@
 
 void putpixel(int pos_x, int pos_y, unsigned char vga_color) {
     volatile unsigned char* location = (volatile unsigned char*)0xA0000 + 320 * pos_y + pos_x;
-    *location = VGA_COLOR;
+    *location = vga_color;
 }
 
 void put_hline(int pos_x, int pos_y, int len, unsigned char vga_color) {
@@ -12,7 +12,7 @@ void put_hline(int pos_x, int pos_y, int len, unsigned char vga_color) {
     // len = min(pos_x + len, 320);
 
     for (int tracer=0; tracer<len; tracer++){
-        *location = VGA_COLOR;
+        *location = vga_color;
         location++;
     }
 }
@@ -24,7 +24,7 @@ void put_vline(int pos_x, int pos_y, int len, unsigned char vga_color) {
     // len = min(pos_y + len, 200);
 
     for (int tracer=0; tracer<len; tracer++){
-        *location = VGA_COLOR;
+        *location = vga_color;
         location += 320;
     }
 }
@@ -36,6 +36,6 @@ void putrect(int pos_x, int pos_y, int width, int height, unsigned char vga_colo
 
     // Draw in hlines
     for (int tracer=0; tracer<height; tracer++){
-        put_hline(pos_x, pos_y + tracer, width, VGA_COLOR);
+        put_hline(pos_x, pos_y + tracer, width, vga_color);
     }
 }
