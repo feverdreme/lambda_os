@@ -2,8 +2,10 @@
 SHELL := /bin/bash -O globstar
 ASM := nasm
 CC := i686-elf-gcc
+CCP := i686-elf-g++
 CFLAGS := -Wall -Wextra -Wpedantic -isystem include -ffreestanding -m32 -g
 LD := i686-elf-ld
+AR := i686-elf-ar
 OBJCOPY := i686-elf-objcopy
 
 ###############################################################################
@@ -27,14 +29,16 @@ OBJCOPY := i686-elf-objcopy
 KERNEL_SPECIAL_O = kernel/kernel_entry.asm.o kernel/kernel_main.c.o 
 
 GENERAL_ASMC_DIRS =
-GENERAL_ASMC_DIRS += kernel/afterboot kernel/graphics
-GENERAL_ASMC_DIRS += include/libc include/fonts
+GENERAL_ASMC_DIRS += kernel/arch/gdt kernel/arch/idt kernel/graphics kernel/memory
+GENERAL_ASMC_DIRS += include/libc include/fonts include/wmgr
 
 GENERAL_ASM_SRC := $(foreach dir, $(GENERAL_ASMC_DIRS), $(wildcard $(dir)/*.asm))
 GENERAL_C_SRC := $(foreach dir, $(GENERAL_ASMC_DIRS), $(wildcard $(dir)/*.c))
+GENERAL_CPP_SRC := $(foreach dir, $(GENERAL_ASMC_DIRS), $(wildcard $(dir)/*.cpp))
 
 GENERAL_ASM_O := $(patsubst %.asm, %.asm.o, $(GENERAL_ASM_SRC))
 GENERAL_C_O := $(patsubst %.c, %.c.o, $(GENERAL_C_SRC))
+GENERAL_CPP_O := $(patsubst %.cpp, %.cpp.o, $(GENERAL_CPP_SRC))
 
 GENERAL_ASMC_BIN_DIRS_O := $(patsubst %, bin/objects/%.o, $(GENERAL_ASMC_DIRS))
 
@@ -48,13 +52,15 @@ bin/boot.bin:
 	@echo 
 
 # Stages 2 & 3
-$(GENERAL_ASMC_BIN_DIRS_O): $(GENERAL_ASM_O) $(GENERAL_C_O)
+$(GENERAL_ASMC_BIN_DIRS_O): $(GENERAL_ASM_O) $(GENERAL_C_O) $(GENERAL_CPP_O)
 	mkdir -p $(@D)
 	$(LD) -relocatable -o $@ $(patsubst bin/objects/%.o, %, $@)/*.o
 
 # Stages 4 & 5
 bin/kernel.elf: $(KERNEL_SPECIAL_O) $(GENERAL_ASMC_BIN_DIRS_O)
-	$(LD) -T extra/ld/linker.ld $(KERNEL_SPECIAL_O) $(shell ls bin/objects/**/*.o)
+	@echo
+	@echo "LINKING..."
+	$(LD) -T extra/ld/linker.ld $(KERNEL_SPECIAL_O) $(GENERAL_ASM_O) $(GENERAL_C_O) $(GENERAL_CPP_O)
 
 # Stage 6
 bin/kernel.bin: bin/kernel.elf
@@ -73,6 +79,11 @@ os.bin: bin/boot.bin bin/kernel.bin bin/zero_padding.bin
 
 ##############################################################################
 # GENERAL C & ASM RULES
+
+%.cpp.o:
+	@echo "COMPILING $@" 
+	$(CCP) $(CFLAGS) -c $(@:.cpp.o=.cpp) -o $@
+	@echo
 
 %.c.o:
 	@echo "COMPILING $@" 

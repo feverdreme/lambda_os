@@ -19,4 +19,6 @@ const char* finds(const char* src, const char* s);
 
 void reverse(char* s, int len);
 
+void itoa(int x, char* buffer);
+
 #endif
