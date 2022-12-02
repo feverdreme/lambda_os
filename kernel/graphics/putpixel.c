@@ -1,9 +1,11 @@
-void putpixel(int pos_x, int pos_y, unsigned char VGA_COLOR) {
+#include "putpixel.h"
+
+void putpixel(int pos_x, int pos_y, unsigned char vga_color) {
     volatile unsigned char* location = (volatile unsigned char*)0xA0000 + 320 * pos_y + pos_x;
     *location = VGA_COLOR;
 }
 
-void put_hline(int pos_x, int pos_y, int len, unsigned char VGA_COLOR) {
+void put_hline(int pos_x, int pos_y, int len, unsigned char vga_color) {
     volatile unsigned char* location = (volatile unsigned char*)0xA0000 + 320 * pos_y + pos_x;
 
     // Clamp len
@@ -15,7 +17,7 @@ void put_hline(int pos_x, int pos_y, int len, unsigned char VGA_COLOR) {
     }
 }
 
-void put_vline(int pos_x, int pos_y, int len, unsigned char VGA_COLOR) {
+void put_vline(int pos_x, int pos_y, int len, unsigned char vga_color) {
     volatile unsigned char* location = (volatile unsigned char*)0xA0000 + 320 * pos_y + pos_x;
 
     // Clamp len
@@ -27,7 +29,7 @@ void put_vline(int pos_x, int pos_y, int len, unsigned char VGA_COLOR) {
     }
 }
 
-void putrect(int pos_x, int pos_y, int width, int height, unsigned char VGA_COLOR) {
+void putrect(int pos_x, int pos_y, int width, int height, unsigned char vga_color) {
     // Clamp values to screen dimensions
     // width = min(pos_x + width, 320);
     // height = min(pos_y + height, 200);
