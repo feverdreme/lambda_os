@@ -8,8 +8,8 @@ struct Cursor {
     int kerning;
 };
 
-// returns the error code: 0 for succ and 1 for fail
-int putc(char c, struct font *fnt);
-void puts(char *c, struct font *fnt);
+int putc(char c, int pos_x, int pos_y, struct font *fnt);
+int printc(char c, struct font *fnt);
+int prints(char *c, struct font *fnt);
 
 #endif
