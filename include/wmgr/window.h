@@ -8,13 +8,13 @@ typedef struct Window {
     char* bodytext;
 } Window_t;
 
-int num_windows = 0;
-Window_t* total_windows[256]; // maximum windows allowed
+extern const int MAXWINDOWS;
+extern int num_windows;
+extern Window_Entry_t **all_windows; // list of all window pointers
 
-void create_window(int _posx, int _posy, int _th, char* _bodytext) {
-    if (num_windows >= 256) return; // this should give an error but ok
+Window_t* create_window(int _posx, int _posy, int _th, char* _bodytext);
 
-    return;
-}
+void draw_window(Window_t* w);
+void draw_tilebar(Window_t* w);
 
 #endif
