@@ -12,7 +12,7 @@
 #define MAT_SIZE (BSS_SIZE / MBLOCK_SIZE + 1)
 
 extern int memused;
-extern int memleft;
+extern int memblocksleft;
 extern int next_mem_id;
 
 // Memory Allocation Table structs
@@ -21,9 +21,18 @@ typedef struct MAT_entry {
     // id for allocating contiguous blocks of memory all under the same malloc call
     int memid;
 
-    // If there is a contiguous array of free blocks afterwards, store the space used
-    int next_free_blocks;
-    int prev_free_blocks;
+    /*
+        if free, index to the start of the contiguous free blocks
+        if not free, index to the end of the previous contiguous free blocks
+    */
+    int prev_free_ind;
+
+    /*
+        if free, index to the end of the contiguous free blocks
+        if not free, index to the start of the next contiguous free blocks
+    */
+    int next_free_ind;
+
 } MAT_entry_t;
 
 extern MAT_entry_t MAT[MAT_SIZE];
@@ -37,7 +46,7 @@ void kfree(void* ptr);
 // Utility functions to handle MAT
 
 /**
- * @brief Calculates what block an MAT_entry is referring to
+ * @brief Calculates what MAT_entry controls an address
  *
  * @param entry A pointer to the MAT_entry
  * @return void* A pointer to the corresponding memory block
