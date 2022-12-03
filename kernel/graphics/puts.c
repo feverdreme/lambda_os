@@ -47,7 +47,7 @@ int puts(char* c, int pos_x, int pos_y, struct font *fnt) {
         }
 
         pos_x = (pos_x + 5) % 320;
-        if (pos_x == 0)
+        if (pos_x == 0) // FIXME: pos_x will not always be 0 because of kerning: you must add a check to see if pos_x < prev_pos_x
             pos_y += 8 + cursor.kerning;
         else
             pos_x += cursor.kerning;
