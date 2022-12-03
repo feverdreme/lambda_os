@@ -27,9 +27,9 @@ int putc(char c, int pos_x, int pos_y, struct font* fnt) {
 
 int puts(char* c, int pos_x, int pos_y, struct font *fnt) {
     for (; *c != '\0'; c++) {
-        fontchar fc = ctofc(c, fnt);
+        fontchar fc = ctofc(*c, fnt);
 
-        if (c == '\n') {
+        if (*c == '\n') {
             pos_x = 0;
             pos_y += 8;
             return 0;
@@ -51,6 +51,8 @@ int puts(char* c, int pos_x, int pos_y, struct font *fnt) {
         else
             pos_x += cursor.kerning;
     }
+
+    return 0;
 }
 
 int printc(char c, struct font *fnt) {
@@ -77,10 +79,12 @@ int printc(char c, struct font *fnt) {
         cursor.y += 8 + cursor.kerning;
     else
         cursor.x += cursor.kerning;
+    
+    return 0;
 }
 
 int prints(char *c, struct font *fnt) {
-    for (; *c != '\0'; c++) putc(*c, fnt);
+    for (; *c != '\0'; c++) printc(*c, fnt);
 
     return 0;
 }

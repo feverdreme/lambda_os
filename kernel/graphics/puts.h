@@ -9,6 +9,7 @@ struct Cursor {
 };
 
 int putc(char c, int pos_x, int pos_y, struct font *fnt);
+int puts(char *c, int pos_x, int pos_y, struct font *fnt);
 int printc(char c, struct font *fnt);
 int prints(char *c, struct font *fnt);
 
