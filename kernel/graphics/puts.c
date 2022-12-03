@@ -2,6 +2,7 @@
 #include "puts.h"
 
 #include <libc/fonts.h>
+#include <libc/string.h>
 #include <stdbool.h>
 
 #include "putpixel.h"
@@ -55,6 +56,14 @@ int puts(char* c, int pos_x, int pos_y, struct font *fnt) {
     return 0;
 }
 
+int putd(int d, int pos_x, int pos_y, struct font *fnt) {
+    char buf[21];
+    itoa(d, buf);
+    puts(buf, pos_x, pos_y, fnt);
+
+    return 0;
+}
+
 int printc(char c, struct font *fnt) {
     fontchar fc = ctofc(c, fnt);
 
@@ -87,4 +96,15 @@ int prints(char *c, struct font *fnt) {
     for (; *c != '\0'; c++) printc(*c, fnt);
 
     return 0;
+}
+
+int printd(int d, struct font *fnt) {
+    char buf[21]; // max we'll need
+    itoa(d, buf);
+
+    prints(buf, fnt);
+}
+
+int println() {
+    printc('\n', &spleen_font);
 }
