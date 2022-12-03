@@ -3,7 +3,7 @@ SHELL := /bin/bash -O globstar
 ASM := nasm
 CC := i686-elf-gcc
 CCP := i686-elf-g++
-CFLAGS := -Wall -Wextra -Wpedantic -isystem include -ffreestanding -m32 -g
+CFLAGS := -Wall -Wextra -Wpedantic -isystem include -isystem kernel -ffreestanding -m32 -g
 LD := i686-elf-ld
 AR := i686-elf-ar
 OBJCOPY := i686-elf-objcopy
@@ -29,7 +29,7 @@ OBJCOPY := i686-elf-objcopy
 KERNEL_SPECIAL_O = kernel/kernel_entry.asm.o kernel/kernel_main.c.o 
 
 GENERAL_ASMC_DIRS =
-GENERAL_ASMC_DIRS += kernel/arch/gdt kernel/arch/idt kernel/graphics kernel/memory
+GENERAL_ASMC_DIRS += kernel/arch/gdt kernel/arch/idt kernel/arch/debug kernel/graphics kernel/memory
 GENERAL_ASMC_DIRS += include/libc include/fonts include/wmgr
 
 GENERAL_ASM_SRC := $(foreach dir, $(GENERAL_ASMC_DIRS), $(wildcard $(dir)/*.asm))
@@ -98,7 +98,7 @@ os.bin: bin/boot.bin bin/kernel.bin bin/zero_padding.bin
 ##############################################################################
 # CLEANING AND RESETTING
 clean:
-	rm $(GENERAL_ASM_O) $(GENERAL_C_O) $(KERNEL_SPECIAL_O)
+	rm $(GENERAL_ASM_O) $(GENERAL_C_O) $(GENERAL_CPP_O) $(KERNEL_SPECIAL_O)
 	rm -r bin/objects/*
 
 reset:
