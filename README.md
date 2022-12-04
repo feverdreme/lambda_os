@@ -23,6 +23,7 @@ The official github repository of the lambda_os project. This is my Severn Van E
 - [ ] Reformat project architecture to scale for kernel code and misc
 - [ ] Basic window prototype done
 - [ ] Add more stuff to the `README`
-- [ ] Add doxygen autogeneration
+- [X] Add doxygen autogeneration
+- [ ] Doxygen prettyfy
 - [ ] Add doxygen comments to all functions
 - [ ] Add documentation and notes on how kernel will interop with LCD and keyboard
