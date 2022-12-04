@@ -61,7 +61,7 @@ int kputs(char* c, int pos_x, int pos_y, font_t *fnt) {
 int kputd(int d, int pos_x, int pos_y, font_t *fnt) {
     char buf[21];
     itoa(d, buf);
-    puts(buf, pos_x, pos_y, fnt);
+    kputs(buf, pos_x, pos_y, fnt);
 
     return 0;
 }
@@ -108,7 +108,7 @@ int kprintc(char c, struct font *fnt) {
 }
 
 int kprints(char *c, font_t *fnt) {
-    for (; *c != '\0'; c++) printc(*c, fnt);
+    for (; *c != '\0'; c++) kprintc(*c, fnt);
 
     return 0;
 }
@@ -117,7 +117,7 @@ int kprintd(int d, font_t *fnt) {
     char buf[21]; // max we'll need
     itoa(d, buf);
 
-    prints(buf, fnt);
+    kprints(buf, fnt);
 }
 
 int printc(char c) {
@@ -133,5 +133,5 @@ int printd(int d) {
 }
 
 int println() {
-    printc('\n', &spleen_font);
+    kprintc('\n', &spleen_font);
 }

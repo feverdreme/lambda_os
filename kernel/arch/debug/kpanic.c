@@ -11,8 +11,8 @@ void kpanic(const char* msg){
     cursor.y = 0;
     cursor.kerning = 1;
 
-    prints("KERNEL PANIC: ", &spleen_font);
-    prints(msg, &spleen_font);
+    prints("KERNEL PANIC: ");
+    prints(msg);
 
     asm("hlt");
 }

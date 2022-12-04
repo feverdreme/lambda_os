@@ -17,8 +17,8 @@
 
 void report_memory(int num) {
     for (int i=0; i<num; i++){
-        printd(MAT[i].memid, &spleen_font);
-        printc(' ', &spleen_font);
+        printd(MAT[i].memid);
+        printc(' ');
     }
 }
 
@@ -33,7 +33,7 @@ void main() {
     void* ptr3 = kmalloc(16);
 
     kfree(ptr2);
-    println();
+
     report_memory(8);
 
     // printd(1 + false, &spleen_font);
