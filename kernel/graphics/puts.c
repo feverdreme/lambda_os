@@ -9,7 +9,7 @@
 
 const font_t *DEFAULT_FONT = &spleen_font;
 
-struct Cursor cursor = {0, 0, 1};
+struct Cursor cursor = {0, 0, 0, 1};
 
 int kputc(char c, int pos_x, int pos_y, font_t *fnt) {
     fontchar fc = ctofc(c, fnt);
@@ -29,6 +29,8 @@ int kputc(char c, int pos_x, int pos_y, font_t *fnt) {
 }
 
 int kputs(char* c, int pos_x, int pos_y, font_t *fnt) {
+    int prev_pos_x = pos_x;
+
     for (; *c != '\0'; c++) {
         fontchar fc = ctofc(*c, fnt);
 
@@ -49,10 +51,12 @@ int kputs(char* c, int pos_x, int pos_y, font_t *fnt) {
         }
 
         pos_x = (pos_x + 5) % 320;
-        if (pos_x == 0) // FIXME: pos_x will not always be 0 because of kerning: you must add a check to see if pos_x < prev_pos_x
+        if (pos_x < prev_pos_x)
             pos_y += 8 + cursor.kerning;
         else
             pos_x += cursor.kerning;
+
+        prev_pos_x = pos_x;
     }
 
     return 0;
@@ -99,10 +103,12 @@ int kprintc(char c, struct font *fnt) {
     }
 
     cursor.x = (cursor.x + 5) % 320;
-    if (cursor.x == 0)
+    if (cursor.x < cursor.prev_x)
         cursor.y += 8 + cursor.kerning;
     else
         cursor.x += cursor.kerning;
+    
+    cursor.prev_x = cursor.x;
     
     return 0;
 }

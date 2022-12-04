@@ -5,6 +5,7 @@
 
 struct Cursor {
     int x, y;
+    int prev_x;
     int kerning;
 };
 

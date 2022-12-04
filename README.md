@@ -6,7 +6,7 @@ The official github repository of the lambda_os project. This is my Severn Van E
 
 (In no particular order)
 
-- [ ] `puts.c` has bug where it assumes `pos_x == 0` if there is a forced newline due to line wrapping
+- [X] `puts.c` has bug where it assumes `pos_x == 0` if there is a forced newline due to line wrapping
 - [ ] `kmalloc` is inefficient, must redesign
 - [ ] Makefile doesn't support a cpp kernel
 - [ ] Remove all explicitly 32bit code in preparation for 64bit mode
