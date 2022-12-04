@@ -1,3 +1,5 @@
+#include <envvars.h>
+
 #include <libc/libc.h>
 
 #include <memory/kmalloc.h>
@@ -7,11 +9,18 @@
 #include <arch/idt/idt.h>
 #include <arch/debug/kpanic.h>
 
-#include <wmgr/window.h>
+// #include <wmgr/window.h>
 
 #include <stdbool.h>
 
 // TODO: make libc and fonts shared static libraries to be linked last
+
+void report_memory(int num) {
+    for (int i=0; i<num; i++){
+        printd(MAT[i].memid, &spleen_font);
+        printc(' ', &spleen_font);
+    }
+}
 
 void main() {
     gdt_install();
@@ -19,21 +28,31 @@ void main() {
     init_spleen_font();
     init_mem_model();
 
-    void* ptr = kmalloc(0x100);
-    printd((int)ptr, &spleen_font);
+    void* ptr = kmalloc(32);
+    void* ptr2 = kmalloc(16 * 3);
+    void* ptr3 = kmalloc(16);
 
+    kfree(ptr2);
     println();
+    report_memory(8);
 
-    for (int i=0; i<18; i++){
-        printd(MAT[i].memid, &spleen_font);
-        printc(' ', &spleen_font);
-    }
+    // printd(1 + false, &spleen_font);
 
-    println();
+    // void* ptr = kmalloc(0x100);
+    // printd((int)ptr, &spleen_font);
 
-    char buf[21];
-    itoa(-12345, buf);
-    prints(buf, &spleen_font);
+    // println();
+
+    // for (int i=0; i<18; i++){
+    //     printd(MAT[i].memid, &spleen_font);
+    //     printc(' ', &spleen_font);
+    // }
+
+    // println();
+
+    // char buf[21];
+    // itoa(-12345, buf);
+    // prints(buf, &spleen_font);
     // ptr = kmalloc(64);
     // *(int*)ptr = ceildiv(64, 16);
     // char buf[20];
