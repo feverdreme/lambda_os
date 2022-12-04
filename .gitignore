@@ -1,4 +1,4 @@
-bin/*
+source/bin/*
 .vscode
 *.o
 *.bin
