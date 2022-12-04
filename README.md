@@ -26,4 +26,5 @@ The official github repository of the lambda_os project. This is my Severn Van E
 - [X] Add doxygen autogeneration
 - [ ] Doxygen prettyfy
 - [ ] Add doxygen comments to all functions
+- [ ] gh_pages for docs
 - [ ] Add documentation and notes on how kernel will interop with LCD and keyboard
