@@ -15,7 +15,7 @@ int kputc(char c, int pos_x, int pos_y, font_t *fnt) {
     fontchar fc = ctofc(c, fnt);
 
     if (c == '\n') return 0;
-    if (fc == 0) return 1;
+    if (fc == NONPRINTABLE_FONTCHAR) return 1;
 
     for (int row = 0; row < fnt->fc_height; row++) {
         for (int col = 0; col < fnt->fc_width; col++) {
@@ -37,7 +37,7 @@ int kputs(char* c, int pos_x, int pos_y, font_t *fnt) {
             pos_y += 8;
             return 0;
         }
-        if (fc == 0) return 1;
+        if (fc == NONPRINTABLE_FONTCHAR) return 1;
 
         for (int row = 0; row < fnt->fc_height; row++) {
             for (int col = 0; col < fnt->fc_width; col++) {
@@ -87,7 +87,7 @@ int kprintc(char c, struct font *fnt) {
         cursor.y += 8;
         return 0;
     }
-    if (fc == 0) return 1;
+    if (fc == NONPRINTABLE_FONTCHAR) return 1;
 
     for (int row = 0; row < fnt->fc_height; row++) {
         for (int col = 0; col < fnt->fc_width; col++) {

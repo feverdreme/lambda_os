@@ -3,6 +3,8 @@
 
 #include <libc/typedef.h>
 
+#define NONPRINTABLE_FONTCHAR 0
+
 // font chars will be serialized bitmaps. Since we can't store all the data in a byte-sized char, we will use int[] and jsut have an implementation detail to not read past
 typedef byte* fontchar;
 
