@@ -6,15 +6,15 @@
 // font chars will be serialized bitmaps. Since we can't store all the data in a byte-sized char, we will use int[] and jsut have an implementation detail to not read past
 typedef byte* fontchar;
 
-struct font {
+typedef struct font {
     int fc_width;
     int fc_height;
     fontchar data[128];
-};
+} font_t;
 
 // TODO: doxygen?
 
-extern struct font spleen_font; // should this be void* ? and then reinterpret later?
+extern font_t spleen_font; // should this be void* ? and then reinterpret later?
 extern void init_spleen_font();
 
 /**
@@ -23,6 +23,6 @@ extern void init_spleen_font();
  * @param fnt Which font to use
  * @return Pointer to the fontchar in memory
 */
-fontchar ctofc(char c, struct font *fnt);
+fontchar ctofc(char c, font_t *fnt);
 
 #endif

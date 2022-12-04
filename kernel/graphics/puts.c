@@ -9,7 +9,7 @@
 
 struct Cursor cursor = {0, 0, 1};
 
-int putc(char c, int pos_x, int pos_y, struct font* fnt) {
+int putc(char c, int pos_x, int pos_y, font_t fnt) {
     fontchar fc = ctofc(c, fnt);
 
     if (c == '\n') return 0;
@@ -26,7 +26,7 @@ int putc(char c, int pos_x, int pos_y, struct font* fnt) {
     return 0;
 }
 
-int puts(char* c, int pos_x, int pos_y, struct font *fnt) {
+int puts(char* c, int pos_x, int pos_y, font_t *fnt) {
     for (; *c != '\0'; c++) {
         fontchar fc = ctofc(*c, fnt);
 
@@ -56,7 +56,7 @@ int puts(char* c, int pos_x, int pos_y, struct font *fnt) {
     return 0;
 }
 
-int putd(int d, int pos_x, int pos_y, struct font *fnt) {
+int putd(int d, int pos_x, int pos_y, font_t *fnt) {
     char buf[21];
     itoa(d, buf);
     puts(buf, pos_x, pos_y, fnt);
@@ -92,13 +92,13 @@ int printc(char c, struct font *fnt) {
     return 0;
 }
 
-int prints(char *c, struct font *fnt) {
+int prints(char *c, font_t *fnt) {
     for (; *c != '\0'; c++) printc(*c, fnt);
 
     return 0;
 }
 
-int printd(int d, struct font *fnt) {
+int printd(int d, font_t *fnt) {
     char buf[21]; // max we'll need
     itoa(d, buf);
 
