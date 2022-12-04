@@ -9,14 +9,29 @@ struct Cursor {
 };
 
 extern struct Cursor cursor;
+extern const font_t *DEFAULT_FONT;
 
-int putc(char c, int pos_x, int pos_y, struct font *fnt);
-int puts(char *c, int pos_x, int pos_y, struct font *fnt);
-int putd(int d, int pos_x, int pos_y, struct font *fnt);
+/*
+    k-functions allow a font input
+    reg functions default to spleen font
+*/
 
-int printc(char c, struct font *fnt);
-int prints(char *c, struct font *fnt);
-int printd(int d, struct font *fnt);
+int kputc(char c, int pos_x, int pos_y, font_t fnt);
+int kputs(char *c, int pos_x, int pos_y, font_t fnt);
+int kputd(int d, int pos_x, int pos_y, font_t fnt);
+
+int putc(char c, int pos_x, int pos_y);
+int puts(char *c, int pos_x, int pos_y);
+int putd(int d, int pos_x, int pos_y);
+
+int kprintc(char c, font_t fnt);
+int kprints(char *c, font_t fnt);
+int kprintd(int d, font_t fnt);
+
+int printc(char c);
+int prints(char *c);
+int printd(int d);
+
 int println();
 
 #endif

@@ -7,9 +7,11 @@
 
 #include "putpixel.h"
 
+const font_t *DEFAULT_FONT = &spleen_font;
+
 struct Cursor cursor = {0, 0, 1};
 
-int putc(char c, int pos_x, int pos_y, font_t fnt) {
+int kputc(char c, int pos_x, int pos_y, font_t *fnt) {
     fontchar fc = ctofc(c, fnt);
 
     if (c == '\n') return 0;
@@ -26,7 +28,7 @@ int putc(char c, int pos_x, int pos_y, font_t fnt) {
     return 0;
 }
 
-int puts(char* c, int pos_x, int pos_y, font_t *fnt) {
+int kputs(char* c, int pos_x, int pos_y, font_t *fnt) {
     for (; *c != '\0'; c++) {
         fontchar fc = ctofc(*c, fnt);
 
@@ -56,7 +58,7 @@ int puts(char* c, int pos_x, int pos_y, font_t *fnt) {
     return 0;
 }
 
-int putd(int d, int pos_x, int pos_y, font_t *fnt) {
+int kputd(int d, int pos_x, int pos_y, font_t *fnt) {
     char buf[21];
     itoa(d, buf);
     puts(buf, pos_x, pos_y, fnt);
@@ -64,7 +66,20 @@ int putd(int d, int pos_x, int pos_y, font_t *fnt) {
     return 0;
 }
 
-int printc(char c, struct font *fnt) {
+int putc(char c, int pos_x, int pos_y) {
+    kputc(c, pos_x, pos_y, DEFAULT_FONT);
+}
+
+int puts(char *c, int pos_x, int pos_y) {
+    kputs(c, pos_x, pos_y, DEFAULT_FONT);
+}
+
+int putd(int d, int pos_x, int pos_y) {
+    kputd(d, pos_x, pos_y, DEFAULT_FONT);
+}
+
+
+int kprintc(char c, struct font *fnt) {
     fontchar fc = ctofc(c, fnt);
 
     if (c == '\n') {
@@ -92,17 +107,29 @@ int printc(char c, struct font *fnt) {
     return 0;
 }
 
-int prints(char *c, font_t *fnt) {
+int kprints(char *c, font_t *fnt) {
     for (; *c != '\0'; c++) printc(*c, fnt);
 
     return 0;
 }
 
-int printd(int d, font_t *fnt) {
+int kprintd(int d, font_t *fnt) {
     char buf[21]; // max we'll need
     itoa(d, buf);
 
     prints(buf, fnt);
+}
+
+int printc(char c) {
+    kprintc(c, DEFAULT_FONT);
+}
+
+int prints(char *c) {
+    kprints(c, DEFAULT_FONT);
+}
+
+int printd(int d) {
+    kprintd(d, DEFAULT_FONT);
 }
 
 int println() {
