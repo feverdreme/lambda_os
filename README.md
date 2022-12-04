@@ -13,7 +13,7 @@ The official github repository of the lambda_os project. This is my Severn Van E
 
 ## Features and Todo
 
-- [ ] Memory manager has `kfree` implemented
+- [X] Memory manager has `kfree` implemented
 - [ ] Memory manager has `kmove` and other memory functions implemented
 - [ ] `crt.0` and other libraries are linked automatically, instead of being linked in the linker script they become a build step before kernel linkage
 - [ ] Prepare makefile for BOOTBOOT protocol and linkage
