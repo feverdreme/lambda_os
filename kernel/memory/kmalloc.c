@@ -136,153 +136,109 @@ void kfree(void* ptr) {
     // Discover of there exists left and right sections
 
     // check for left block
-    //TODO: Just make look_for_MAT_section inline and ignore this extra baggage
-    MAT_section_t left_section = lookfor_MAT_section(block_begin, true);
-    bool leftexists = !MAT_section_same(&left_section, &MAT_section_NULL);
-    bool leftisalloc = left_section.memid != FREE_BLOCK;
-    int left_section_begin = left_section.begin_ind;
-    int left_section_end = left_section.end_ind;
+    bool leftexists = false;
+    bool leftisalloc;
+    int left_section_begin;
+    int left_section_end;
+
+    if (block_begin >= 1) {
+        leftexists = true;
+
+        int leftmemid = MAT[block_begin - 1].memid;
+        leftisalloc = leftmemid != FREE_BLOCK;
+
+        int mb_ind = block_begin - 1;
+        while (mb_ind >= 0 && MAT[mb_ind].memid == leftmemid) {
+            left_section_begin = mb_ind;
+            mb_ind--;
+        } 
+
+        left_section_end = block_begin - 1;
+    }
 
     // check for right block
-    MAT_section_t right_section = lookfor_MAT_section(block_end, false);
-    bool rightexists = !MAT_section_same(&right_section, &MAT_section_NULL);
-    bool rightisalloc = right_section.memid != FREE_BLOCK;
-    int right_section_begin = right_section.begin_ind;
-    int right_section_end = right_section.end_ind;
+    bool rightexists = false;
+    bool rightisalloc;
+    int right_section_begin;
+    int right_section_end;
 
-    // printd(left_section_begin, &spleen_font);
-    // printc(' ', &spleen_font);
-    // printd(left_section_end, &spleen_font);
-    // printc(' ', &spleen_font);
-    // printd(right_section_begin, &spleen_font);
-    // printc(' ', &spleen_font);
-    // printd(right_section_end, &spleen_font);
+    if (block_end < MAT_END) {
+        rightexists = true;
 
-    // return;
+        int rightmemid = MAT[block_end + 1].memid;
+        rightisalloc = rightmemid != FREE_BLOCK;
 
-    // ALL THE SUBCASES
-    //TODO: Optimize the code so that it marks contiguous blocks and handles edge-cases like left-left with separate if-statements
-
-    // Case 1: Left and right exist
-    if (leftexists && rightexists) {
-        // Subcase 1.1: Both free
-        if (!leftisalloc && !rightisalloc) {
-            MAT_set(left_section_begin, right_section_end, FREE_BLOCK,
-                    left_section_begin, right_section_end);
-
-            // check for left-left block
-            if (left_section_begin >= 1)
-                MAT_floodfill_next_free_ind(
-                    left_section_begin - 1,
-                    left_section_begin
-                );
-            
-            // check for right-right block
-            if (right_section_begin < MAT_END)
-                MAT_floodfill_prev_free_ind(
-                    right_section_begin + 1,
-                    right_section_end
-                );
+        int mb_ind = block_end + 1;
+        while (mb_ind < MAT_END && MAT[mb_ind].memid == rightmemid) {
+            right_section_end = mb_ind;
+            mb_ind++;
         } 
-        // Subcase 1.2 Left free right allocated
-        else if (!leftisalloc && rightisalloc) {
-            MAT_set(left_section_begin, block_end, FREE_BLOCK,
-                    left_section_begin, block_end);
-            
-            // handle the right allocated block
-            MAT_set_prev_free_ind(
-                right_section_begin,
-                right_section_end,
-                block_end
-            );
-        }
-        // Subcase 1.3 Left allocated right free
-        else if (leftisalloc && !rightisalloc) {
-            MAT_set(block_begin, right_section_end, FREE_BLOCK,
-            block_begin, right_section_end);
 
-            // handle left-allocated block
-            MAT_set_next_free_ind(
-                left_section_begin,
-                left_section_end,
-                block_begin
-            );
-        }
-        // Subcase 1.4 Both allocated
+        right_section_begin = block_end + 1;
+    }
+
+    // calculate what the bounds are the new contiguous free blocks
+    int cont_free_begin = block_begin;
+    int cont_free_end = block_end;
+
+    // update the contiguous free blocks boundary and reset the indices
+    if (leftexists && !leftisalloc) {
+        cont_free_begin = left_section_begin;
+
+        if (cont_free_begin == 0) leftexists = false;
         else {
-            MAT_set(block_begin, block_end, FREE_BLOCK,
-            block_begin, block_end);
+            int leftmemid = MAT[cont_free_begin - 1].memid;
 
-            // handle left allocated block
-            MAT_set_next_free_ind(
-                left_section_begin,
-                left_section_end,
-                block_begin
-            );
-            // handle right allocated block
-            MAT_set_prev_free_ind(
-                right_section_begin,
-                right_section_end,
-                block_end
-            );
+            int mb_ind = cont_free_begin - 1;
+            while (mb_ind >= 0 && MAT[mb_ind].memid == leftmemid) {
+                left_section_begin = mb_ind;
+                mb_ind--;
+            } 
+
+            left_section_end = block_begin - 1;
         }
     }
-    // Case 2: Left exists right doesn't
-    else if (leftexists) {
-        // Subcase 2.1: Left free
-        if (!leftisalloc) {
-            MAT_set(left_section_begin, block_end, FREE_BLOCK,
-            left_section_begin, block_end);
 
-            // check for left-left allocated
-            if (left_section_begin >= 1)
-                MAT_floodfill_next_free_ind(
-                    left_section_begin - 1,
-                    left_section_begin
-                );
-        }
-        // Subcase 2.2 Left allocated
+    if (rightexists && !rightisalloc) {
+        cont_free_end = right_section_end;
+
+        if (cont_free_end == MAT_END) rightexists = false;
         else {
-            MAT_set(block_begin, block_end, FREE_BLOCK,
-            block_begin, block_end);
+            int rightmemid = MAT[cont_free_end + 1].memid;
 
-            MAT_set_next_free_ind(
-                left_section_begin,
-                left_section_end,
-                block_begin
-            );
+            int mb_ind = cont_free_end + 1;
+            while (mb_ind < MAT_END && MAT[mb_ind].memid == rightmemid) {
+                right_section_end = mb_ind;
+                mb_ind++;
+            } 
+
+            right_section_begin = block_end + 1;
         }
     }
-    // Case 3: Right exists left doesn't
-    else if (rightexists) {
-        // Subcase 3.1: Right free
-        if (!rightisalloc) {
-            MAT_set(block_begin, right_section_end, FREE_BLOCK,
-            block_begin, right_section_end);
 
-            // check for right-right allocated
-            if (right_section_end < MAT_END) {
-                MAT_floodfill_prev_free_ind(
-                    right_section_end + 1,
-                    right_section_end
-                );
-            }
-        }
-        // Subcase 3.2: Right allocated
-        else {
-            MAT_set(block_begin, block_end, FREE_BLOCK,
-            block_begin, block_end);
+    // set the incdices and memid of the contiguous free blocks
+    MAT_set(
+        cont_free_begin,
+        cont_free_end,
+        FREE_BLOCK,
+        cont_free_begin,
+        cont_free_end
+    );
 
-            MAT_set_prev_free_ind(
-                right_section_begin,
-                right_section_end,
-                block_end
-            );
-        }
-    }
-    // Case 4: Neither exists
-    else {
-        init_mem_model();
+    // alter left blocks
+    if (leftexists)
+        MAT_set_next_free_ind(
+            left_section_begin,
+            left_section_end,
+            cont_free_begin
+        );
+    
+    if (rightexists) {
+        MAT_set_prev_free_ind(
+            right_section_begin,
+            right_section_end,
+            cont_free_end
+        );
     }
 }
 
@@ -388,60 +344,4 @@ void MAT_floodfill_next_free_ind(int flood_ind, int new_next_free_ind) {
          right_ind++) {
         MAT[right_ind].next_free_ind = new_next_free_ind;
     }
-}
-
-//! DEPRECATED
-MAT_section_t lookfor_MAT_section(int center_ind, bool left) {
-    MAT_entry_t center = MAT[center_ind];
-    int found_ind = -1;
-
-    int section_begin;
-    int section_end;
-
-    if (left) {
-        // keep looking left until you find a different memid
-        for (int mb_ind = center_ind - 1; mb_ind >= 0; mb_ind--) {
-            if (MAT[mb_ind].memid != center.memid) {
-                found_ind = mb_ind;
-                break;
-            }
-        }
-
-        // if not found, return no found section
-        if (found_ind == -1) return MAT_section_NULL;
-
-        section_begin = MAT[found_ind].prev_free_ind;
-        if (MAT[section_begin].memid != FREE_BLOCK) section_begin++;
-
-        section_end = found_ind;
-    } else {
-        // keep looking right until you find a different memid
-        for (int mb_ind = center_ind + 1; mb_ind < MAT_SIZE; mb_ind++) {
-            if (MAT[mb_ind].memid != center.memid) {
-                found_ind = mb_ind;
-                break;
-            }
-        }
-
-        // if not found, return no found section
-        if (found_ind == -1) return MAT_section_NULL;
-
-        section_begin = found_ind;
-
-        section_end = MAT[section_begin].next_free_ind;
-        if (MAT[section_end].memid != FREE_BLOCK) section_end--;
-    }
-
-    return (MAT_section_t){.memid = center.memid,
-                           .begin_ind = section_begin,
-                           .end_ind = section_end};
-}
-
-//! DEPRECATED
-bool MAT_section_same(MAT_section_t *a, MAT_section_t *b) {
-    return (
-        a->memid == b->memid &&
-        a->begin_ind == b->begin_ind &&
-        a->end_ind == b->end_ind
-    );
 }

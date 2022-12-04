@@ -129,24 +129,6 @@ void MAT_floodfill_prev_free_ind(int flood_ind, int new_prev_free_ind);
 void MAT_floodfill_next_free_ind(int flood_ind, int new_next_free_ind);
 
 /**
- * @brief Looks for an MAT section that's either left or right of a center section
- * 
- * @param center_ind Index of the center section you're looking around
- * @param left True if left, false if right
- * @return A section descriptor if it exists. NULL if not.
- */
-MAT_section_t lookfor_MAT_section(int center_ind, bool left);
-
-/**
- * @brief Checks whether two MAT_section descriptors are the same
- * 
- * @param a Section 1
- * @param b Section 2
- * @return Whether they're the same
- */
-bool MAT_section_same(MAT_section_t *a, MAT_section_t *b);
-
-/**
  * @brief Sanity check to make sure available memory size doesn't exceed possible mem_ids
  * 
  */
