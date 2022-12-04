@@ -22,38 +22,8 @@
 ## `kfree`
 
 1. Calculate the index of the MAT given the pointer using `calculate_block_index()`
-2. Floodfill the blocks and mark them all as free
-3. Find the bounds of the left and right adjacent sections using their left and right indicies (remember it's different depending if theyre free or not)
-
-There are many cases once we have discovered the left and right adjacent sections
-
-* Case 1: Left and right exist
-  * Subcase 1.1: Both free
-    1. Mark all three as if it were one contiguous block
-    2. Check for adjacent allocated. If they exist, then flood-update
-  * Subcase 1.2: Left free right allocated
-    1. For both free:
-        1. Mark `prev_free_ind` according to left block
-        2. Mark `next_free_ind` making freed block as the end
-    2. For right allocated:
-        1. Mark prev_free_ind according to block
-    3. If left-left-alloc exists, then flood-update
-  * Subcase 1.3: Left allocated right free
-    1. Subcase 1.2 flipped
-  * Subcase 1.4: Both allocated
-    1. For free block: The block is insulated. Mark according to itself
-    2. For both allocated: Mark next and prev ind respectively
-* Case 2: Left exists right doesn't
-  * Subcase 2.1: Left free
-    1. Mark both free blocks accordingly
-    2. If left-left-alloc exists, mark accordingly
-  * Subcase 2.2 Left allocated
-    1. Mark freed block
-    2. Mark left allocated right `next_free_ind`
-* Case 3: Right exists left doesn't
-  * Case 2 but flipped
-* Case 4: Neither exist??
-  * This only happens if you initially allocated the entire allowed size... I shouldn't let this happen but currently it's allowed
-  * Literally just call `init_mem_model` at this point it will do the same thing
-
-Remember for all of these to check for out-of-bounds errors
+2. Find the bounds of the block
+3. Flood-find the left-adjacent and right-adjacent blocks if they exist
+4. Taking into account the status of the adject blocks, demarcate bounds of new contiguous free block
+5. Flood-find the left-adjacent and right-adjacent blocks of the new contiguous free block if they exist
+6. Update indicies of the adjacent blocks
