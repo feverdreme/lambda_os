@@ -18,6 +18,6 @@ SECTIONS {
         /* bss will exist at memory location 0x3E00 */
         *(COMMON)
         *(.bss)
-        . += 0x10000
+        . = . + 0x10000;
     }
 }

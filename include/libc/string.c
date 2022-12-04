@@ -54,16 +54,14 @@ const char* finds(const char* src, const char* s) {
     }
 }
 
-void reverse(char* str, int length)
+void reverse(char* begin, char* end)
 {
-    int start = 0;
-    int end = length -1;
-    while (start < end)
-    {
-        char tmp = *(str + start);
-        *(str + start) = *(str + end);
-        *(str + end) = tmp;
-        start++;
+    while (begin < end) {
+        char temp = *end;
+        *end = *begin;
+        *begin = temp;
+
+        begin++;
         end--;
     }
 }
@@ -71,7 +69,12 @@ void reverse(char* str, int length)
 void itoa(int x, char* buf) {
     static const char* lookup = "0123456789";
 
-    if (x < 1) {
+    if (x == 0) {
+        buf[0] = '0';
+        return;
+    }
+
+    if (x < 0) {
         *buf = '-';
         x *= -1;
         buf++;
@@ -84,5 +87,7 @@ void itoa(int x, char* buf) {
         buf++;
     }
 
-    reverse(start, buf - start);
+    *buf = '\0';
+
+    reverse(start, buf - 1);
 }

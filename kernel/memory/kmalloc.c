@@ -1,109 +1,347 @@
-#include <libc/math.h>
 #include "kmalloc.h"
 
+#include <envvars.h>
+#include <libc/math.h>
+#include <stdbool.h>
+
+#include "../graphics/puts.h"
+
 int memused = 0;
-int memleft = BSS_SIZE;
-int next_mem_id = 0; // make this a function that can retrieve. we can store all used memids, using this memory model to create a vecotr, then scan for lowest number
+int memblocksleft = MAT_SIZE;
+unsigned int next_mem_id =
+    1;  // make this a function that can retrieve. we can store
+        // all used memids, using this memory model to create a
+        // vector, then scan for lowest number
+
+const MAT_section_t MAT_section_NULL =
+    (const MAT_section_t){.memid = -1, .begin_ind = -1, .end_ind = -1};
 
 MAT_entry_t MAT[MAT_SIZE];
 
-void init_mem_model() {
-    for (int i=0; i<MAT_SIZE; i++) {
-        MAT[i].memid = FREE_BLOCK;
-        MAT[i].next_free_blocks = 0;
-        MAT[i].prev_free_blocks = 0;
-    }
+void possible_memid_sanity_check() {
+#if MAT_SIZE > OS_MAXUINT - 1
+    kpanic("CAN'T GARUNTEE NEXT_MEM_ID (PIGEONHOLE PRINCIPLE)");
+#endif
+}
 
-    MAT[0].next_free_blocks = MAT_SIZE;
-    MAT[MAT_SIZE-1].prev_free_blocks = MAT_SIZE;
+void init_mem_model() {
+    possible_memid_sanity_check();
+
+    // for each block, update with values assuming all blocks are free
+    for (int mb_ind = 0; mb_ind < MAT_SIZE; mb_ind++) {
+        MAT[mb_ind].memid = FREE_BLOCK;
+        MAT[mb_ind].prev_free_ind = 0;
+        MAT[mb_ind].next_free_ind = MAT_END;
+    }
 }
 
 void* kmalloc(int req_size) {
-    int needed_blocks = ceildiv(req_size, MBLOCK_SIZE);
+    int req_blocks = ceildiv(req_size, MBLOCK_SIZE);
 
-    // find the next available free block that satisfies the req_size    
-    int starting_index = -1;
+    // sanity check for number of requested blocks
+    if (req_blocks > memblocksleft) kpanic("MEMORY LIMIT EXCEEDED");
 
-    for (int i=0; i<MAT_SIZE; i++) {
-        if (MAT[i].memid == FREE_BLOCK) continue;
-        if (MAT[i].next_free_blocks >= needed_blocks) {
-            starting_index = i;
-            break;
+    int valid_mb = -1;
+
+    // look for the first contiguous free blocks
+    for (int mb_ind = 0; mb_ind < MAT_SIZE;) {
+        // check if free
+        if (MAT[mb_ind].memid != FREE_BLOCK) {
+            // send to the next available free
+            mb_ind = MAT[mb_ind].next_free_ind;
+        } else {
+            // check size requirements
+            int contiguous_block_size = MAT[mb_ind].next_free_ind - mb_ind + 1;
+
+            if (contiguous_block_size >= req_blocks) {
+                valid_mb = mb_ind;
+                break;
+            }
+
+            // it doesn't work. jump to the next free blocks
+            // jump to the end of the free blocks then overstep into non-free
+            mb_ind = MAT[mb_ind].next_free_ind + 1;
+
+            // check that we don't overstep the index. if we do, then return an
+            // error
+            if (mb_ind >= MAT_SIZE) kpanic("MEMORY LIMIT EXCEEDED");
+
+            // jump to the next free blocks
+            mb_ind = MAT[mb_ind].next_free_ind;
         }
-
-        // make this a circular buffer
-        if (i == MAT_SIZE - 1) starting_index = 0;
     }
 
-    // convert the index to a pointer
-    void* ret_ptr = (void*)(BSS_BEGIN + starting_index * MBLOCK_SIZE);
+    // sanity check that the mb_ind we found is valid
+    if (valid_mb == -1 || MAT[valid_mb].memid != FREE_BLOCK ||
+        valid_mb + req_blocks >= MAT_SIZE)
+        kpanic("MEMORY LIMIT EXCEEDED");
 
-    // mark all the blocks as used now
-    for (int offset=0; offset<needed_blocks; i++) {
-        MAT[starting_index + offset].memid = next_mem_id;
+    // update indices of blocks surrounding memory
+
+    // update blocks before
+    if (valid_mb - 1 >= 0) {
+        /*
+            Case 1: Previous blocks are already allocated
+                Set all blocks in prev_alloc to update indicies for their next_free_ptr 
+            Case 2?: Previous blocks are free (for some reason) 
+                Set all blocks in prev_free to update indices for their next_free_ptr
+
+            Combine these two cases: check for status of memid.
+            Then floodfill all of that memid to update the next_free_ptr to be valid_mb + req_blocks
+        */
+
+        int flood_memid = MAT[valid_mb - 1].memid;
+        for (int mb_ind = valid_mb - 1;
+             MAT[mb_ind].memid == flood_memid && mb_ind >= 0; mb_ind--) {
+            MAT[mb_ind].next_free_ind = valid_mb;
+        }
     }
 
-    // mark the free blocks
-    mark_contiguous_free_blocks(starting_index - 1);
-    mark_contiguous_free_blocks(starting_index + needed_blocks + 1);
+    // update blocks after
+    if (valid_mb + 1 < MAT_SIZE) {
+        // same algorithm applies just forward
 
-    // return the memory ptr
-    return ret_ptr;
+        int flood_memid = MAT[valid_mb + 1].memid;
+        for (int mb_ind = valid_mb + 1;
+             MAT[mb_ind].memid == flood_memid && mb_ind < MAT_SIZE; mb_ind++) {
+            MAT[mb_ind].prev_free_ind = valid_mb + req_blocks - 1;
+        }
+    }
+
+    // set blocks to be allocated
+    for (int mb_offset = 0; mb_offset < req_blocks; mb_offset++) {
+        MAT[valid_mb + mb_offset].memid = next_mem_id;
+
+        // update indices
+        MAT[valid_mb + mb_offset].next_free_ind = valid_mb + req_blocks;
+        MAT[valid_mb + mb_offset].prev_free_ind = valid_mb - 1;
+    }
+
+    // update memory values
+    memblocksleft -= req_size;
+    memused += req_size;
+    next_mem_id++;
+
+    // final return value
+    return (void*)(BSS_BEGIN + valid_mb * MBLOCK_SIZE);
 }
 
 void kfree(void* ptr) {
-    MAT_entry_t* original_entry = calculate_entry_mapping(ptr);
+    // Flood-fill mark all the blocks of the same memid as FREE
+    int block_begin = calculate_mblock_index(ptr);
+    int block_end = MAT[block_begin].next_free_ind - 1;
 
-    // floodfill the memid
-    int memid = original_entry->memid;
+    MAT_floodfill(block_begin, FREE_BLOCK, -2, -2);
 
-    MAT_entry_t* left_ptr = original_entry;
-    MAT_entry_t* right_ptr = original_entry + 1;
+    // Discover of there exists left and right sections
 
-    while(left_ptr->memid != memid) {
-        left_ptr->memid = FREE_BLOCK;
-        left_ptr--;
+    // check for left block
+    bool leftexists = false;
+    bool leftisalloc;
+    int left_section_begin;
+    int left_section_end;
+
+    if (block_begin >= 1) {
+        leftexists = true;
+
+        int leftmemid = MAT[block_begin - 1].memid;
+        leftisalloc = leftmemid != FREE_BLOCK;
+
+        int mb_ind = block_begin - 1;
+        while (mb_ind >= 0 && MAT[mb_ind].memid == leftmemid) {
+            left_section_begin = mb_ind;
+            mb_ind--;
+        } 
+
+        left_section_end = block_begin - 1;
     }
 
-    while(right_ptr->memid != memid) {
-        right_ptr->memid = FREE_BLOCK;
-        right_ptr++;
+    // check for right block
+    bool rightexists = false;
+    bool rightisalloc;
+    int right_section_begin;
+    int right_section_end;
+
+    if (block_end < MAT_END) {
+        rightexists = true;
+
+        int rightmemid = MAT[block_end + 1].memid;
+        rightisalloc = rightmemid != FREE_BLOCK;
+
+        int mb_ind = block_end + 1;
+        while (mb_ind < MAT_END && MAT[mb_ind].memid == rightmemid) {
+            right_section_end = mb_ind;
+            mb_ind++;
+        } 
+
+        right_section_begin = block_end + 1;
     }
 
-    // update the free blocks
-    mark_contiguous_free_blocks((original_entry - MAT) / sizeof(MAT_entry_t));
+    // calculate what the bounds are the new contiguous free blocks
+    int cont_free_begin = block_begin;
+    int cont_free_end = block_end;
+
+    // update the contiguous free blocks boundary and reset the indices
+    if (leftexists && !leftisalloc) {
+        cont_free_begin = left_section_begin;
+
+        if (cont_free_begin == 0) leftexists = false;
+        else {
+            int leftmemid = MAT[cont_free_begin - 1].memid;
+
+            int mb_ind = cont_free_begin - 1;
+            while (mb_ind >= 0 && MAT[mb_ind].memid == leftmemid) {
+                left_section_begin = mb_ind;
+                mb_ind--;
+            } 
+
+            left_section_end = block_begin - 1;
+        }
+    }
+
+    if (rightexists && !rightisalloc) {
+        cont_free_end = right_section_end;
+
+        if (cont_free_end == MAT_END) rightexists = false;
+        else {
+            int rightmemid = MAT[cont_free_end + 1].memid;
+
+            int mb_ind = cont_free_end + 1;
+            while (mb_ind < MAT_END && MAT[mb_ind].memid == rightmemid) {
+                right_section_end = mb_ind;
+                mb_ind++;
+            } 
+
+            right_section_begin = block_end + 1;
+        }
+    }
+
+    // set the incdices and memid of the contiguous free blocks
+    MAT_set(
+        cont_free_begin,
+        cont_free_end,
+        FREE_BLOCK,
+        cont_free_begin,
+        cont_free_end
+    );
+
+    // alter left blocks
+    if (leftexists)
+        MAT_set_next_free_ind(
+            left_section_begin,
+            left_section_end,
+            cont_free_begin
+        );
+    
+    if (rightexists) {
+        MAT_set_prev_free_ind(
+            right_section_begin,
+            right_section_end,
+            cont_free_end
+        );
+    }
 }
 
-void mark_contiguous_free_blocks(int free_block_index) {
-    // edge cases
-    if (free_block_index < 0) return;
-    if (free_block_index >= MAT_SIZE) return;
-    if (MAT[free_block_index].memid != FREE_BLOCK) return;
-
-    // scan everything
-    int begin_ptr = free_block_index;
-    int end_ptr = free_block_index;
-
-    while (MAT[end_ptr].memid == FREE_BLOCK && end_ptr < MAT_SIZE) {
-        MAT[end_ptr].next_free_blocks = 0;
-        MAT[end_ptr].prev_free_blocks = 0;
-        end_ptr++;
-    }
-    if (MAT[end_ptr].memid != FREE_BLOCK) end_ptr--;
-
-    while (MAT[begin_ptr].memid == FREE_BLOCK && begin_ptr >= 0) {
-        MAT[begin_ptr].next_free_blocks = 0;
-        MAT[begin_ptr].prev_free_blocks = 0;
-        begin_ptr--;
-    }
-    if (MAT[begin_ptr].memid != FREE_BLOCK) begin_ptr++;
-
-    // mark the corresponding indices
-    int free_block_size = end_ptr - begin_ptr + 1;
-    MAT[begin_ptr].next_free_blocks = free_block_size;
-    MAT[end_ptr].prev_free_blocks = free_block_size;
+int calculate_mblock_index(void* ptr) {
+    return ((int)ptr - BSS_BEGIN) / MBLOCK_SIZE;
 }
 
-MAT_entry_t* calculate_entry_mapping(void* ptr) {
-    return (MAT_entry_t*)(MAT + (ptr - BSS_BEGIN) / MBLOCK_SIZE);
+void MAT_set(int begin, int end, int new_memid, int new_prev_free_ind,
+             int new_next_free_ind) {
+    for (int mb_ind = begin; mb_ind <= end; mb_ind++) {
+        MAT[mb_ind].memid = new_memid;
+        MAT[mb_ind].prev_free_ind = new_prev_free_ind;
+        MAT[mb_ind].next_free_ind = new_next_free_ind;
+    }
+}
+
+void MAT_set_memid(int begin, int end, int new_memid) {
+    for (int mb_ind = begin; mb_ind <= end; mb_ind++) {
+        MAT[mb_ind].memid = new_memid;
+    }
+}
+
+void MAT_set_prev_free_ind(int begin, int end, int new_prev_free_ind) {
+    for (int mb_ind = begin; mb_ind <= end; mb_ind++) {
+        MAT[mb_ind].prev_free_ind = new_prev_free_ind;
+    }
+}
+
+void MAT_set_next_free_ind(int begin, int end, int new_next_free_ind) {
+    for (int mb_ind = begin; mb_ind <= end; mb_ind++) {
+        MAT[mb_ind].next_free_ind = new_next_free_ind;
+    }
+}
+
+void MAT_floodfill(int flood_ind, int new_memid, int new_prev_free_ind,
+                   int new_next_free_ind) {
+    int flood_memid = MAT[flood_ind].memid;
+
+    // left floodfill
+    for (int left_ind = flood_ind;
+         left_ind >= 0 && MAT[left_ind].memid == flood_memid; left_ind--) {
+        MAT[left_ind].memid = new_memid;
+        MAT[left_ind].prev_free_ind = new_prev_free_ind;
+        MAT[left_ind].next_free_ind = new_next_free_ind;
+    }
+
+    // right floodfill
+    for (int right_ind = flood_ind + 1;
+         right_ind < MAT_SIZE && MAT[right_ind].memid == flood_memid;
+         right_ind++) {
+        MAT[right_ind].memid = new_memid;
+        MAT[right_ind].prev_free_ind = new_prev_free_ind;
+        MAT[right_ind].next_free_ind = new_next_free_ind;
+    }
+}
+
+void MAT_floodfill_memid(int flood_ind, int new_memid) {
+    int flood_memid = MAT[flood_ind].memid;
+
+    // left floodfill
+    for (int left_ind = flood_ind;
+         left_ind >= 0 && MAT[left_ind].memid == flood_memid; left_ind--) {
+        MAT[left_ind].memid = new_memid;
+    }
+
+    // right floodfill
+    for (int right_ind = flood_ind + 1;
+         right_ind < MAT_SIZE && MAT[right_ind].memid == flood_memid;
+         right_ind++) {
+        MAT[right_ind].memid = new_memid;
+    }
+}
+
+void MAT_floodfill_prev_free_ind(int flood_ind, int new_prev_free_ind) {
+    int flood_memid = MAT[flood_ind].memid;
+
+    // left floodfill
+    for (int left_ind = flood_ind;
+         left_ind >= 0 && MAT[left_ind].memid == flood_memid; left_ind--) {
+        MAT[left_ind].prev_free_ind = new_prev_free_ind;
+    }
+
+    // right floodfill
+    for (int right_ind = flood_ind + 1;
+         right_ind < MAT_SIZE && MAT[right_ind].memid == flood_memid;
+         right_ind++) {
+        MAT[right_ind].prev_free_ind = new_prev_free_ind;
+    }
+}
+
+void MAT_floodfill_next_free_ind(int flood_ind, int new_next_free_ind) {
+    int flood_memid = MAT[flood_ind].memid;
+
+    // left floodfill
+    for (int left_ind = flood_ind;
+         left_ind >= 0 && MAT[left_ind].memid == flood_memid; left_ind--) {
+        MAT[left_ind].next_free_ind = new_next_free_ind;
+    }
+
+    // right floodfill
+    for (int right_ind = flood_ind + 1;
+         right_ind < MAT_SIZE && MAT[right_ind].memid == flood_memid;
+         right_ind++) {
+        MAT[right_ind].next_free_ind = new_next_free_ind;
+    }
 }

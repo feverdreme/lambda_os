@@ -6,14 +6,14 @@ The official github repository of the lambda_os project. This is my Severn Van E
 
 (In no particular order)
 
-- [ ] `puts.c` has bug where it assumes `pos_x == 0` if there is a forced newline due to line wrapping
+- [X] `puts.c` has bug where it assumes `pos_x == 0` if there is a forced newline due to line wrapping
 - [ ] `kmalloc` is inefficient, must redesign
 - [ ] Makefile doesn't support a cpp kernel
 - [ ] Remove all explicitly 32bit code in preparation for 64bit mode
 
 ## Features and Todo
 
-- [ ] Memory manager has `kfree` implemented
+- [X] Memory manager has `kfree` implemented
 - [ ] Memory manager has `kmove` and other memory functions implemented
 - [ ] `crt.0` and other libraries are linked automatically, instead of being linked in the linker script they become a build step before kernel linkage
 - [ ] Prepare makefile for BOOTBOOT protocol and linkage

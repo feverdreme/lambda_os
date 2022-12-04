@@ -1,54 +1,137 @@
 #ifndef KMALLOC_H
 #define KMALLOC_H
 
-#define FREE_BLOCK -1
-
 #include <stdint.h>
+#include <stdbool.h>
 
-// CONSTANTS
+/* -------------------------------------------------------------------------- */
+/*                                  CONSTANTS                                */
+/* -------------------------------------------------------------------------- */
+
+#define FREE_BLOCK 0
+
 #define BSS_BEGIN 0x3E00
 #define BSS_SIZE 0x10000
 #define MBLOCK_SIZE 16
 #define MAT_SIZE (BSS_SIZE / MBLOCK_SIZE + 1)
+#define MAT_END (MAT_SIZE - 1)
 
-extern int memused;
-extern int memleft;
-extern int next_mem_id;
-
-// Memory Allocation Table structs
+/* -------------------------------------------------------------------------- */
+/*                       Memory Allocation Table structs                      */
+/* -------------------------------------------------------------------------- */
 
 typedef struct MAT_entry {
     // id for allocating contiguous blocks of memory all under the same malloc call
     int memid;
 
-    // If there is a contiguous array of free blocks afterwards, store the space used
-    int next_free_blocks;
-    int prev_free_blocks;
+    /*
+        If free, index to the start of the contiguous free blocks
+        If not free, index to the end of the previous contiguous free blocks
+    */
+    int prev_free_ind;
+
+    /*
+        If free, index to the end of the contiguous free blocks
+        If not free, index to the start of the next contiguous free blocks
+    */
+    int next_free_ind;
+
 } MAT_entry_t;
+
+/**
+ * @brief Descriptor for contiguous sections of memory blocks.
+ * ! Meant only to be used as a return type
+ */
+typedef struct MAT_section {
+    int memid;
+    int begin_ind;
+    int end_ind;
+} MAT_section_t;
+
+extern const MAT_section_t MAT_section_NULL;
+
+/* ----------------------------- MAT declaration ---------------------------- */
 
 extern MAT_entry_t MAT[MAT_SIZE];
 
-// User memory functions
+extern int memused;
+extern int memblocksleft;
+extern unsigned int next_mem_id;
 
-void init_mem_model();
-void* kmalloc(int req_size);
-void kfree(void* ptr);
-
-// Utility functions to handle MAT
+/* -------------------------------------------------------------------------- */
+/*                            User memory functions                           */
+/* -------------------------------------------------------------------------- */
 
 /**
- * @brief Calculates what block an MAT_entry is referring to
+ * @brief Initializes MAT as all free
+ * 
+ */
+void init_mem_model();
+
+/**
+ * @brief Allocates memory in MAT (no restrictions)
+ * 
+ * @param req_size Requested memory size in bytes
+ * @return void* A pointer to the allocated memory section
+ */
+void* kmalloc(int req_size);
+
+/**
+ * @brief Frees memory section that the memory pointer belongs to
+ * 
+ * @param ptr ptr to the FRONT of the memory section
+ */
+void kfree(void* ptr);
+
+/* -------------------------------------------------------------------------- */
+/*                       Utility functions to handle MAT                      */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * @brief Calculates the index of the MAT_entry that controls the address
  *
  * @param entry A pointer to the MAT_entry
  * @return void* A pointer to the corresponding memory block
  */
-MAT_entry_t* calculate_entry_mapping(void* ptr);
+int calculate_mblock_index(void* ptr);
 
 /**
- * @brief Takes the contiguous free blocks from an index and marks the beginning and end
+ * @brief Sets MAT_entries give specified bounds (inclusive)
  * 
- * @param free_block_index An index of any block in the contiguous thing
+ * @param begin Begin index
+ * @param end End index (inclusive)
+ * @param new_memid memid to set
+ * @param new_prev_free_ind prev_free_ind to set
+ * @param new_next_free_ind next_free_ind to set
  */
-void mark_contiguous_free_blocks(int free_block_index);
+void MAT_set(int begin, int end, int new_memid, int new_prev_free_ind, int new_next_free_ind);
+
+void MAT_set_memid(int begin, int end, int new_memid);
+
+void MAT_set_prev_free_ind(int begin, int end, int new_prev_free_ind);
+
+void MAT_set_next_free_ind(int begin, int end, int new_next_free_ind);
+
+/**
+ * @brief Sets MAT_entries through floodfill by memid
+ * 
+ * @param flood_ind Index of MAT section
+ * @param new_memid memid to set
+ * @param new_prev_free_ind prev_free_ind to set
+ * @param new_next_free_ind next_free_ind to set
+ */
+void MAT_floodfill(int flood_ind, int new_memid, int new_prev_free_ind, int new_next_free_ind);
+
+void MAT_floodfill_memid(int flood_ind, int new_memid);
+
+void MAT_floodfill_prev_free_ind(int flood_ind, int new_prev_free_ind);
+
+void MAT_floodfill_next_free_ind(int flood_ind, int new_next_free_ind);
+
+/**
+ * @brief Sanity check to make sure available memory size doesn't exceed possible mem_ids
+ * 
+ */
+void possible_memid_sanity_check();
 
 #endif

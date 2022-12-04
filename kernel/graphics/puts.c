@@ -2,17 +2,20 @@
 #include "puts.h"
 
 #include <libc/fonts.h>
+#include <libc/string.h>
 #include <stdbool.h>
 
 #include "putpixel.h"
 
-struct Cursor cursor = {0, 0, 1};
+const font_t *DEFAULT_FONT = &spleen_font;
 
-int putc(char c, int pos_x, int pos_y, struct font* fnt) {
+struct Cursor cursor = {0, 0, 0, 1};
+
+int kputc(char c, int pos_x, int pos_y, font_t *fnt) {
     fontchar fc = ctofc(c, fnt);
 
     if (c == '\n') return 0;
-    if (fc == 0) return 1;
+    if (fc == NONPRINTABLE_FONTCHAR) return 1;
 
     for (int row = 0; row < fnt->fc_height; row++) {
         for (int col = 0; col < fnt->fc_width; col++) {
@@ -25,16 +28,18 @@ int putc(char c, int pos_x, int pos_y, struct font* fnt) {
     return 0;
 }
 
-int puts(char* c, int pos_x, int pos_y, struct font *fnt) {
-    for (; *c != '\0'; c++) {
-        fontchar fc = ctofc(c, fnt);
+int kputs(char* c, int pos_x, int pos_y, font_t *fnt) {
+    int prev_pos_x = pos_x;
 
-        if (c == '\n') {
+    for (; *c != '\0'; c++) {
+        fontchar fc = ctofc(*c, fnt);
+
+        if (*c == '\n') {
             pos_x = 0;
             pos_y += 8;
             return 0;
         }
-        if (fc == 0) return 1;
+        if (fc == NONPRINTABLE_FONTCHAR) return 1;
 
         for (int row = 0; row < fnt->fc_height; row++) {
             for (int col = 0; col < fnt->fc_width; col++) {
@@ -46,14 +51,39 @@ int puts(char* c, int pos_x, int pos_y, struct font *fnt) {
         }
 
         pos_x = (pos_x + 5) % 320;
-        if (pos_x == 0)
+        if (pos_x < prev_pos_x)
             pos_y += 8 + cursor.kerning;
         else
             pos_x += cursor.kerning;
+
+        prev_pos_x = pos_x;
     }
+
+    return 0;
 }
 
-int printc(char c, struct font *fnt) {
+int kputd(int d, int pos_x, int pos_y, font_t *fnt) {
+    char buf[21];
+    itoa(d, buf);
+    kputs(buf, pos_x, pos_y, fnt);
+
+    return 0;
+}
+
+int putc(char c, int pos_x, int pos_y) {
+    kputc(c, pos_x, pos_y, DEFAULT_FONT);
+}
+
+int puts(char *c, int pos_x, int pos_y) {
+    kputs(c, pos_x, pos_y, DEFAULT_FONT);
+}
+
+int putd(int d, int pos_x, int pos_y) {
+    kputd(d, pos_x, pos_y, DEFAULT_FONT);
+}
+
+
+int kprintc(char c, struct font *fnt) {
     fontchar fc = ctofc(c, fnt);
 
     if (c == '\n') {
@@ -61,7 +91,7 @@ int printc(char c, struct font *fnt) {
         cursor.y += 8;
         return 0;
     }
-    if (fc == 0) return 1;
+    if (fc == NONPRINTABLE_FONTCHAR) return 1;
 
     for (int row = 0; row < fnt->fc_height; row++) {
         for (int col = 0; col < fnt->fc_width; col++) {
@@ -73,14 +103,41 @@ int printc(char c, struct font *fnt) {
     }
 
     cursor.x = (cursor.x + 5) % 320;
-    if (cursor.x == 0)
+    if (cursor.x < cursor.prev_x)
         cursor.y += 8 + cursor.kerning;
     else
         cursor.x += cursor.kerning;
+    
+    cursor.prev_x = cursor.x;
+    
+    return 0;
 }
 
-int prints(char *c, struct font *fnt) {
-    for (; *c != '\0'; c++) putc(*c, fnt);
+int kprints(char *c, font_t *fnt) {
+    for (; *c != '\0'; c++) kprintc(*c, fnt);
 
     return 0;
+}
+
+int kprintd(int d, font_t *fnt) {
+    char buf[21]; // max we'll need
+    itoa(d, buf);
+
+    kprints(buf, fnt);
+}
+
+int printc(char c) {
+    kprintc(c, DEFAULT_FONT);
+}
+
+int prints(char *c) {
+    kprints(c, DEFAULT_FONT);
+}
+
+int printd(int d) {
+    kprintd(d, DEFAULT_FONT);
+}
+
+int println() {
+    kprintc('\n', &spleen_font);
 }
