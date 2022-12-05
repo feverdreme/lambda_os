@@ -36,6 +36,7 @@ int kputs(char* c, int pos_x, int pos_y, font_t *fnt) {
 
         if (*c == '\n') {
             pos_x = 0;
+            prev_pos_x = 0;
             pos_y += 8;
             continue;
         }
@@ -98,6 +99,7 @@ int kprintc(char c, struct font *fnt) {
 
     if (c == '\n') {
         cursor.x = 0;
+        cursor.prev_x = 0;
         cursor.y += 8;
         return 0;
     }
