@@ -37,9 +37,17 @@ int kputs(char* c, int pos_x, int pos_y, font_t *fnt) {
         if (*c == '\n') {
             pos_x = 0;
             pos_y += 8;
-            return 0;
+            continue;
         }
         if (fc == NONPRINTABLE_FONTCHAR) return 1;
+
+        // if it will write past the screen
+        if (pos_x + fnt->fc_width >= 320) {
+            // reset the counter while controlling vars
+            pos_x = 0;
+            prev_pos_x = 0;
+            pos_y += 8;
+        }
 
         for (int row = 0; row < fnt->fc_height; row++) {
             for (int col = 0; col < fnt->fc_width; col++) {
@@ -50,11 +58,13 @@ int kputs(char* c, int pos_x, int pos_y, font_t *fnt) {
             }
         }
 
-        pos_x = (pos_x + 5) % 320;
-        if (pos_x < prev_pos_x)
+        pos_x += cursor.kerning;
+        pos_x = (pos_x + fnt->fc_width) % 320;
+
+        if (pos_x < prev_pos_x) {
+            pos_x = 0;
             pos_y += 8 + cursor.kerning;
-        else
-            pos_x += cursor.kerning;
+        }
 
         prev_pos_x = pos_x;
     }
@@ -93,6 +103,14 @@ int kprintc(char c, struct font *fnt) {
     }
     if (fc == NONPRINTABLE_FONTCHAR) return 1;
 
+    // if it will write past the screen
+    if (cursor.x + fnt->fc_width >= 320) {
+        // reset the counter while controlling vars
+        cursor.x = 0;
+        cursor.prev_x = 0;
+        cursor.y += 8;
+    }
+
     for (int row = 0; row < fnt->fc_height; row++) {
         for (int col = 0; col < fnt->fc_width; col++) {
             // FIXME: Only works with bitmaps fonts with 16bit widths at
@@ -102,12 +120,14 @@ int kprintc(char c, struct font *fnt) {
         }
     }
 
-    cursor.x = (cursor.x + 5) % 320;
-    if (cursor.x < cursor.prev_x)
+    cursor.x += cursor.kerning;
+    cursor.x = (cursor.x + fnt->fc_width) % 320;
+
+    if (cursor.x < cursor.prev_x) {
         cursor.y += 8 + cursor.kerning;
-    else
-        cursor.x += cursor.kerning;
-    
+        cursor.x = 0;
+    }
+
     cursor.prev_x = cursor.x;
     
     return 0;
