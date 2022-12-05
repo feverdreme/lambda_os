@@ -60,7 +60,7 @@ $(GENERAL_ASMC_BIN_DIRS_O): $(GENERAL_ASM_O) $(GENERAL_C_O) $(GENERAL_CPP_O)
 bin/kernel.elf: $(KERNEL_SPECIAL_O) $(GENERAL_ASMC_BIN_DIRS_O)
 	@echo
 	@echo "LINKING..."
-	$(LD) -T extra/ld/linker.ld $(KERNEL_SPECIAL_O) $(GENERAL_ASM_O) $(GENERAL_C_O) $(GENERAL_CPP_O)
+	$(LD) -T ../extra/ld/linker.ld $(KERNEL_SPECIAL_O) $(GENERAL_ASM_O) $(GENERAL_C_O) $(GENERAL_CPP_O)
 
 # Stage 6
 bin/kernel.bin: bin/kernel.elf
