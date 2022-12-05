@@ -10,6 +10,7 @@ The official github repository of the lambda_os project. This is my Severn Van E
 - [ ] `kmalloc` is inefficient, must redesign
 - [ ] Makefile doesn't support a cpp kernel
 - [ ] Remove all explicitly 32bit code in preparation for 64bit mode
+- [ ] It fails when converting to cpp because [https://stackoverflow.com/questions/1041866/what-is-the-effect-of-extern-c-in-c](THIS)
 
 ## Features and Todo
 
