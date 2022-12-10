@@ -32,8 +32,9 @@ fontchar ctofc(char c, font_t *fnt);
  * 
  * @param str The string data
  * @param fnt The font the string will be put in
+ * @param kerning The kerning that would be used
  * @return The length in pixels
  */
-int font_strlen(const char *str, font_t *fnt);
+int font_strlen(const char *str, font_t *fnt, int kerning);
 
 #endif
