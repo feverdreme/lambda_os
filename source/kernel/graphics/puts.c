@@ -7,7 +7,7 @@
 
 #include "putpixel.h"
 
-const font_t *DEFAULT_FONT = &spleen_font;
+font_t *DEFAULT_FONT = &spleen_font;
 
 struct Cursor cursor = {0, 0, 0, 1};
 
@@ -28,7 +28,7 @@ int kputc(char c, int pos_x, int pos_y, font_t *fnt) {
     return 0;
 }
 
-int kputs(char* c, int pos_x, int pos_y, font_t *fnt) {
+int kputs(const char* c, int pos_x, int pos_y, font_t *fnt) {
     int prev_pos_x = pos_x;
 
     for (; *c != '\0'; c++) {
@@ -85,7 +85,7 @@ int putc(char c, int pos_x, int pos_y) {
     kputc(c, pos_x, pos_y, DEFAULT_FONT);
 }
 
-int puts(char *c, int pos_x, int pos_y) {
+int puts(const char *c, int pos_x, int pos_y) {
     kputs(c, pos_x, pos_y, DEFAULT_FONT);
 }
 
@@ -135,7 +135,7 @@ int kprintc(char c, struct font *fnt) {
     return 0;
 }
 
-int kprints(char *c, font_t *fnt) {
+int kprints(const char *c, font_t *fnt) {
     for (; *c != '\0'; c++) kprintc(*c, fnt);
 
     return 0;
@@ -152,7 +152,7 @@ int printc(char c) {
     kprintc(c, DEFAULT_FONT);
 }
 
-int prints(char *c) {
+int prints(const char *c) {
     kprints(c, DEFAULT_FONT);
 }
 
