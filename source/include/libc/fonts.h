@@ -27,4 +27,13 @@ extern void init_spleen_font();
 */
 fontchar ctofc(char c, font_t *fnt);
 
+/**
+ * @brief Calculates the pixel length of a string in a font
+ * 
+ * @param str The string data
+ * @param fnt The font the string will be put in
+ * @return The length in pixels
+ */
+int font_strlen(const char *str, font_t *fnt);
+
 #endif
