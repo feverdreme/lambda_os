@@ -9,9 +9,9 @@
 
 font_t *DEFAULT_FONT = &spleen_font;
 
-struct Cursor cursor = {0, 0, 0, 1};
+struct Cursor cursor = {0, 0, 0, 1, GREEN};
 
-int kputc(char c, int pos_x, int pos_y, font_t *fnt) {
+int kputc(char c, int pos_x, int pos_y, font_t *fnt, enum VGA_COLOR color) {
     fontchar fc = ctofc(c, fnt);
 
     if (c == '\n') return 0;
@@ -21,14 +21,14 @@ int kputc(char c, int pos_x, int pos_y, font_t *fnt) {
         for (int col = 0; col < fnt->fc_width; col++) {
             // FIXME: Only works with bitmaps fonts with 16bit widths at most
             int drawbit = fc[row] & (1 << (8 - col));
-            if (drawbit) putpixel(pos_x + col, pos_y + row, GREEN);
+            if (drawbit) putpixel(pos_x + col, pos_y + row, color);
         }
     }
 
     return 0;
 }
 
-int kputs(const char* c, int pos_x, int pos_y, font_t *fnt) {
+int kputs(const char* c, int pos_x, int pos_y, font_t *fnt, enum VGA_COLOR color) {
     int prev_pos_x = pos_x;
 
     for (; *c != '\0'; c++) {
@@ -55,7 +55,7 @@ int kputs(const char* c, int pos_x, int pos_y, font_t *fnt) {
                 // FIXME: Only works with bitmaps fonts with 16bit widths at
                 // most
                 int drawbit = fc[row] & (1 << (8 - col));
-                if (drawbit) putpixel(pos_x + col, pos_y + row, 2);
+                if (drawbit) putpixel(pos_x + col, pos_y + row, color);
             }
         }
 
@@ -73,24 +73,24 @@ int kputs(const char* c, int pos_x, int pos_y, font_t *fnt) {
     return 0;
 }
 
-int kputd(int d, int pos_x, int pos_y, font_t *fnt) {
+int kputd(int d, int pos_x, int pos_y, font_t *fnt, enum VGA_COLOR color) {
     char buf[21];
     itoa(d, buf);
-    kputs(buf, pos_x, pos_y, fnt);
+    kputs(buf, pos_x, pos_y, fnt, color);
 
     return 0;
 }
 
-int putc(char c, int pos_x, int pos_y) {
-    kputc(c, pos_x, pos_y, DEFAULT_FONT);
+int putc(char c, int pos_x, int pos_y, enum VGA_COLOR color) {
+    kputc(c, pos_x, pos_y, DEFAULT_FONT, color);
 }
 
-int puts(const char *c, int pos_x, int pos_y) {
-    kputs(c, pos_x, pos_y, DEFAULT_FONT);
+int puts(const char *c, int pos_x, int pos_y, enum VGA_COLOR color) {
+    kputs(c, pos_x, pos_y, DEFAULT_FONT, color);
 }
 
-int putd(int d, int pos_x, int pos_y) {
-    kputd(d, pos_x, pos_y, DEFAULT_FONT);
+int putd(int d, int pos_x, int pos_y, enum VGA_COLOR color) {
+    kputd(d, pos_x, pos_y, DEFAULT_FONT, color);
 }
 
 
@@ -118,7 +118,7 @@ int kprintc(char c, struct font *fnt) {
             // FIXME: Only works with bitmaps fonts with 16bit widths at
             // most
             int drawbit = fc[row] & (1 << (8 - col));
-            if (drawbit) putpixel(cursor.x + col, cursor.y + row, 2);
+            if (drawbit) putpixel(cursor.x + col, cursor.y + row, cursor.color);
         }
     }
 

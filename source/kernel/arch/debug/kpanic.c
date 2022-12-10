@@ -10,6 +10,7 @@ void kpanic(const char* msg){
     cursor.x = 0;
     cursor.y = 0;
     cursor.kerning = 1;
+    cursor.color = GREEN;
 
     prints("KERNEL PANIC: ");
     prints(msg);
