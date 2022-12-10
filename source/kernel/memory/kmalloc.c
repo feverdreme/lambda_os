@@ -3,6 +3,7 @@
 #include <envvars.h>
 #include <libc/math.h>
 #include <stdbool.h>
+#include <arch/debug/kpanic.h>
 
 #include "../graphics/puts.h"
 
