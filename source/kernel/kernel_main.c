@@ -9,7 +9,7 @@
 #include <arch/idt/idt.h>
 #include <arch/debug/kpanic.h>
 
-// #include <wmgr/window.h>
+#include <wmgr/window.h>
 
 #include <stdbool.h>
 
@@ -20,6 +20,7 @@ void main() {
     idt_init();
     init_spleen_font();
     init_mem_model();
+    init_genesis_window();
 
     return;
 }
