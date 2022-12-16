@@ -1,12 +1,15 @@
 #include "putpixel.h"
+#include <stdint.h>
+
+extern uint8_t fb;                      // linear framebuffer mapped
 
 void putpixel(int pos_x, int pos_y, unsigned char vga_color) {
-    volatile unsigned char* location = (volatile unsigned char*)0xA0000 + 320 * pos_y + pos_x;
+    volatile unsigned char* location = (volatile unsigned char*)fb + 320 * pos_y + pos_x;
     *location = vga_color;
 }
 
 void put_hline(int pos_x, int pos_y, int len, unsigned char vga_color) {
-    volatile unsigned char* location = (volatile unsigned char*)0xA0000 + 320 * pos_y + pos_x;
+    volatile unsigned char* location = (volatile unsigned char*)fb + 320 * pos_y + pos_x;
 
     // Clamp len
     // len = min(pos_x + len, 320);
@@ -18,7 +21,7 @@ void put_hline(int pos_x, int pos_y, int len, unsigned char vga_color) {
 }
 
 void put_vline(int pos_x, int pos_y, int len, unsigned char vga_color) {
-    volatile unsigned char* location = (volatile unsigned char*)0xA0000 + 320 * pos_y + pos_x;
+    volatile unsigned char* location = (volatile unsigned char*)fb + 320 * pos_y + pos_x;
 
     // Clamp len
     // len = min(pos_y + len, 200);
