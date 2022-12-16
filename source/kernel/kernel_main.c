@@ -24,7 +24,7 @@ void main() {
 
     Window_t* test_window = create_window(0, 0, 320 / 2, 200, "Window 1", 20, BLACK, "Hello! test window!");
     Window_t* test_window2 = create_window(320 / 2, 0, 320 / 2, 200 / 2, "Window 2", 20, BLACK, "Pog Pog");
-    Window_t* test_window3 = create_window(320 / 2, 200 / 2, 320 / 2, 200 / 2, "Window 3", 20, BLACK, "there's 3 now");
+    Window_t* test_window3 = create_window(320 / 2, 200 / 2, 320 / 2, 200 / 2, "Patricie Viewer", 20, BLACK, "Ancilla est in foro");
 
     window_draw_window(test_window);
     window_draw_window(test_window2);
