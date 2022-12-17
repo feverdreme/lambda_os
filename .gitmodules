@@ -1,3 +1,6 @@
-[submodule "spleen"]
+[submodule "submodules/bootboot"]
+	path = submodules/bootboot
+	url = https://gitlab.com/bztsrc/bootboot.git
+[submodule "submodules/spleen"]
 	path = submodules/spleen
 	url = https://github.com/fcambus/spleen
