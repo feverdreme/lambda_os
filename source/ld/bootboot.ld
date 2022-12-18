@@ -1,4 +1,4 @@
-ENTRY(_start)
+/* ENTRY(_start) */
 
 OUTPUT(bin/kernel.elf)
 OUTPUT_FORMAT(elf64-x86-64)

@@ -1,12 +1,20 @@
 # Build tools and flags
+ARCH := x86_64-elf
+
 SHELL := /bin/bash -O globstar
 ASM := nasm
-CC := i686-elf-gcc
-CCP := i686-elf-g++
-CFLAGS := -Wall -Wextra -Wpedantic -isystem include -isystem kernel -ffreestanding -m32 -g
-LD := i686-elf-ld
-AR := i686-elf-ar
-OBJCOPY := i686-elf-objcopy
+CC := $(ARCH)-gcc
+CCP := $(ARCH)-g++
+CFLAGS := -Wall -Wextra -Wpedantic -mno-red-zone -ffreestanding -fno-stack-protector -m64 -g
+CFLAGS += -isystem include -isystem kernel
+LD := $(ARCH)-ld
+AR := $(ARCH)-ar
+OBJCOPY := $(ARCH)-objcopy
+STRIP := $(ARCH)-strip
+STRIPFLAGS =  -s -K mmio -K fb -K bootboot -K environment -K initstack
+# LDSCRIPT := ld/bootboot.ld
+LDSCRIPT := ld/bootboot.ld
+
 
 ###############################################################################
 # Stages
@@ -29,21 +37,21 @@ OBJCOPY := i686-elf-objcopy
 KERNEL_SPECIAL_O = kernel/kernel_entry.asm.o kernel/kernel_main.c.o 
 
 GENERAL_ASMC_DIRS =
-GENERAL_ASMC_DIRS += kernel/arch/gdt kernel/arch/idt kernel/arch/debug kernel/graphics kernel/memory
-GENERAL_ASMC_DIRS += include/libc include/fonts include/wmgr
+# GENERAL_ASMC_DIRS += kernel/arch/gdt kernel/arch/idt kernel/arch/debug kernel/graphics kernel/memory
+# GENERAL_ASMC_DIRS += include/libc include/fonts include/wmgr
 
 GENERAL_ASM_SRC := $(foreach dir, $(GENERAL_ASMC_DIRS), $(wildcard $(dir)/*.asm))
 GENERAL_C_SRC := $(foreach dir, $(GENERAL_ASMC_DIRS), $(wildcard $(dir)/*.c))
-GENERAL_CPP_SRC := $(foreach dir, $(GENERAL_ASMC_DIRS), $(wildcard $(dir)/*.cpp))
+# GENERAL_CPP_SRC := $(foreach dir, $(GENERAL_ASMC_DIRS), $(wildcard $(dir)/*.cpp))
 
 GENERAL_ASM_O := $(patsubst %.asm, %.asm.o, $(GENERAL_ASM_SRC))
 GENERAL_C_O := $(patsubst %.c, %.c.o, $(GENERAL_C_SRC))
-GENERAL_CPP_O := $(patsubst %.cpp, %.cpp.o, $(GENERAL_CPP_SRC))
+# GENERAL_CPP_O := $(patsubst %.cpp, %.cpp.o, $(GENERAL_CPP_SRC))
 
 GENERAL_ASMC_BIN_DIRS_O := $(patsubst %, bin/objects/%.o, $(GENERAL_ASMC_DIRS))
 
 ##############################################################################
-all: os.bin
+all: os32.bin
 
 # Stage 1
 bin/boot.bin:
@@ -60,7 +68,8 @@ $(GENERAL_ASMC_BIN_DIRS_O): $(GENERAL_ASM_O) $(GENERAL_C_O) $(GENERAL_CPP_O)
 bin/kernel.elf: $(KERNEL_SPECIAL_O) $(GENERAL_ASMC_BIN_DIRS_O)
 	@echo
 	@echo "LINKING..."
-	$(LD) -T ../extra/ld/linker.ld $(KERNEL_SPECIAL_O) $(GENERAL_ASM_O) $(GENERAL_C_O) $(GENERAL_CPP_O)
+	$(LD) -n -nostdlib -T $(LDSCRIPT) $(KERNEL_SPECIAL_O) $(GENERAL_ASM_O) $(GENERAL_C_O) $(GENERAL_CPP_O)
+	$(STRIP) $(STRIPFLAGS) bin/kernel.elf
 
 # Stage 6
 bin/kernel.bin: bin/kernel.elf
@@ -72,11 +81,23 @@ bin/zero_padding.bin:
 	$(ASM) kernel/zero_padding.asm -f bin -o bin/zero_padding.bin
 
 # Stage 8
-os.bin: bin/boot.bin bin/kernel.bin bin/zero_padding.bin
+
+# Option 1: 32 bit traditional
+os32.bin: bin/boot.bin bin/kernel.bin bin/zero_padding.bin
 	cat bin/boot.bin bin/kernel.bin bin/zero_padding.bin > bin/os.bin
 
 	$(OBJCOPY) --only-keep-debug bin/kernel.elf bin/kernel.sym
 
+# Option 2: 64 bit BOOTBOOT
+os64.bin: bin/kernel.elf
+	cp bin/kernel.elf boot/sys/core
+	
+	mkbootimg check boot/sys/core
+	mkbootimg configuration.json initrd.rom
+	mkbootimg configuration.json bootpart.bin
+	mkbootimg configuration.json lambda_os.img
+
+	mv lambda_os.img bin/lambda_os.img
 ##############################################################################
 # GENERAL C & ASM RULES
 
@@ -92,7 +113,7 @@ os.bin: bin/boot.bin bin/kernel.bin bin/zero_padding.bin
 
 %.asm.o:
 	@echo "COMPILING $@" 
-	$(ASM) -f elf $(@:.asm.o=.asm) -o $@
+	$(ASM) -f elf64 $(@:.asm.o=.asm) -o $@
 	@echo
 
 ##############################################################################
@@ -100,6 +121,7 @@ os.bin: bin/boot.bin bin/kernel.bin bin/zero_padding.bin
 clean:
 	rm $(GENERAL_ASM_O) $(GENERAL_C_O) $(GENERAL_CPP_O) $(KERNEL_SPECIAL_O)
 	rm -r bin/objects/*
+	rm initrd.rom bootpart.bin
 
 reset:
 	rm bin/*.bin 

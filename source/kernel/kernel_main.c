@@ -3,14 +3,14 @@
 #include <bootboot.h>
 
 #include <envvars.h>
-#include <libc/libc.h>
-#include <memory/kmalloc.h>
-#include <graphics/putpixel.h>
-#include <graphics/puts.h>
-#include <arch/gdt/gdt.h>
-#include <arch/idt/idt.h>
-#include <arch/debug/kpanic.h>
-#include <wmgr/window.h>
+// #include <libc/libc.h>
+// #include <memory/kmalloc.h>
+// #include <graphics/putpixel.h>
+// #include <graphics/puts.h>
+// #include <arch/gdt/gdt.h>
+// #include <arch/idt/idt.h>
+// #include <arch/debug/kpanic.h>
+// #include <wmgr/window.h>
 
 extern BOOTBOOT bootboot;               // see bootboot.h
 extern unsigned char environment[4096]; // configuration, UTF-8 text key=value pairs
@@ -19,7 +19,7 @@ extern uint8_t fb;                      // linear framebuffer mapped
 // TODO: make libc and fonts shared static libraries to be linked last
 
 void main() {
-    gdt_install();
+    // gdt_install();
     // idt_init();
 
     int x, y, s=bootboot.fb_scanline, w=bootboot.fb_width, h=bootboot.fb_height;
@@ -37,17 +37,17 @@ void main() {
 
     return;
 
-    init_spleen_font();
-    init_mem_model();
-    init_genesis_window();
+    // init_spleen_font();
+    // init_mem_model();
+    // init_genesis_window();
 
-    Window_t* test_window = create_window(0, 0, 320 / 2, 200, "Window 1", 20, BLACK, "Hello! test window!");
-    Window_t* test_window2 = create_window(320 / 2, 0, 320 / 2, 200 / 2, "Window 2", 20, BLACK, "Pog Pog");
-    Window_t* test_window3 = create_window(320 / 2, 200 / 2, 320 / 2, 200 / 2, "Patricie Viewer", 20, BLACK, "Ancilla est in foro");
+    // Window_t* test_window = create_window(0, 0, 320 / 2, 200, "Window 1", 20, BLACK, "Hello! test window!");
+    // Window_t* test_window2 = create_window(320 / 2, 0, 320 / 2, 200 / 2, "Window 2", 20, BLACK, "Pog Pog");
+    // Window_t* test_window3 = create_window(320 / 2, 200 / 2, 320 / 2, 200 / 2, "Patricie Viewer", 20, BLACK, "Ancilla est in foro");
 
-    window_draw_window(test_window);
-    window_draw_window(test_window2);
-    window_draw_window(test_window3);
+    // window_draw_window(test_window);
+    // window_draw_window(test_window2);
+    // window_draw_window(test_window3);
 
     return;
 }
