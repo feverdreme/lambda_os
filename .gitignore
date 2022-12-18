@@ -4,3 +4,5 @@ source/bin/*
 *.bin
 build-tools
 *.rom
+source/build/*
+!source/build/boot/sys/config

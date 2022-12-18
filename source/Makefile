@@ -51,7 +51,7 @@ GENERAL_C_O := $(patsubst %.c, %.c.o, $(GENERAL_C_SRC))
 GENERAL_ASMC_BIN_DIRS_O := $(patsubst %, bin/objects/%.o, $(GENERAL_ASMC_DIRS))
 
 ##############################################################################
-all: os32.bin
+all: os32 os64
 
 # Stage 1
 bin/boot.bin:
@@ -83,21 +83,23 @@ bin/zero_padding.bin:
 # Stage 8
 
 # Option 1: 32 bit traditional
-os32.bin: bin/boot.bin bin/kernel.bin bin/zero_padding.bin
+os32: bin/boot.bin bin/kernel.bin bin/zero_padding.bin
 	cat bin/boot.bin bin/kernel.bin bin/zero_padding.bin > bin/os.bin
 
 	$(OBJCOPY) --only-keep-debug bin/kernel.elf bin/kernel.sym
 
 # Option 2: 64 bit BOOTBOOT
-os64.bin: bin/kernel.elf
-	cp bin/kernel.elf boot/sys/core
+os64: bin/kernel.elf
+	cp bin/kernel.elf build/boot/sys/core
 
-	mkbootimg check boot/sys/core
+	mkbootimg check build/boot/sys/core
 	mkbootimg configuration.json initrd.rom
 	mkbootimg configuration.json bootpart.bin
 	mkbootimg configuration.json lambda_os.img
 
-	mv lambda_os.img bin/lambda_os.img
+	mv initrd.rom build/
+	mv bootpart.bin build/
+	mv lambda_os.img build/
 ##############################################################################
 # GENERAL C & ASM RULES
 
@@ -120,9 +122,8 @@ os64.bin: bin/kernel.elf
 # CLEANING AND RESETTING
 clean:
 	rm $(GENERAL_ASM_O) $(GENERAL_C_O) $(GENERAL_CPP_O) $(KERNEL_SPECIAL_O)
-	rm -r bin/objects/*
-	rm initrd.rom bootpart.bin
+	rm build/initrd.rom build/bootpart.bin
 
 reset:
-	rm bin/*.bin 
-	rm bin/kernel.*
+	rm -f bin/*.bin 
+	rm -f bin/kernel.*
