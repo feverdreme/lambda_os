@@ -56,7 +56,7 @@ all: os32.bin
 # Stage 1
 bin/boot.bin:
 	@echo "STAGE 1..."
-	$(ASM) boot/boot.asm -f bin -o bin/boot.bin
+	$(ASM) boot/legacy/boot.asm -f bin -o bin/boot.bin
 	@echo 
 
 # Stages 2 & 3
@@ -91,7 +91,7 @@ os32.bin: bin/boot.bin bin/kernel.bin bin/zero_padding.bin
 # Option 2: 64 bit BOOTBOOT
 os64.bin: bin/kernel.elf
 	cp bin/kernel.elf boot/sys/core
-	
+
 	mkbootimg check boot/sys/core
 	mkbootimg configuration.json initrd.rom
 	mkbootimg configuration.json bootpart.bin

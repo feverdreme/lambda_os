@@ -63,7 +63,7 @@ start_protectedmode:
     ; kernel entry
     jmp KERNEL_ENTRY
 
-%include "boot/gdt_table.inc"
+%include "boot/legacy/gdt_table.inc"
 
 ; boot padding to 512 bytes
 ; 510 is in this expression because the last two bytes are for the magic number
