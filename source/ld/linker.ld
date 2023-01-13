@@ -4,6 +4,7 @@ OUTPUT(bin/kernel.elf)
 /* OUTPUT_FORMAT(elf32-i386) */
 OUTPUT_FORMAT(elf64-x86-64)
 
+fb = 0xA0000;
 
 SECTIONS {
     . = 0x1000;
