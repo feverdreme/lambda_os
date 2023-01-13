@@ -1,7 +1,7 @@
 #ifndef ENVVARS_H
 #define ENVVARS_H
 
-#define OS_BITMODE 32
+#define OS_BITMODE 64
 
 #if OS_BITMODE == 32
 #define OS_MAXINT INT32_MAX
@@ -12,5 +12,7 @@
 #define OS_MAXUINT UINT64_MAX
 
 #endif
+
+#define ARGB32
 
 #endif

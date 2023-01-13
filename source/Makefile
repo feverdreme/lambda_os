@@ -36,7 +36,7 @@ LDSCRIPT := ld/bootboot.ld
 # Never EVER switch the order of these two
 KERNEL_SPECIAL_O = kernel/kernel_entry.asm.o kernel/kernel_main.c.o 
 
-GENERAL_ASMC_DIRS =
+GENERAL_ASMC_DIRS = kernel/graphics
 # GENERAL_ASMC_DIRS += kernel/arch/gdt kernel/arch/idt kernel/arch/debug kernel/graphics kernel/memory
 # GENERAL_ASMC_DIRS += include/libc include/fonts include/wmgr
 

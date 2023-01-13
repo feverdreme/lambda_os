@@ -5,7 +5,7 @@
 #include <envvars.h>
 // #include <libc/libc.h>
 // #include <memory/kmalloc.h>
-// #include <graphics/putpixel.h>
+#include <graphics/putpixel.h>
 // #include <graphics/puts.h>
 // #include <arch/gdt/gdt.h>
 // #include <arch/idt/idt.h>
@@ -14,7 +14,7 @@
 
 extern BOOTBOOT bootboot;               // see bootboot.h
 extern unsigned char environment[4096]; // configuration, UTF-8 text key=value pairs
-extern uint8_t fb;                      // linear framebuffer mapped
+extern uint8_t fb;                      // linear framebuffer mapped 
 
 // TODO: make libc and fonts shared static libraries to be linked last
 
@@ -30,10 +30,12 @@ void main() {
         for(x=0;x<w;x++) { *((uint32_t*)(&fb + s*(h/2)+x*4))=0x00FFFFFF; }
 
         // red, green, blue boxes in order
-        for(y=0;y<20;y++) { for(x=0;x<20;x++) { *((uint32_t*)(&fb + s*(y+20) + (x+20)*4))=0x00FF0000; } }
-        for(y=0;y<20;y++) { for(x=0;x<20;x++) { *((uint32_t*)(&fb + s*(y+20) + (x+50)*4))=0x0000FF00; } }
-        for(y=0;y<20;y++) { for(x=0;x<20;x++) { *((uint32_t*)(&fb + s*(y+20) + (x+80)*4))=0x000000FF; } }
+    //     for(y=0;y<20;y++) { for(x=0;x<20;x++) { *((uint32_t*)(&fb + s*(y+20) + (x+20)*4))=0x00FF0000; } }
+    //     for(y=0;y<20;y++) { for(x=0;x<20;x++) { *((uint32_t*)(&fb + s*(y+20) + (x+50)*4))=0x0000FF00; } }
+    //     for(y=0;y<20;y++) { for(x=0;x<20;x++) { *((uint32_t*)(&fb + s*(y+20) + (x+80)*4))=0x000000FF; } }
     }
+
+    putrect(30, 30, 100, 50, 0x00FF0000);
 
     return;
 
