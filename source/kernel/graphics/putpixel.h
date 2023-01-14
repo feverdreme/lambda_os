@@ -3,9 +3,10 @@
 
 #include <envvars.h>
 
-#ifdef RGB8
+#if defined(RGB8)
 
-typedef unsigned char pixel_color_t
+typedef unsigned char pixel_color_t;
+typedef volatile unsigned char* vga_ptr;
 
 enum VGA_COLOR {
     BLACK = 0,
@@ -28,8 +29,6 @@ enum VGA_COLOR {
 
 extern void* fb;
 
-inline void* calc_fb_location(int x, int y);
-
 #elif defined(ARGB32)
 
 #include <stdint.h>
@@ -37,14 +36,15 @@ inline void* calc_fb_location(int x, int y);
 #include <bootboot.h>
 
 typedef uint32_t pixel_color_t;
+typedef uint32_t* vga_ptr;
 
 extern BOOTBOOT bootboot;               // see bootboot.h
 extern unsigned char environment[4096]; // configuration, UTF-8 text key=value pairs
 extern uint8_t fb;                      // linear framebuffer mapped 
 
-extern inline uint32_t* calc_fb_location(int x, int y);
-
 #endif
+
+extern inline vga_ptr calc_fb_location(int x, int y);
 
 void putpixel(int pos_x, int pos_y, pixel_color_t color);
 void put_hline(int pos_x, int pos_y, int len, pixel_color_t color);
