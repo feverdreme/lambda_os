@@ -8,7 +8,7 @@ struct Cursor {
     int x, y;
     int prev_x;
     int kerning;
-    enum VGA_COLOR color;
+    pixel_color_t color;
 };
 
 extern struct Cursor cursor;
@@ -19,13 +19,13 @@ extern font_t *DEFAULT_FONT;
     reg functions default to spleen font
 */
 
-int kputc(char c, int pos_x, int pos_y, font_t *fnt, enum VGA_COLOR color);
-int kputs(const char *c, int pos_x, int pos_y, font_t *fnt, enum VGA_COLOR color);
-int kputd(int d, int pos_x, int pos_y, font_t *fnt, enum VGA_COLOR color);
+int kputc(char c, int pos_x, int pos_y, font_t *fnt, pixel_color_t color);
+int kputs(const char *c, int pos_x, int pos_y, font_t *fnt, pixel_color_t color);
+int kputd(int d, int pos_x, int pos_y, font_t *fnt, pixel_color_t color);
 
-int putc(char c, int pos_x, int pos_y, enum VGA_COLOR color);
-int puts(const char *c, int pos_x, int pos_y, enum VGA_COLOR color);
-int putd(int d, int pos_x, int pos_y, enum VGA_COLOR color);
+int putc(char c, int pos_x, int pos_y, pixel_color_t color);
+int puts(const char *c, int pos_x, int pos_y, pixel_color_t color);
+int putd(int d, int pos_x, int pos_y, pixel_color_t color);
 
 int kprintc(char c, font_t *fnt);
 int kprints(const char *c, font_t *fnt);
