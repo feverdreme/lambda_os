@@ -9,15 +9,13 @@
 typedef byte* fontchar;
 
 typedef struct font {
-    int fc_width;
-    int fc_height;
+    uint32_t fc_width;
+    uint32_t fc_height;
+    bool is_printable[128];
     fontchar data[128];
 } font_t;
 
-// TODO: doxygen?
-
 extern font_t spleen_font; // should this be void* ? and then reinterpret later?
-extern void init_spleen_font();
 
 /**
  * @brief Interface to map chars to fontchars without directly accessing the data member
