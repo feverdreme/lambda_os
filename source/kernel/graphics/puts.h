@@ -4,14 +4,14 @@
 #include <libc/fonts.h>
 #include <graphics/putpixel.h>
 
-struct Cursor {
+typedef struct Cursor {
     int x, y;
     int prev_x;
     int kerning;
     pixel_color_t color;
-};
+} Cursor_t;
 
-extern struct Cursor cursor;
+extern Cursor_t cursor;
 extern font_t *DEFAULT_FONT;
 
 /*
