@@ -17,6 +17,8 @@ extern font_t *DEFAULT_FONT;
 /*
     k-functions allow a font input
     reg functions default to spleen font
+
+    put allows specify print
 */
 
 int kputc(char c, int pos_x, int pos_y, font_t *fnt, pixel_color_t color);

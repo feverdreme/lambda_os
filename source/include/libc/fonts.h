@@ -2,18 +2,19 @@
 #define FONTS_H
 
 #include <libc/typedef.h>
-
-#define NONPRINTABLE_FONTCHAR 0
+#include <stdbool.h>
 
 // font chars will be serialized bitmaps. Since we can't store all the data in a byte-sized char, we will use int[] and jsut have an implementation detail to not read past
-typedef byte* fontchar;
+typedef byte fontchar;
 
 typedef struct font {
     uint32_t fc_width;
     uint32_t fc_height;
     bool is_printable[128];
-    fontchar data[128];
+    fontchar data[8 * 128];
 } font_t;
+
+typedef uint8_t ascii_code_t;
 
 extern font_t spleen_font; // should this be void* ? and then reinterpret later?
 
@@ -23,7 +24,7 @@ extern font_t spleen_font; // should this be void* ? and then reinterpret later?
  * @param fnt Which font to use
  * @return Pointer to the fontchar in memory
 */
-fontchar ctofc(char c, font_t *fnt);
+fontchar* ctofc(char c, font_t *fnt);
 
 /**
  * @brief Calculates the pixel length of a string in a font
