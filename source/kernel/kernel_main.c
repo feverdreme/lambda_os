@@ -4,12 +4,12 @@
 
 #include <envvars.h>
 // #include <libc/libc.h>
-// #include <memory/kmalloc.h>
+#include <memory/kmalloc.h>
 #include <graphics/putpixel.h>
-// #include <graphics/puts.h>
+#include <graphics/puts.h>
 // #include <arch/gdt/gdt.h>
 // #include <arch/idt/idt.h>
-// #include <arch/debug/kpanic.h>
+#include <arch/debug/kpanic.h>
 // #include <wmgr/window.h>
 
 extern BOOTBOOT bootboot;               // see bootboot.h
@@ -36,6 +36,14 @@ void main() {
     }
 
     putrect(30, 30, 100, 50, 0x00FF0000);
+    // putrect(30, 100, 100, 50, 0x00FF00FF);
+
+    // kputc('H', 0, 0, DEFAULT_FONT, 0x00FFFFFF);
+    const char* t = "Hello World";
+    prints("Kernel PANIC: ");
+    // kpanic("Poggers");
+
+    printd(bootboot.fb_height);
 
     return;
 

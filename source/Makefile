@@ -4,8 +4,8 @@ ARCH := x86_64-elf
 SHELL := /bin/bash -O globstar
 ASM := nasm
 CC := $(ARCH)-gcc
-CCP := $(ARCH)-g++
-CFLAGS := -Wall -Wextra -Wpedantic -mno-red-zone -ffreestanding -fno-stack-protector -m64 -g
+CCP := $(ARCH)-g++ -std=c++0x
+CFLAGS := -Wall -fpic -Wextra -Wpedantic -mno-red-zone -ffreestanding -fno-stack-protector -m64 -g
 CFLAGS += -isystem include -isystem kernel
 LD := $(ARCH)-ld
 AR := $(ARCH)-ar
@@ -36,9 +36,9 @@ LDSCRIPT := ld/bootboot.ld
 # Never EVER switch the order of these two
 KERNEL_SPECIAL_O = kernel/kernel_entry.asm.o kernel/kernel_main.c.o 
 
-GENERAL_ASMC_DIRS = kernel/graphics
+GENERAL_ASMC_DIRS = kernel/graphics kernel/memory kernel/arch/debug
 # GENERAL_ASMC_DIRS += kernel/arch/gdt kernel/arch/idt kernel/arch/debug kernel/graphics kernel/memory
-# GENERAL_ASMC_DIRS += include/libc include/fonts include/wmgr
+GENERAL_ASMC_DIRS += include/libc include/fonts # include/wmgr
 
 GENERAL_ASM_SRC := $(foreach dir, $(GENERAL_ASMC_DIRS), $(wildcard $(dir)/*.asm))
 GENERAL_C_SRC := $(foreach dir, $(GENERAL_ASMC_DIRS), $(wildcard $(dir)/*.c))
