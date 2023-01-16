@@ -4,14 +4,13 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#include <envvars.h>
+
 /* -------------------------------------------------------------------------- */
 /*                                  CONSTANTS                                */
 /* -------------------------------------------------------------------------- */
 
 #define FREE_BLOCK 0
-
-// TODO: FIX THIS ABOMINATION AND MAKE IT DEPEND ON THE ENV VARS
-extern uint8_t mmio;
 
 #define BSS_SIZE 0x10000
 #define BSS_BEGIN ((uint32_t)(&mmio) - BSS_SIZE)

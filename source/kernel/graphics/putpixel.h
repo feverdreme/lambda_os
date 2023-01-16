@@ -31,10 +31,6 @@ extern void* fb;
 
 #elif defined(ARGB32)
 
-#include <stdint.h>
-#include <stdbool.h>
-#include <bootboot.h>
-
 typedef uint32_t pixel_color_t;
 typedef uint32_t* vga_ptr;
 
