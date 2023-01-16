@@ -21,6 +21,8 @@ extern uint8_t fb;                      // linear framebuffer mapped
 void main() {
     // gdt_install();
     // idt_init();
+    init_mem_model();
+
 
     int x, y, s=bootboot.fb_scanline, w=bootboot.fb_width, h=bootboot.fb_height;
 
@@ -40,10 +42,19 @@ void main() {
 
     // kputc('H', 0, 0, DEFAULT_FONT, 0x00FFFFFF);
     const char* t = "Hello World";
-    prints("Kernel PANIC: ");
+
+    // prints("Kernel PANIC: ");
     // kpanic("Poggers");
 
-    printd(bootboot.fb_height);
+    char* k = kmalloc(sizeof(char) * 17);
+    // *k = '+';
+    // *(k + 1) = '\0';
+
+    putrect(30, 30, 100, 50, 0x00FF00FF);
+
+    // prints(k);
+    // printc('H');
+    printd(&fb);
 
     return;
 

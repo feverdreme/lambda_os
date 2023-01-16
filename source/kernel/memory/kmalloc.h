@@ -10,8 +10,11 @@
 
 #define FREE_BLOCK 0
 
-#define BSS_BEGIN 0x3E00
+// TODO: FIX THIS ABOMINATION AND MAKE IT DEPEND ON THE ENV VARS
+extern uint8_t mmio;
+
 #define BSS_SIZE 0x10000
+#define BSS_BEGIN ((uint32_t)(&mmio) - BSS_SIZE)
 #define MBLOCK_SIZE 16
 #define MAT_SIZE (BSS_SIZE / MBLOCK_SIZE + 1)
 #define MAT_END (MAT_SIZE - 1)
