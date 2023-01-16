@@ -1,9 +1,6 @@
 #ifndef KMALLOC_H
 #define KMALLOC_H
 
-#include <stdint.h>
-#include <stdbool.h>
-
 #include <envvars.h>
 
 /* -------------------------------------------------------------------------- */

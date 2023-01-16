@@ -1,7 +1,4 @@
 #include "kpanic.h"
-#include "../../graphics/puts.h"
-#include "../../graphics/putpixel.h"
-
 
 void kpanic(const char* msg){
     // clear first line

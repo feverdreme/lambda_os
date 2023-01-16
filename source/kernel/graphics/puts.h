@@ -2,6 +2,7 @@
 #define PUTS_H
 
 #include <libc/fonts.h>
+#include <libc/string.h>
 #include <graphics/putpixel.h>
 
 typedef struct Cursor {

@@ -1,11 +1,5 @@
 #include "puts.h"
 
-#include <libc/fonts.h>
-#include <libc/string.h>
-#include <stdbool.h>
-
-#include "putpixel.h"
-
 font_t *DEFAULT_FONT = &spleen_font;
 
 Cursor_t cursor = {0, 0, 0, 1, 0x0000FF00};

@@ -2,10 +2,8 @@
 
 #include <envvars.h>
 #include <libc/math.h>
-#include <stdbool.h>
 #include <arch/debug/kpanic.h>
-
-#include "../graphics/puts.h"
+#include <graphics/puts.h>
 
 int memused = 0;
 int memblocksleft = MAT_SIZE;
