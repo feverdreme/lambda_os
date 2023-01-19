@@ -38,7 +38,7 @@ KERNEL_SPECIAL_O = kernel/kernel_entry.asm.o kernel/kernel_main.c.o
 
 GENERAL_ASMC_DIRS = kernel/graphics kernel/memory kernel/arch/debug
 # GENERAL_ASMC_DIRS += kernel/arch/gdt kernel/arch/idt kernel/arch/debug kernel/graphics kernel/memory
-GENERAL_ASMC_DIRS += include/libc include/fonts # include/wmgr
+GENERAL_ASMC_DIRS += include/libc include/fonts include/wmgr
 
 GENERAL_ASM_SRC := $(foreach dir, $(GENERAL_ASMC_DIRS), $(wildcard $(dir)/*.asm))
 GENERAL_C_SRC := $(foreach dir, $(GENERAL_ASMC_DIRS), $(wildcard $(dir)/*.c))
