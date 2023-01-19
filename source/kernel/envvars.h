@@ -32,6 +32,6 @@
 extern BOOTBOOT bootboot;               // see bootboot.h
 extern unsigned char environment[4096]; // configuration, UTF-8 text key=value pairs
 extern uint8_t fb;                      // linear framebuffer mapped 
-extern void* mmio;
+// extern void* mmio;
 
 #endif

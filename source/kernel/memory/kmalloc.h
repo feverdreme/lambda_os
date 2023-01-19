@@ -9,8 +9,10 @@
 
 #define FREE_BLOCK 0
 
+extern uint8_t mmio;
+
 #define BSS_SIZE 0x10000
-#define BSS_BEGIN ((uint32_t)(&mmio) - BSS_SIZE)
+#define BSS_BEGIN ((int32_t)0x1000)
 #define MBLOCK_SIZE 16
 #define MAT_SIZE (BSS_SIZE / MBLOCK_SIZE + 1)
 #define MAT_END (MAT_SIZE - 1)
