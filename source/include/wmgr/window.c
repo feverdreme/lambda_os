@@ -48,8 +48,6 @@ Window_t* create_window(int _pos_x, int _pos_y, int _width, int _height, const c
     all_windows[num_windows] = new_window;
     num_windows++;
 
-    printd(_width);
-
     return new_window;
 }
 
