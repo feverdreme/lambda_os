@@ -49,7 +49,7 @@ void put_vline(int pos_x, int pos_y, int len, pixel_color_t color) {
 
     for (int tracer=0; tracer<len; tracer++){
         *location = color;
-        location += ROWSIZE;
+        location += ROWSIZE / 4; // 32 bit pointer increments by 4 bytes
     }
 }
 
