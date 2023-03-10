@@ -14,9 +14,13 @@ var searchData=
   ['idt_5ftype_5fattributes_11',['idt_type_attributes',['../structidt__type__attributes.html',1,'']]],
   ['idtp_12',['idtp',['../idt_8h.html#a4bd16833092d3d6fb954727f65314ef0',1,'idt.h']]],
   ['index_13',['index',['../structsegment__selector.html#a2289d8b14bb0a7c056e15bcbd52701ca',1,'segment_selector::index()'],['../idt_8h.html#a750b5d744c39a06bfb13e6eb010e35d0',1,'index():&#160;idt.h']]],
-  ['init_5fmem_5fmodel_14',['init_mem_model',['../kmalloc_8c.html#a045637cc019305cfa094f82dc69d818c',1,'init_mem_model():&#160;kmalloc.c'],['../kmalloc_8h.html#a045637cc019305cfa094f82dc69d818c',1,'init_mem_model():&#160;kmalloc.c']]],
-  ['init_5fspleen_5ffont_15',['init_spleen_font',['../fonts_8h.html#ab38622d202f2abebd6195f3fe7964102',1,'fonts.h']]],
-  ['int_5f16_16',['int_16',['../idt_8h.html#ae227193bffdf5da1aa4649cc6db335efa70930e0ef29e608c8fd94172e9ab37c6',1,'idt.h']]],
-  ['int_5f32_17',['int_32',['../idt_8h.html#ae227193bffdf5da1aa4649cc6db335efa657c4b4c1fb6afab79094ada925cdd0c',1,'idt.h']]],
-  ['itoa_18',['itoa',['../DEPREACTED__puts_8h.html#a44ec176a02a62ada468ebde1b3f6e9f0',1,'itoa(int num, char *str, int base):&#160;DEPREACTED_puts.h'],['../string_8c.html#acdfa3e7dd7a5ffa9d5e988f0823b72ed',1,'itoa(int x, char *buf):&#160;string.c'],['../string_8h.html#a9c62f571a683f21ff78aa0a58ff329a9',1,'itoa(int x, char *buffer):&#160;string.c']]]
+  ['init_5fgenesis_5fwindow_14',['init_genesis_window',['../window_8c.html#a02ecb9af6be655823757995c334d1a36',1,'init_genesis_window():&#160;window.c'],['../window_8h.html#a02ecb9af6be655823757995c334d1a36',1,'init_genesis_window():&#160;window.c']]],
+  ['init_5fmem_5fmodel_15',['init_mem_model',['../kmalloc_8c.html#a045637cc019305cfa094f82dc69d818c',1,'init_mem_model():&#160;kmalloc.c'],['../kmalloc_8h.html#a045637cc019305cfa094f82dc69d818c',1,'init_mem_model():&#160;kmalloc.c']]],
+  ['initrd_5fmaxsize_16',['INITRD_MAXSIZE',['../bootboot_8h.html#ac7d34cf283b09b37b83b84270a1f56aa',1,'bootboot.h']]],
+  ['initrd_5fptr_17',['initrd_ptr',['../struct__pack.html#ac7e9425cfb92e030a72567395497031d',1,'_pack']]],
+  ['initrd_5fsize_18',['initrd_size',['../struct__pack.html#a91baf113ca5db832c21dd4e502683065',1,'_pack']]],
+  ['int_5f16_19',['int_16',['../idt_8h.html#ae227193bffdf5da1aa4649cc6db335efa70930e0ef29e608c8fd94172e9ab37c6',1,'idt.h']]],
+  ['int_5f32_20',['int_32',['../idt_8h.html#ae227193bffdf5da1aa4649cc6db335efa657c4b4c1fb6afab79094ada925cdd0c',1,'idt.h']]],
+  ['is_5fprintable_21',['is_printable',['../structfont.html#a6343b566ce9e214bc8f091999c392fbf',1,'font']]],
+  ['itoa_22',['itoa',['../DEPREACTED__puts_8h.html#a44ec176a02a62ada468ebde1b3f6e9f0',1,'itoa(int num, char *str, int base):&#160;DEPREACTED_puts.h'],['../string_8c.html#acdfa3e7dd7a5ffa9d5e988f0823b72ed',1,'itoa(int x, char *buf):&#160;string.c'],['../string_8h.html#a9c62f571a683f21ff78aa0a58ff329a9',1,'itoa(int x, char *buffer):&#160;string.c']]]
 ];

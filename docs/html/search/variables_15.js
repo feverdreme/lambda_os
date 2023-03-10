@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['width_0',['width',['../DEPREACTED__puts_8h.html#a556bac21d04be6a53667fd59448d7d3a',1,'DEPREACTED_puts.h']]]
+  ['vga_5fvideo_5fmemory_0',['VGA_VIDEO_MEMORY',['../DEPREACTED__puts_8h.html#afa0ad6246df49bda6b0b67b89c9835dd',1,'DEPREACTED_puts.h']]]
 ];

@@ -77,6 +77,18 @@ os.bin: bin/boot.bin bin/kernel.bin bin/zero_padding.bin
 
 	$(OBJCOPY) --only-keep-debug bin/kernel.elf bin/kernel.sym
 
+# Option 2: 64 bit BOOTBOOT
+os64: bin/kernel.elf
+	cp bin/kernel.elf build/boot/sys/core
+
+	mkbootimg check build/boot/sys/core
+	mkbootimg configuration.json initrd.rom
+	mkbootimg configuration.json bootpart.bin
+	mkbootimg configuration.json lambda_os.iso
+
+	mv initrd.rom build/
+	mv bootpart.bin build/
+	mv lambda_os.iso build/
 ##############################################################################
 # GENERAL C & ASM RULES
 

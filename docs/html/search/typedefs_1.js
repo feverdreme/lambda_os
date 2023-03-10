@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['font_5ft_0',['font_t',['../fonts_8h.html#a4869d6f320684d34e65d214f59af7a8c',1,'fonts.h']]],
-  ['fontchar_1',['fontchar',['../fonts_8h.html#a825d113cb67460aa25e0e3a3e4817e49',1,'fonts.h']]]
+  ['byte_0',['byte',['../typedef_8h.html#a0c8186d9b9b7880309c27230bbb5e69d',1,'typedef.h']]]
 ];

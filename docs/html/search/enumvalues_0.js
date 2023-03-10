@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['black_0',['BLACK',['../putpixel_8h.html#ad53815d1915c172b4c989a75e8c82130af77fb67151d0c18d397069ad8c271ba3',1,'putpixel.h']]],
-  ['blue_1',['BLUE',['../putpixel_8h.html#ad53815d1915c172b4c989a75e8c82130a35d6719cb4d7577c031b3d79057a1b79',1,'putpixel.h']]],
-  ['brown_2',['BROWN',['../putpixel_8h.html#ad53815d1915c172b4c989a75e8c82130a1fa14482e7e4dc1332ab8c9d995fe570',1,'putpixel.h']]]
+  ['int_5f16_0',['int_16',['../idt_8h.html#ae227193bffdf5da1aa4649cc6db335efa70930e0ef29e608c8fd94172e9ab37c6',1,'idt.h']]],
+  ['int_5f32_1',['int_32',['../idt_8h.html#ae227193bffdf5da1aa4649cc6db335efa657c4b4c1fb6afab79094ada925cdd0c',1,'idt.h']]]
 ];

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['mat_5fentry_5ft_0',['MAT_entry_t',['../kmalloc_8h.html#ae04474677fec06f4673f031bc906063d',1,'kmalloc.h']]],
-  ['mat_5fsection_5ft_1',['MAT_section_t',['../kmalloc_8h.html#a12c50d102265d48c2a34d7908fe61d2d',1,'kmalloc.h']]]
+  ['font_5ft_0',['font_t',['../fonts_8h.html#a4869d6f320684d34e65d214f59af7a8c',1,'fonts.h']]],
+  ['fontchar_1',['fontchar',['../fonts_8h.html#a692c5d72b3d0abc02438f3336b95b0e0',1,'fonts.h']]]
 ];

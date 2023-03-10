@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['idt_5fgate_5ftype_5ft_0',['idt_gate_type_t',['../idt_8h.html#afb279eabc0e03b2e3af1b06d6425801c',1,'idt.h']]]
+  ['cursor_5ft_0',['Cursor_t',['../puts_8h.html#a32f8e65ecab62003ca9080f36e6164c4',1,'puts.h']]]
 ];

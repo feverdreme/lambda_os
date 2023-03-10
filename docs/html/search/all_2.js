@@ -2,13 +2,21 @@ var searchData=
 [
   ['base_0',['base',['../structgdt__ptr.html#a79ad4f90a92c24aea05345dfc0d44765',1,'gdt_ptr::base()'],['../gdt_8h.html#af905b55df53bcba791c8fc3d4e1fefd0',1,'base():&#160;gdt.h']]],
   ['base_5fhigh_1',['base_high',['../structgdt__entry.html#a96abeddea82dd23ff9e84d09230e31a2',1,'gdt_entry::base_high()'],['../gdt_8h.html#a1a173457c7aa39c59c008fcc3332d2b3',1,'base_high():&#160;gdt.h']]],
-  ['base_5flow_2',['base_low',['../structgdt__entry.html#ade3b4a3948e6e475221de4e226f8579c',1,'gdt_entry::base_low()'],['../gdt_8h.html#a71e21ea67de59991e9a27666a1752a8f',1,'base_low():&#160;gdt.h']]],
+  ['base_5flow_2',['base_low',['../gdt_8h.html#a71e21ea67de59991e9a27666a1752a8f',1,'base_low():&#160;gdt.h'],['../structgdt__entry.html#ade3b4a3948e6e475221de4e226f8579c',1,'gdt_entry::base_low()']]],
   ['base_5fmiddle_3',['base_middle',['../structgdt__entry.html#ab5c8ccda9d0651184c31089ce7bbdbae',1,'gdt_entry::base_middle()'],['../gdt_8h.html#a6b67e86f6de9204d76adab79069aec29',1,'base_middle():&#160;gdt.h']]],
   ['begin_5find_4',['begin_ind',['../structMAT__section.html#a89072550707bf05c65b9d355b85b778b',1,'MAT_section']]],
-  ['black_5',['BLACK',['../putpixel_8h.html#ad53815d1915c172b4c989a75e8c82130af77fb67151d0c18d397069ad8c271ba3',1,'putpixel.h']]],
-  ['blue_6',['BLUE',['../putpixel_8h.html#ad53815d1915c172b4c989a75e8c82130a35d6719cb4d7577c031b3d79057a1b79',1,'putpixel.h']]],
-  ['brown_7',['BROWN',['../putpixel_8h.html#ad53815d1915c172b4c989a75e8c82130a1fa14482e7e4dc1332ab8c9d995fe570',1,'putpixel.h']]],
-  ['bss_5fbegin_8',['BSS_BEGIN',['../kmalloc_8h.html#a7e84b2c0c441b3f1fe030d24245ea281',1,'kmalloc.h']]],
-  ['bss_5fsize_9',['BSS_SIZE',['../kmalloc_8h.html#a42fccc6c8c6e55f2e081f345b27f4341',1,'kmalloc.h']]],
-  ['byte_10',['byte',['../typedef_8h.html#a0c8186d9b9b7880309c27230bbb5e69d',1,'typedef.h']]]
+  ['bodytext_5',['bodytext',['../structWindow.html#ae8da5d939c6ef6f8b2c746c2a740d01e',1,'Window']]],
+  ['bootboot_6',['bootboot',['../envvars_8h.html#a22a9f5bf2bf9cc4f3ddc40833c1813b9',1,'envvars.h']]],
+  ['bootboot_2eh_7',['bootboot.h',['../bootboot_8h.html',1,'']]],
+  ['bootboot_5fcore_8',['BOOTBOOT_CORE',['../bootboot_8h.html#af2801f894ded89107a67ccd822df31ac',1,'bootboot.h']]],
+  ['bootboot_5fenv_9',['BOOTBOOT_ENV',['../bootboot_8h.html#a85ef3587a87bfc2e167f3a3bd2964738',1,'bootboot.h']]],
+  ['bootboot_5ffb_10',['BOOTBOOT_FB',['../bootboot_8h.html#a3f4d22d06681434ef2b4b68d0c8d210d',1,'bootboot.h']]],
+  ['bootboot_5finfo_11',['BOOTBOOT_INFO',['../bootboot_8h.html#ae38fdafff5142a98f778ff6691caddda',1,'bootboot.h']]],
+  ['bootboot_5fmagic_12',['BOOTBOOT_MAGIC',['../bootboot_8h.html#ac58f0cce559bd97b55540f12bdc5df6e',1,'bootboot.h']]],
+  ['bootboot_5fmmio_13',['BOOTBOOT_MMIO',['../bootboot_8h.html#adfcfd6928c3b01d5f57500befc4f9106',1,'bootboot.h']]],
+  ['border_5fcolor_14',['border_color',['../structWindow.html#a55b212a41bb67f722b3e15ac31e5aa6b',1,'Window']]],
+  ['bspid_15',['bspid',['../struct__pack.html#acf21a5039ca9a445849e711ae498797d',1,'_pack']]],
+  ['bss_5fbegin_16',['BSS_BEGIN',['../kmalloc_8h.html#a7e84b2c0c441b3f1fe030d24245ea281',1,'kmalloc.h']]],
+  ['bss_5fsize_17',['BSS_SIZE',['../kmalloc_8h.html#a42fccc6c8c6e55f2e081f345b27f4341',1,'kmalloc.h']]],
+  ['byte_18',['byte',['../typedef_8h.html#a0c8186d9b9b7880309c27230bbb5e69d',1,'typedef.h']]]
 ];
