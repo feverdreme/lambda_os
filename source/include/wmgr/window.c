@@ -13,23 +13,7 @@ Window_t* all_windows[MAX_WINDOWS];  // maximum windows allowed
 void init_genesis_window() {
     Window_t* genesis_window = create_window(
         0, 0, INTERNAL_WIDTH, INTERNAL_HEIGHT, "Window 1", 20, RED,
-        "Elit ut laboris ut quis laboris dolor velit sit ea anim quis officia. \
-Duis elit consectetur eu magna. Adipisicing est dolor consequat sunt velit. \
-Aliquip tempor mollit ullamco quis ea. Non commodo anim aliquip consequat irure occaecat \
-consectetur mollit deserunt amet duis commodo ad aute.\nSit excepteur adipisicing tempor \
-laboris ea ut. Dolore aute magna dolor enim do laborum cupidatat esse reprehenderit aliqua aliqua. \
-Fugiat dolore dolore anim sunt Lorem qui mollit velit nulla cillum deserunt minim exercitation. \
-Quis aliquip enim nostrud aute mollit enim ex dolore est mollit ullamco. Excepteur voluptate \
-velit ex proident deserunt qui dolor fugiat excepteur sit commodo voluptate. Incididunt \
-nostrud ut veniam cillum do.\nEsse aute sit id in nulla culpa et aliquip ipsum. Est do \
-enim reprehenderit nostrud aute anim. Sunt veniam veniam pariatur anim id anim. Tempor \
-ex labore occaecat enim nulla et amet sunt id nulla. Dolore adipisicing duis minim fugiat. \
-Mollit id reprehenderit cupidatat in nulla ullamco veniam exercitation tempor. Consectetur \
-esse reprehenderit dolor ipsum minim voluptate laborum esse sint.\nVeniam commodo tempor \
-esse nostrud consequat officia anim cupidatat laboris in mollit deserunt in. Ipsum irure \
-laboris amet eiusmod ea ad laboris Lorem culpa duis. Incididunt laborum mollit et reprehenderit \
-ipsum labore commodo qui sint. Quis ad eiusmod est occaecat exercitation est \
-consectetur excepteur nisi nostrud ipsum.");
+        "Elit ut laboris ut quis laboris dolor velit sit ea anim quis officia.");
 
     // window_draw_window(genesis_window);
 }
