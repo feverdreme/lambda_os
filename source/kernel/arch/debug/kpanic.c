@@ -1,8 +1,10 @@
 #include "kpanic.h"
 
+#include <envvars.h>
+
 void kpanic(const char* msg){
     // clear first line
-    putrect(0, 0, 320, 8, 0x00DDDDDD);
+    putrect(0, 0, INTERNAL_WIDTH, 8, 0x00DDDDDD);
 
     cursor.x = 0;
     cursor.y = 0;

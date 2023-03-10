@@ -1,5 +1,7 @@
 #include "puts.h"
 
+#include <envvars.h>
+
 font_t *DEFAULT_FONT = &spleen_font;
 
 Cursor_t cursor = {0, 0, 0, 1, 0x0000FF00};
@@ -43,7 +45,7 @@ int kputs(const char* c, int pos_x, int pos_y, font_t *fnt, pixel_color_t color)
         }
 
         // if it will write past the screen
-        if (pos_x + fnt->fc_width >= 320) {
+        if (pos_x + fnt->fc_width >= INTERNAL_WIDTH) {
             // reset the counter while controlling vars
             pos_x = 0;
             prev_pos_x = 0;
@@ -60,7 +62,7 @@ int kputs(const char* c, int pos_x, int pos_y, font_t *fnt, pixel_color_t color)
         }
 
         pos_x += cursor.kerning;
-        pos_x = (pos_x + fnt->fc_width) % 320;
+        pos_x = (pos_x + fnt->fc_width) % INTERNAL_WIDTH;
 
         if (pos_x < prev_pos_x) {
             pos_x = 0;
@@ -105,7 +107,7 @@ int kprintc(char c, struct font *fnt) {
     }
 
     // if it will write past the screen
-    if (cursor.x + fnt->fc_width >= 320) {
+    if (cursor.x + fnt->fc_width >= INTERNAL_WIDTH) {
         // reset the counter while controlling vars
         cursor.x = 0;
         cursor.prev_x = 0;
@@ -122,7 +124,7 @@ int kprintc(char c, struct font *fnt) {
     }
 
     cursor.x += cursor.kerning;
-    cursor.x = (cursor.x + fnt->fc_width) % 320;
+    cursor.x = (cursor.x + fnt->fc_width) % INTERNAL_WIDTH;
 
     if (cursor.x < cursor.prev_x) {
         cursor.y += fnt->fc_width + cursor.kerning;

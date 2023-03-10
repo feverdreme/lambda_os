@@ -34,4 +34,11 @@ extern unsigned char environment[4096]; // configuration, UTF-8 text key=value p
 extern uint8_t fb;                      // linear framebuffer mapped 
 // extern void* mmio;
 
+/* -------------------------------------------------------------------------- */
+/*                             INTERNAL PIXEL DEFS                            */
+/* -------------------------------------------------------------------------- */
+
+#define INTERNAL_WIDTH (320 * 2)
+#define INTERNAL_HEIGHT (200 * 2)
+
 #endif
