@@ -4,6 +4,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#define NULL ((void *)0)
+
 /* -------------------------------------------------------------------------- */
 /*                                 OS BITMODE                                 */
 /* -------------------------------------------------------------------------- */
@@ -40,5 +42,14 @@ extern uint8_t fb;                      // linear framebuffer mapped
 
 #define INTERNAL_WIDTH (320 * 2)
 #define INTERNAL_HEIGHT (200 * 2)
+
+/* -------------------------------------------------------------------------- */
+/*                              HELPFUL CONSTANTS                             */
+/* -------------------------------------------------------------------------- */
+
+typedef enum SUCCESS_STATUS {
+    SUCCESS = 0,
+    FAILURE = 1
+} SUCCESS_STATUS_t
 
 #endif
