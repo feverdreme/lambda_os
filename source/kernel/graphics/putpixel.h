@@ -5,6 +5,9 @@
 
 #if defined(RGB8)
 
+#define ROWSIZE (320)
+#define COLSIZE (200)
+
 typedef unsigned char pixel_color_t;
 typedef volatile unsigned char* vga_ptr;
 
@@ -28,6 +31,10 @@ enum VGA_COLOR {
     YELLOW = 14,
     WHITE = 15
 };
+
+static inline vga_ptr calc_fb_location(int x, int y) {
+    return (volatile unsigned char*)fb + ROWSIZE * y + x;
+}
 
 #elif defined(ARGB32)
 
@@ -53,9 +60,15 @@ enum VGA_COLOR {
     WHITE           = 0xFFFFFF
 };
 
-#endif
+// IN BYTES
+#define ROWSIZE bootboot.fb_scanline
+#define COLSIZE bootboot.fb_height
 
-extern inline vga_ptr calc_fb_location(int x, int y);
+static inline vga_ptr calc_fb_location(int x, int y) {
+    return ((vga_ptr)(&fb + 4*x + ROWSIZE * y));
+}
+
+#endif
 
 void putpixel(int pos_x, int pos_y, pixel_color_t color);
 void put_hline(int pos_x, int pos_y, int len, pixel_color_t color);

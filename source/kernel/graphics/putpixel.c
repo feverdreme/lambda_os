@@ -9,19 +9,9 @@
 int ROWSIZE = 320;
 int COLSIZE = 200;
 
-inline vga_ptr calc_fb_location(int x, int y) {
-    return (volatile unsigned char*)fb + ROWSIZE * y + x;
-}
-
 #elif defined(ARGB32)
 
-// IN BYTES
-#define ROWSIZE bootboot.fb_scanline
-#define COLSIZE bootboot.fb_height
 
-inline vga_ptr calc_fb_location(int x, int y) {
-    return ((vga_ptr)(&fb + 4*x + ROWSIZE * y));
-}
 
 #endif
 
