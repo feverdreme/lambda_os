@@ -28,14 +28,11 @@ enum Tile_Type {
 typedef struct Tile {
     int num_children;
 
-    /**
-     * @brief What type of children the instance has
-     * 
-     */
+    /// @brief What type of children the instance has
     enum Tile_Type tile_type;
     
     struct Tile* sub_tiles[MAX_SUBELEMENTS];
-    Window_t* sub_windows[MAX_SUBELEMENTS];
+    Window_t* child_window;
 
     struct Tile* parent;
 } Tile_t;
@@ -53,15 +50,31 @@ extern Tile_t *all_tiles[MAX_TILES]; // list of all window pointers
 
 Tile_t* init_genesis_tile();
 
-Tile_t* create_tile(Tile_t *parent, int tile_type);
-void tile_add_child_tile(Tile_t *this, Tile_t *child);
+Tile_t* create_tile(int tile_type);
+SUCCESS_STATUS_t tile_add_child_tile(Tile_t *this, Tile_t *child);
 void tile_add_child_window(Tile_t *this, Window_t *child);
 SUCCESS_STATUS_t tile_change_parent(Tile_t *this, Tile_t *new_parent);
-SUCCESS_STATUS_t tile_remove_child(Tile_t *this, GENERIC_PTR_ARRAY child_arr, void *child);
+SUCCESS_STATUS_t tile_remove_child(Tile_t *this, Tile_t *child);
 
+/**
+ * @brief Draws a tile recursively.
+ * 
+ * @param this 
+ * @param x 
+ * @param y 
+ * @param width 
+ * @param height 
+ * @return * void 
+ */
+void tile_draw(Tile_t *this, int x, int y, int width, int height);
+
+void tile_draw_2x2(Tile_t *this, int x, int y, int width, int height);
+
+void tile_draw_rowcol(Tile_t *this, int x, int y, int width, int height);
 
 /* -------------------------------------------------------------------------- */
 /*                              Utility Functions                             */
 /* -------------------------------------------------------------------------- */
+
 
 #endif

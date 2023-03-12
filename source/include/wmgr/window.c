@@ -36,7 +36,7 @@ Window_t* create_window(int _pos_x, int _pos_y, int _width, int _height, const c
     return new_window;
 }
 
-void destroy_window(Window_t* w) {
+void window_destroy_window(Window_t* w) {
     kfree(w);
     num_windows--;
 }
@@ -79,4 +79,11 @@ void window_draw_border(Window_t* w) {
     put_hline(w->pos_x, w->pos_y + w->height, w->width, w->border_color);
     put_vline(w->pos_x, w->pos_y, w->height, w->border_color);
     put_vline(w->pos_x + w->width, w->pos_y, w->height, w->border_color);
+}
+
+void window_update_xywh(Window_t* w, int x, int y, int width, int height) {
+    w->pos_x = x;
+    w->pos_y = y;
+    w->width = width;
+    w->height = height;
 }
