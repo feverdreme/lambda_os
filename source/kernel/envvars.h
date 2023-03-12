@@ -50,6 +50,6 @@ extern uint8_t fb;                      // linear framebuffer mapped
 typedef enum SUCCESS_STATUS {
     SUCCESS = 0,
     FAILURE = 1
-} SUCCESS_STATUS_t
+} SUCCESS_STATUS_t;
 
 #endif
