@@ -2,6 +2,8 @@
 
 #include <envvars.h>
 
+#include <memory/kmalloc.h>
+
 int num_tiles = 0;             // counter of windows that exist
 Tile_t *all_tiles[MAX_TILES];  // list of all window pointers
 
