@@ -34,8 +34,6 @@ void tile_add_child_window(Tile_t *this, Window_t *child) {
     if (this->tile_type != WINDOW_CHILDREN) return;
     if (this->num_children >= MAX_SUBELEMENTS) return;
 
-    tile_change_parent(child, this);
-
     this->sub_windows[this->num_children] = child;
     this->num_children++;
 }
