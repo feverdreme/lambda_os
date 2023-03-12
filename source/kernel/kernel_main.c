@@ -1,15 +1,19 @@
+#include <stdint.h>
+#include <stdbool.h>
+#include <bootboot.h>
+
 #include <envvars.h>
 
 #include <libc/libc.h>
 
 #include <memory/kmalloc.h>
-#include <graphics/putpixel.h>
 #include <graphics/puts.h>
 #include <arch/gdt/gdt.h>
 #include <arch/idt/idt.h>
 #include <arch/debug/kpanic.h>
 
 #include <wmgr/window.h>
+#include <wmgr/tile.h>
 
 #include <stdbool.h>
 
