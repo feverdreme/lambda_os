@@ -42,10 +42,15 @@ extern Window_t *all_windows[MAX_WINDOWS]; // list of all window pointers
 void init_genesis_window();
 
 Window_t* create_window(int _pos_x, int _pos_y, int _width, int _height, const char *_tilebar_title, int _th, pixel_color_t _border_color, char* _bodytext);
+void destroy_window(Window_t* w);
 
 void window_draw_window(Window_t* w);
 void window_draw_tilebar(Window_t* w);
 void window_draw_body(Window_t* w);
 void window_draw_border(Window_t* w);
+
+/* -------------------------------------------------------------------------- */
+/*                        Window Manipulation Functions                       */
+/* -------------------------------------------------------------------------- */
 
 #endif

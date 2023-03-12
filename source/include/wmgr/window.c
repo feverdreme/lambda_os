@@ -36,6 +36,11 @@ Window_t* create_window(int _pos_x, int _pos_y, int _width, int _height, const c
     return new_window;
 }
 
+void destroy_window(Window_t* w) {
+    kfree(w);
+    num_windows--;
+}
+
 void window_draw_window(Window_t* w) {
     window_draw_tilebar(w);
     window_draw_body(w);
