@@ -63,14 +63,15 @@ SUCCESS_STATUS_t tile_remove_child(Tile_t *this, GENERIC_PTR_ARRAY child_arr, vo
     for (int child_index; child_index < MAX_SUBELEMENTS; child_index++) {
         if (child_arr[child_index] == child) {
             // child is found
-
+            if (child_index == this->num_children) {
             // there's no replacing to be done
-            if (child_index == MAX_SUBELEMENTS) return FAILURE;
-
+                this->num_children--;
+            } else {
             // swap the tobedeleted child with the last child
             // and decrement the parent's num_children at the same time
             child_arr[child_index] = child_arr[(this->num_children--) - 1];
         }
+    }
     }
 
     return SUCCESS;
