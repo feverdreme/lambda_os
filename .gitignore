@@ -5,4 +5,5 @@ source/bin/*
 build-tools
 *.rom
 source/build/*
+submodules/bootboot/mkbootimg-Linux.zip
 !source/build/boot/sys/config
