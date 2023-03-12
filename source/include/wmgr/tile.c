@@ -18,6 +18,8 @@ Tile_t *create_tile(Tile_t *parent, int tile_type) {
 
     all_tiles[num_tiles] = new_tile;
     num_tiles++;
+
+    return new_tile;
 }
 
 void tile_add_child_tile(Tile_t *this, Tile_t *child) {
