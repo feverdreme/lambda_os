@@ -7,7 +7,7 @@
 int num_tiles = 0;             // counter of windows that exist
 Tile_t *all_tiles[MAX_TILES];  // list of all window pointers
 
-Tile_t *init_genesis_tile() { create_tile(NULL, 0); }
+Tile_t *init_genesis_tile() { return create_tile(NULL, 0); }
 
 Tile_t *create_tile(Tile_t *parent, int tile_type) {
     Tile_t *new_tile = (Tile_t *)kmalloc(sizeof(Tile_t));
