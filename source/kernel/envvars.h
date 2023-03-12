@@ -52,4 +52,6 @@ typedef enum SUCCESS_STATUS {
     FAILURE = 1
 } SUCCESS_STATUS_t;
 
+typedef char** GENERIC_PTR_ARRAY;
+
 #endif

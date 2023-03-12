@@ -46,7 +46,7 @@ SUCCESS_STATUS_t tile_change_parent(Tile_t *this, Tile_t *new_parent) {
     if (new_parent->num_children == MAX_SUBELEMENTS) return FAILURE;
 
     // Delete child from previous parent
-    tile_remove_child(this->parent, this->parent->sub_tiles, this);
+    tile_remove_child(this->parent, (GENERIC_PTR_ARRAY)(this->parent->sub_tiles), this);
 
     // Reassign new parent
     this->parent = new_parent;
@@ -57,7 +57,7 @@ SUCCESS_STATUS_t tile_change_parent(Tile_t *this, Tile_t *new_parent) {
     return SUCCESS;
 }
 
-SUCCESS_STATUS_t tile_remove_child(Tile_t *this, char *child_arr, void *child) {
+SUCCESS_STATUS_t tile_remove_child(Tile_t *this, GENERIC_PTR_ARRAY child_arr, void *child) {
     for (int child_index; child_index < MAX_SUBELEMENTS; child_index++) {
         if (child_arr[child_index] == child) {
             // child is found

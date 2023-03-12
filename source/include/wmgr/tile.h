@@ -57,7 +57,7 @@ Tile_t* create_tile(Tile_t *parent, int tile_type);
 void tile_add_child_tile(Tile_t *this, Tile_t *child);
 void tile_add_child_window(Tile_t *this, Window_t *child);
 SUCCESS_STATUS_t tile_change_parent(Tile_t *this, Tile_t *new_parent);
-SUCCESS_STATUS_t tile_remove_child(Tile_t *this, char *child_arr, void *child);
+SUCCESS_STATUS_t tile_remove_child(Tile_t *this, GENERIC_PTR_ARRAY child_arr, void *child);
 
 
 /* -------------------------------------------------------------------------- */
