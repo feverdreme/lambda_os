@@ -22,6 +22,20 @@ Tile_t *create_tile(int tile_type) {
     return new_tile;
 }
 
+Tile_t* create_tile_tile(Tile_t *parent) {
+    Tile_t *new_tile = create_tile(TILE_CHILDREN);
+    tile_add_child_tile(parent, new_tile);
+
+    return new_tile;
+}
+
+Tile_t* create_window_tile(Window_t *child) {
+    Tile_t *new_tile = create_tile(WINDOW_CHILDREN);
+    tile_add_child_window(new_tile, child);
+    
+    return new_tile;
+}
+
 SUCCESS_STATUS_t tile_add_child_tile(Tile_t *this, Tile_t *child) {
     if (this->tile_type != TILE_CHILDREN) return FAILURE;
     if (this->num_children >= MAX_SUBELEMENTS) return FAILURE;
