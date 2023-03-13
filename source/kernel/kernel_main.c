@@ -38,7 +38,8 @@ void main() {
 
     tile_add_child_tile(genesis_tile, t1);
     tile_add_child_tile(genesis_tile, t2);
-    tile_add_child_tile(genesis_tile, t3);
+    // tile_add_child_tile(genesis_tile, t3);
+    tile_change_parent(t3, genesis_tile);
 
     tile_draw(genesis_tile, 0, 0, 640, 400);
 

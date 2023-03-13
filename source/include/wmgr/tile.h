@@ -3,6 +3,8 @@
 
 #include <envvars.h>
 
+#include <stdbool.h>
+
 #include <wmgr/window.h>
 
 /* -------------------------------------------------------------------------- */
@@ -75,6 +77,8 @@ void tile_draw_rowcol(Tile_t *this, int x, int y, int width, int height);
 /* -------------------------------------------------------------------------- */
 /*                              Utility Functions                             */
 /* -------------------------------------------------------------------------- */
+bool tile_has_child_tile(Tile_t *this, Tile_t *child);
+
 
 
 #endif

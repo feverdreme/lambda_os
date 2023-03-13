@@ -24,11 +24,9 @@ Tile_t *create_tile(int tile_type) {
 SUCCESS_STATUS_t tile_add_child_tile(Tile_t *this, Tile_t *child) {
     if (this->tile_type != TILE_CHILDREN) return FAILURE;
     if (this->num_children >= MAX_SUBELEMENTS) return FAILURE;
+    if (tile_has_child_tile(this, child)) return SUCCESS;
     
-    if (child->parent != this) {
-        // make it so tile_change_parent doesn't do this wrong
-        child->parent = this;
-    };
+    child->parent = this;
 
     this->sub_tiles[this->num_children] = child;
     this->num_children++;
@@ -65,7 +63,8 @@ SUCCESS_STATUS_t tile_change_parent(Tile_t *this, Tile_t *new_parent) {
     this->parent = new_parent;
 
     // add child to new parent
-    tile_add_child_tile(this->parent, this);
+    if (!tile_has_child_tile(this->parent, this))
+        tile_add_child_tile(this->parent, this);
 
     return SUCCESS;
 }
@@ -146,4 +145,14 @@ void tile_draw_2x2(Tile_t *this, int x, int y, int width, int height) {
             );
         }
     }
+}
+
+bool tile_has_child_tile(Tile_t *this, Tile_t *child) {
+    if (this->tile_type != TILE_CHILDREN) return false;
+
+    for (int i=0; i<MAX_SUBELEMENTS; i++) {
+        if (this->sub_tiles[i] == child) return true;
+    }
+
+    return false;
 }
