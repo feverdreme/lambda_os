@@ -36,8 +36,8 @@ SUCCESS_STATUS_t tile_add_child_tile(Tile_t *this, Tile_t *child) {
     return SUCCESS;
 }
 
-void tile_add_child_window(Tile_t *this, Window_t *child) {
-    if (this->tile_type != WINDOW_CHILDREN) return;
+SUCCESS_STATUS_t tile_add_child_window(Tile_t *this, Window_t *child) {
+    if (this->tile_type != WINDOW_CHILDREN) return FAILURE;
 
     if (this->child_window != NULL) {
         // we must prevent the memory leaks
@@ -45,6 +45,8 @@ void tile_add_child_window(Tile_t *this, Window_t *child) {
     }
 
     this->child_window = child;
+
+    return SUCCESS;
 }
 
 SUCCESS_STATUS_t tile_change_parent(Tile_t *this, Tile_t *new_parent) {
