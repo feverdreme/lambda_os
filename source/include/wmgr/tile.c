@@ -14,6 +14,7 @@ Tile_t *create_tile(int tile_type) {
     new_tile->num_children = 0;
     new_tile->tile_type = tile_type;
     new_tile->child_window = NULL;
+    new_tile->parent = NULL;
 
     all_tiles[num_tiles] = new_tile;
     num_tiles++;
@@ -26,10 +27,11 @@ SUCCESS_STATUS_t tile_add_child_tile(Tile_t *this, Tile_t *child) {
     if (this->num_children >= MAX_SUBELEMENTS) return FAILURE;
     if (tile_has_child_tile(this, child)) return SUCCESS;
     
-    child->parent = this;
-
     this->sub_tiles[this->num_children] = child;
     this->num_children++;
+    
+    tile_change_parent(child, this);
+    // child->parent = this;
 
     return SUCCESS;
 }
@@ -70,7 +72,9 @@ SUCCESS_STATUS_t tile_change_parent(Tile_t *this, Tile_t *new_parent) {
 }
 
 SUCCESS_STATUS_t tile_remove_child(Tile_t *this, Tile_t *child) {
-    for (int child_index; child_index < MAX_SUBELEMENTS; child_index++) {
+    if (this->tile_type != TILE_CHILDREN) return FAILURE;
+
+    for (int child_index = 0; child_index < MAX_SUBELEMENTS; child_index++) {
         if (this->sub_tiles[child_index] == child) {
             // child is found
             if (child_index == this->num_children) {
