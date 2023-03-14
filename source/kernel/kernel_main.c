@@ -4,6 +4,8 @@
 
 #include <envvars.h>
 
+#include <arch/gdt/gdt.h>
+
 #include <memory/kmalloc.h>
 #include <graphics/puts.h>
 #include <arch/debug/kpanic.h>
@@ -13,7 +15,7 @@
 // TODO: make libc and fonts shared static libraries to be linked last
 
 void main() {
-    // gdt_install();
+    gdt_install();
     // idt_init();
     init_mem_model();
     // init_genesis_window();

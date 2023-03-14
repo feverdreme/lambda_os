@@ -37,6 +37,7 @@ LDSCRIPT := ld/bootboot.ld
 KERNEL_SPECIAL_O = kernel/kernel_entry.asm.o kernel/kernel_main.c.o 
 
 GENERAL_ASMC_DIRS = kernel/graphics kernel/memory kernel/arch/debug
+GENERAL_ASMC_DIRS += kernel/arch/gdt
 # GENERAL_ASMC_DIRS += kernel/arch/gdt kernel/arch/idt kernel/arch/debug kernel/graphics kernel/memory
 GENERAL_ASMC_DIRS += include/libc include/fonts include/wmgr
 
@@ -93,13 +94,17 @@ os64: bin/kernel.elf
 	cp bin/kernel.elf build/boot/sys/core
 
 	mkbootimg check build/boot/sys/core
+
 	mkbootimg configuration.json initrd.rom
 	mkbootimg configuration.json bootpart.bin
-	mkbootimg configuration.json lambda_os.img
+	mkbootimg configuration.json lambda_os.iso
 
 	mv initrd.rom build/
 	mv bootpart.bin build/
-	mv lambda_os.img build/
+	mv lambda_os.iso build/
+
+vdi: os64
+	VBoxManage convertfromraw --format VDI build/lambda_os.img build/lambda_os.vdi
 ##############################################################################
 # GENERAL C & ASM RULES
 
