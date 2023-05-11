@@ -35,7 +35,7 @@
  * Last 8 bits of the base
  * Bits 24-31
  */
-struct gdt_entry { * Bits 0-15
+struct gdt_entry { 
     uint16_t limit_low;
     uint16_t base_low;
     uint8_t base_middle;
