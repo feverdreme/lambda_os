@@ -5,6 +5,8 @@
 #include <envvars.h>
 
 #include <arch/gdt/gdt.h>
+#include <arch/idt/idt.h>
+#include <arch/paging/paging.h>
 
 #include <memory/kmalloc.h>
 #include <graphics/puts.h>
@@ -16,7 +18,7 @@
 
 void main() {
     gdt_install();
-    // idt_init();
+    idt_init();
     init_mem_model();
     // init_genesis_window();
     Tile_t *genesis_tile = init_genesis_tile();
@@ -48,7 +50,9 @@ void main() {
     tile_change_parent(t3, genesis_tile);
     tile_add_child_tile(genesis_tile, t4);
 
+    // if (sizeof(Page_Entry_t) == 8)
     tile_draw(genesis_tile, 0, 0, 640, 400);
+    // printd(get_MAXPHYADDR());
 
     return;
 }
