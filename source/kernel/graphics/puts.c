@@ -33,7 +33,6 @@ int kputs(const char* c, int pos_x, int pos_y, font_t *fnt, pixel_color_t color)
     int prev_pos_x = pos_x;
 
     for (; *c != '\0'; c++) {
-        if (!fnt->is_printable[(ascii_code_t)(*c)]) return 1;
 
         fontchar* fc = ctofc(*c, fnt);
 
@@ -44,6 +43,13 @@ int kputs(const char* c, int pos_x, int pos_y, font_t *fnt, pixel_color_t color)
             continue;
         }
 
+        else if (!fnt->is_printable[(ascii_code_t)(*c)]) {
+            // TODO IMPLEMENT CONTROL CHARACTERS
+            continue;
+            
+            kprintc(c, fnt);
+        }
+        
         // if it will write past the screen
         if (pos_x + fnt->fc_width >= INTERNAL_WIDTH) {
             // reset the counter while controlling vars

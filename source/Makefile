@@ -11,7 +11,7 @@ LD := $(ARCH)-ld
 AR := $(ARCH)-ar
 OBJCOPY := $(ARCH)-objcopy
 STRIP := $(ARCH)-strip
-STRIPFLAGS =  -s -K mmio -K fb -K bootboot -K environment -K initstack
+STRIPFLAGS = -s -K mmio -K fb -K bootboot -K environment -K initstack
 # LDSCRIPT := ld/bootboot.ld
 LDSCRIPT := ld/bootboot.ld
 
@@ -24,11 +24,12 @@ LDSCRIPT := ld/bootboot.ld
 # 3. Object linkage (objects from step 2) 
 # 4. kernel/kernel_entry.asm and kernel/kernel_main.c compilation
 # 5. Kernel linkage
-# 6. kernel.elf -> kernel.bin
-# 7. zero-padding generation
-# 8. concatenation into OS.bin
+# 6. Symbol table creation
+# 7. kernel.elf -> kernel.bin
+# 8. zero-padding generation
+# 9. concatenation into OS.bin
 
-# 9. cleaning
+# 10. cleaning
 
 ##############################################################################
 # Stage lists
@@ -37,8 +38,10 @@ LDSCRIPT := ld/bootboot.ld
 KERNEL_SPECIAL_O = kernel/kernel_entry.asm.o kernel/kernel_main.c.o 
 
 GENERAL_ASMC_DIRS = kernel/graphics kernel/memory kernel/arch/debug
+GENERAL_ASMC_DIRS += kernel/arch/gdt kernel/arch/idt
 # GENERAL_ASMC_DIRS += kernel/arch/gdt kernel/arch/idt kernel/arch/debug kernel/graphics kernel/memory
 GENERAL_ASMC_DIRS += include/libc include/fonts include/wmgr
+GENERAL_ASMC_DIRS += kernel/applications/term
 
 GENERAL_ASM_SRC := $(foreach dir, $(GENERAL_ASMC_DIRS), $(wildcard $(dir)/*.asm))
 GENERAL_C_SRC := $(foreach dir, $(GENERAL_ASMC_DIRS), $(wildcard $(dir)/*.c))
@@ -69,37 +72,44 @@ bin/kernel.elf: $(KERNEL_SPECIAL_O) $(GENERAL_ASMC_BIN_DIRS_O)
 	@echo
 	@echo "LINKING..."
 	$(LD) -n -nostdlib -T $(LDSCRIPT) $(KERNEL_SPECIAL_O) $(GENERAL_ASM_O) $(GENERAL_C_O) $(GENERAL_CPP_O)
+	cp bin/kernel.elf bin/kernel.duplicate.elf
 	$(STRIP) $(STRIPFLAGS) bin/kernel.elf
 
 # Stage 6
+bin/kernel.sym: bin/kernel.duplicate.elf
+	$(OBJCOPY) --only-keep-debug bin/kernel.duplicate.elf bin/kernel.sym
+
+# Stage 7
 bin/kernel.bin: bin/kernel.elf
 	$(OBJCOPY) -O binary bin/kernel.elf bin/kernel.bin
 
-# Stage 7
+# Stage 8
 bin/zero_padding.bin:
 	echo "times 10240 db 0" > kernel/zero_padding.asm
 	$(ASM) kernel/zero_padding.asm -f bin -o bin/zero_padding.bin
 
-# Stage 8
+# Stage 9
 
 # Option 1: 32 bit traditional
-os32: bin/boot.bin bin/kernel.bin bin/zero_padding.bin
+os32: bin/boot.bin bin/kernel.bin bin/zero_padding.bin bin/kernel.sym
 	cat bin/boot.bin bin/kernel.bin bin/zero_padding.bin > bin/os.bin
 
-	$(OBJCOPY) --only-keep-debug bin/kernel.elf bin/kernel.sym
-
 # Option 2: 64 bit BOOTBOOT
-os64: bin/kernel.elf
+os64: bin/kernel.elf bin/kernel.sym
 	cp bin/kernel.elf build/boot/sys/core
 
 	mkbootimg check build/boot/sys/core
+
 	mkbootimg configuration.json initrd.rom
 	mkbootimg configuration.json bootpart.bin
-	mkbootimg configuration.json lambda_os.img
+	mkbootimg configuration.json lambda_os.iso
 
 	mv initrd.rom build/
 	mv bootpart.bin build/
-	mv lambda_os.img build/
+	mv lambda_os.iso build/
+
+vdi: os64
+	VBoxManage convertfromraw --format VDI build/lambda_os.img build/lambda_os.vdi
 ##############################################################################
 # GENERAL C & ASM RULES
 
