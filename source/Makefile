@@ -41,7 +41,8 @@ GENERAL_ASMC_DIRS = kernel/graphics kernel/memory kernel/arch/debug
 GENERAL_ASMC_DIRS += kernel/arch/gdt kernel/arch/idt
 # GENERAL_ASMC_DIRS += kernel/arch/gdt kernel/arch/idt kernel/arch/debug kernel/graphics kernel/memory
 GENERAL_ASMC_DIRS += include/libc include/fonts include/wmgr
-GENERAL_ASMC_DIRS += kernel/applications/term
+GENERAL_ASMC_DIRS += kernel/arch/paging
+#GENERAL_ASMC_DIRS += kernel/applications/term
 
 GENERAL_ASM_SRC := $(foreach dir, $(GENERAL_ASMC_DIRS), $(wildcard $(dir)/*.asm))
 GENERAL_C_SRC := $(foreach dir, $(GENERAL_ASMC_DIRS), $(wildcard $(dir)/*.c))
