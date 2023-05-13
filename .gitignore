@@ -8,6 +8,8 @@ source/build/*
 docs/
 submodules/bootboot/mkbootimg-Linux.zip
 !source/build/boot/sys/config
+/limine.h
+*.elf
 /limine
 /ovmf
 *.iso
