@@ -38,12 +38,44 @@ typedef Paging_Structure_t Page_Directory_t;
 typedef Paging_Structure_t PDPT_t;
 typedef Paging_Structure_t PML4_t;
 
-extern PML4_t PML4_Table;
+extern PML4_t PML4T;
 extern int MAXPHYADDR;
 
-void fill_page_entry(Page_Entry_t *entry, uint8_t flags, void *address);
+/**
+ * @brief Set a page table entry located at a virtual address, along with necesary heirarchical structures. If it already exists returns a pointer to the existing entry.
+ * 
+ * @param phys_addr 
+ * @param vaddr 
+ * @return Page_Entry_t* 
+ */
+Page_Entry_t *set_page(void *phys_addr, void *vaddr);
 
-void copy_bootboot_paging();
+/**
+ * @brief Sets the present bit on a page entry
+ * 
+ * @param pte Page table entry
+ */
+void enable_page_entry(Page_Entry_t *pte);
+
+/**
+ * @brief Disables the present bit on a page entry
+ * 
+ * @param pte Page table entry
+ */
+void disable_page_entry(Page_Entry_t *pte);
+
+/**
+ * @brief Locates the page entry that maps to a specific virtual address
+ * 
+ * @param vaddr The virtual address
+ * @return Page_Entry_t* A pointer to the page entry
+ */
+Page_Entry_t *locate_page_entry(void *vaddr);
+
+/**
+ * @brief Initializes all paging for the OS, including remapping the BOOTBOOT paging and modifying cr3.
+ * 
+ */
 void initialize_paging();
 
 #endif
