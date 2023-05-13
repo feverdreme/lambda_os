@@ -1,3 +1,5 @@
+KERNEL_SRC := source
+
 # Nuke built-in rules and variables.
 override MAKEFLAGS += -rR
 
@@ -35,12 +37,12 @@ limine:
 
 .PHONY: kernel
 kernel:
-	$(MAKE) -C kernel
+	$(MAKE) -C $(KERNEL_SRC)
 
 $(IMAGE_NAME).iso: limine kernel
 	rm -rf iso_root
 	mkdir -p iso_root
-	cp kernel/kernel.elf \
+	cp $(KERNEL_SRC)/kernel.elf \
 		limine.cfg limine/limine.sys limine/limine-cd.bin limine/limine-cd-efi.bin iso_root/
 	xorriso -as mkisofs -b limine-cd.bin \
 		-no-emul-boot -boot-load-size 4 -boot-info-table \
@@ -62,7 +64,7 @@ $(IMAGE_NAME).hdd: limine kernel
 	mkdir -p img_mount
 	sudo mount `cat loopback_dev`p1 img_mount
 	sudo mkdir -p img_mount/EFI/BOOT
-	sudo cp -v kernel/kernel.elf limine.cfg limine/limine.sys img_mount/
+	sudo cp -v $(KERNEL_SRC)/kernel.elf limine.cfg limine/limine.sys img_mount/
 	sudo cp -v limine/BOOTX64.EFI img_mount/EFI/BOOT/
 	sync
 	sudo umount img_mount
@@ -72,9 +74,9 @@ $(IMAGE_NAME).hdd: limine kernel
 .PHONY: clean
 clean:
 	rm -rf iso_root $(IMAGE_NAME).iso $(IMAGE_NAME).hdd
-	$(MAKE) -C kernel clean
+	$(MAKE) -C $(KERNEL_SRC) clean
 
 .PHONY: distclean
 distclean: clean
 	rm -rf limine ovmf
-	$(MAKE) -C kernel distclean
+	$(MAKE) -C $(KERNEL_SRC) distclean
