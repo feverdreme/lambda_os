@@ -1,10 +1,13 @@
 #include "puts.h"
 
 #include <envvars.h>
+#include <graphics/putpixel.h>
+#include <graphics/fb.h>
+#include <graphics/vga_constants.h>
 
 font_t *DEFAULT_FONT = &spleen_font;
 
-Cursor_t cursor = {0, 0, 0, 1, 0x0000FF00};
+Cursor_t cursor = {0, 0, 0, 1, GREEN};
 
 int kputc(char c, int pos_x, int pos_y, font_t *fnt, pixel_color_t color) {
     // check if printable
@@ -51,7 +54,7 @@ int kputs(const char* c, int pos_x, int pos_y, font_t *fnt, pixel_color_t color)
         }
         
         // if it will write past the screen
-        if (pos_x + fnt->fc_width >= INTERNAL_WIDTH) {
+        if (pos_x + fnt->fc_width >= FB_WIDTH) {
             // reset the counter while controlling vars
             pos_x = 0;
             prev_pos_x = 0;
@@ -68,7 +71,7 @@ int kputs(const char* c, int pos_x, int pos_y, font_t *fnt, pixel_color_t color)
         }
 
         pos_x += cursor.kerning;
-        pos_x = (pos_x + fnt->fc_width) % INTERNAL_WIDTH;
+        pos_x = (pos_x + fnt->fc_width) % FB_WIDTH;
 
         if (pos_x < prev_pos_x) {
             pos_x = 0;
@@ -113,15 +116,15 @@ int kprintc(char c, struct font *fnt) {
     }
 
     // if it will write past the screen
-    if (cursor.x + fnt->fc_width >= INTERNAL_WIDTH) {
+    if (cursor.x + fnt->fc_width >= FB_WIDTH) {
         // reset the counter while controlling vars
         cursor.x = 0;
         cursor.prev_x = 0;
         cursor.y += 8;
     }
 
-    for (uint32_t row = 0; row < fnt->fc_height; row++) {
-        for (uint32_t col = 0; col < fnt->fc_width; col++) {
+    for (uint64_t row = 0; row < fnt->fc_height; row++) {
+        for (uint64_t col = 0; col < fnt->fc_width; col++) {
             // FIXME: Only works with bitmaps fonts with 16bit widths at
             // most
             int drawbit = fc[row] & (1 << (8 - col));
@@ -130,7 +133,7 @@ int kprintc(char c, struct font *fnt) {
     }
 
     cursor.x += cursor.kerning;
-    cursor.x = (cursor.x + fnt->fc_width) % INTERNAL_WIDTH;
+    cursor.x = (cursor.x + fnt->fc_width) % FB_WIDTH;
 
     if (cursor.x < cursor.prev_x) {
         cursor.y += fnt->fc_width + cursor.kerning;
