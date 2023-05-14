@@ -97,8 +97,8 @@ override NASMFLAGS += \
 
 override CFILES := $(shell find -L kernel include -type f -name '*.c')
 override NASMFILES := $(shell find -L kernel include -type f -name '*.asm')
-override OBJ := $(CFILES:.c=.o) $(NASMFILES:.asm=.o)
-override HEADER_DEPS := $(CFILES:.c=.d)
+override OBJ := $(CFILES:.c=.c.o) $(NASMFILES:.asm=.asm.o)
+override HEADER_DEPS := $(CFILES:.c=.c.d)
 
 # Default target.
 .PHONY: all
@@ -112,11 +112,11 @@ $(KERNEL): $(OBJ)
 	$(LD) $(OBJ) $(LDFLAGS) -o $@
 
 # Compilation rules for *.c files.
-%.o: %.c limine.h
+%.c.o: %.c limine.h
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 
 # Compilation rules for *.asm (nasm) files.
-%.o: %.asm
+%.asm.o: %.asm
 	$(ASM) $(NASMFLAGS) $< -o $@
 
 # Remove object files and the final executable.
