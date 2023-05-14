@@ -22,14 +22,27 @@
 */
 
 translated_vaddr_t get_vaddr_indices(void *vaddr) {
-    int PHYS_offset = (uint64_t)vaddr & 0xfff,
-        PT_index = ((uint64_t)vaddr >> 12) & 0x1ff,  // 9 bit mask
-        PD_index = ((uint64_t)vaddr >> 21) & 0x1ff,
-        PDPT_index = ((uint64_t)vaddr >> 30) & 0x1ff,
-        PML4_index = ((uint64_t)vaddr >> 39) & 0x1ff;
+    int PHYS = (uint64_t)vaddr & 0xfff,
+        PTi = ((uint64_t)vaddr >> 12) & 0x1ff,  // 9 bit mask
+        PDi = ((uint64_t)vaddr >> 21) & 0x1ff,
+        PDPTi = ((uint64_t)vaddr >> 30) & 0x1ff,
+        PML4i = ((uint64_t)vaddr >> 39) & 0x1ff;
 
-    translated_vaddr_t ret = {PML4_index, PDPT_index, PD_index, PT_index,
-                              PHYS_offset};
+    translated_vaddr_t ret = {PML4i, PDPTi, PDi, PTi,
+                              PHYS};
     
+    return ret;
+}
+
+translated_vaddr_ptrs_t get_vaddr_paging_ptrs(void *vaddr) {
+    translated_vaddr_t idcs = get_vaddr_indices(vaddr);
+
+    translated_vaddr_ptrs_t ret = {
+        &(*PML4T)[idcs.PML4i],
+        &(*ALL_PDPT)[idcs.PML4i][idcs.PDPTi],
+        &(*ALL_PD)[idcs.PML4i][idcs.PDPTi][idcs.PDi],
+        &(*ALL_PT)[idcs.PML4i][idcs.PDPTi][idcs.PDi][idcs.PTi]
+    };
+
     return ret;
 }
