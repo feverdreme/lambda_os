@@ -1,6 +1,7 @@
 #include <wmgr/window.h>
 
 #include <envvars.h>
+#include <graphics/fb.h>
 #include <graphics/putpixel.h>
 #include <graphics/puts.h>
 #include <libc/libc.h>
@@ -12,7 +13,7 @@ Window_t* all_windows[MAX_WINDOWS];  // maximum windows allowed
 
 void init_genesis_window() {
     Window_t* genesis_window = create_window(
-        0, 0, INTERNAL_WIDTH, INTERNAL_HEIGHT, "Window 1", 20, RED,
+        0, 0, FB_WIDTH, FB_HEIGHT, "Window 1", 20, RED,
         "Elit ut laboris ut quis laboris dolor velit sit ea anim quis officia.");
 
     // window_draw_window(genesis_window);

@@ -2,18 +2,17 @@
 
 #include <stdint.h>
 #include <envvars.h>
+#include <graphics/fb.h>
 
-#if defined(RGB8)
+// #if defined(RGB8)
 
-// IN BYTES
-int ROWSIZE = 320;
-int COLSIZE = 200;
+// // IN BYTES
+// int ROWSIZE = 320;
+// int COLSIZE = 200;
 
-#elif defined(ARGB32)
+// #elif defined(ARGB32)
 
-
-
-#endif
+// #endif
 
 void putpixel(int pos_x, int pos_y, pixel_color_t color) {
     *calc_fb_location(pos_x, pos_y) = color;
@@ -32,14 +31,11 @@ void put_hline(int pos_x, int pos_y, int len, pixel_color_t color) {
 }
 
 void put_vline(int pos_x, int pos_y, int len, pixel_color_t color) {
-    // volatile unsigned char* location = (volatile unsigned char*)fb + 320 * pos_y + pos_x;
     vga_ptr location = calc_fb_location(pos_x, pos_y);
-    // Clamp len
-    // len = min(pos_y + len, 200);
 
     for (int tracer=0; tracer<len; tracer++){
         *location = color;
-        location += ROWSIZE / 4; // 32 bit pointer increments by 4 bytes
+        location += FB_WIDTH;
     }
 }
 

@@ -1,10 +1,11 @@
 #include "kpanic.h"
 
 #include <envvars.h>
+#include <graphics/fb.h>
 
 void kpanic(const char* msg){
     // clear first line
-    putrect(0, 0, INTERNAL_WIDTH, 8, 0x00DDDDDD);
+    putrect(0, 0, FB_WIDTH, 8, 0x00DDDDDD);
 
     cursor.x = 0;
     cursor.y = 0;
