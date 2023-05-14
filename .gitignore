@@ -1,4 +1,16 @@
-bin/*
+source/bin/*
 .vscode
 *.o
 *.bin
+build-tools
+*.rom
+source/build/*
+docs/
+submodules/bootboot/mkbootimg-Linux.zip
+!source/build/boot/sys/config
+/limine.h
+*.elf
+/limine
+/ovmf
+*.iso
+*.hdd
