@@ -29,9 +29,7 @@ typedef struct Page_Entry {
     int xd : 1;         // execute-disable
 } __attribute__((packed)) Page_Entry_t;
 
-typedef struct Paging_Structure {
-    Page_Entry_t entries[512];
-} Paging_Structure_t;
+typedef Page_Entry_t Paging_Structure_t[512];
 
 typedef Paging_Structure_t Page_Table_t;
 typedef Paging_Structure_t Page_Directory_t;
