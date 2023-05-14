@@ -4,7 +4,6 @@
 
 #include <envvars.h>
 
-#include <arch/gdt/gdt.h>
 #include <arch/idt/idt.h>
 #include <arch/paging/paging.h>
 
@@ -21,7 +20,6 @@
 
 void main() {
     initialize_fb();
-    // gdt_install();
     // idt_init();
     init_mem_model();
     init_genesis_window();
