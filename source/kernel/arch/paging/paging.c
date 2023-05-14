@@ -21,7 +21,7 @@ int MAXPHYADDR;
 Page_Entry_t *set_page(void *phys_addr, void *vaddr, uint8_t pe_flags) {
     Page_Entry_t *pte = locate_page_entry(vaddr);
 
-	pte->phys = phys_addr;
+	pte->phys = (uint64_t)(phys_addr);
 	pte->flags = pe_flags;
 
 	return pte;
