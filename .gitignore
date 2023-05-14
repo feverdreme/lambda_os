@@ -1,6 +1,7 @@
 source/bin/*
 .vscode
 *.o
+*.d
 *.bin
 build-tools
 *.rom
