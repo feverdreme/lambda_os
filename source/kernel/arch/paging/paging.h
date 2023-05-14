@@ -67,19 +67,20 @@ extern int MAXPHYADDR;
  */
 Page_Entry_t *set_page(void *phys_addr, void *vaddr, uint8_t pe_flags);
 
+Page_Entry_t *modify_page_entry_present(Page_Entry_t *pte);
 /**
  * @brief Sets the present bit on a page entry, cascading down hierarchical structures.
  * 
  * @param pte Page table entry
  */
-Page_Entry_t *enable_page_entry(Page_Entry_t *pte);
+Page_Entry_t *enable_page_entry(void *vaddr);
 
 /**
- * @brief Disables the present bit on a page entry, and all necesary
+ * @brief Disables the present bit on ONLY the page entry.
  * 
  * @param pte Page table entry
  */
-void disable_page_entry(Page_Entry_t *pte);
+Page_Entry_t *disable_page_entry(void *vaddr);
 
 /**
  * @brief Locates the page entry that maps to a specific virtual address
