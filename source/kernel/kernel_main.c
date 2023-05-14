@@ -20,9 +20,10 @@
 
 void main() {
     initialize_fb();
-    // idt_init();
+    idt_init();
     init_mem_model();
     init_genesis_window();
+    
     Tile_t *genesis_tile = init_genesis_tile();
     // // putrect(0, 0, FB_WIDTH, FB_HEIGHT, WHITE);
 
