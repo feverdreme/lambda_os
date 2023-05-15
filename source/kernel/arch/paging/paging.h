@@ -3,6 +3,7 @@
 
 #include <cpuid.h>
 #include <envvars.h>
+#include <limine.h>
 
 // This can only map 4kb pages, other direct mappings are too complex right now
 
@@ -58,14 +59,18 @@ extern Contiguous_PT_t 		*ALL_PT;
 
 extern int MAXPHYADDR;
 
+extern struct limine_kernel_address_response kernel_address_response;
+
 /**
- * @brief Set a 4kb page table entry located at a virtual address, along with necesary heirarchical structures. If it already exists returns a pointer to the existing entry. Does not cascade enable.
+ * @brief Set a 4kb page table entry located at a virtual address, along with necesary heirarchical structures. If it already exists returns a pointer to the existing entry. Does not cascade enable. DOES NOT OVERRIDE 1GB MAPPING
  * 
  * @param phys_addr 
  * @param vaddr 
  * @return Page_Entry_t* 
  */
-Page_Entry_t *set_page(void *phys_addr, void *vaddr, uint8_t pe_flags);
+Page_Entry_t *map_4kb_page(void *phys_addr, void *vaddr, uint8_t pe_flags);
+
+Page_Entry_t *map_4kb_page(void *phys_addr, void *vaddr, uint8_t pe_flags);
 
 /**
  * @brief Sets the present bit on a page entry, cascading down hierarchical structures.

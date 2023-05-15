@@ -1,6 +1,7 @@
 #include "paging.h"
 
 #include <arch/paging/virtm.h>
+#include <limine_requests.h>
 
 PML4_t 				*PML4T;
 Contiguous_PDPT_t 	*ALL_PDPT;
@@ -8,6 +9,7 @@ Contiguous_PD_t 	*ALL_PD;
 Contiguous_PT_t 	*ALL_PT;
 
 int MAXPHYADDR;
+struct limine_kernel_address_response kernel_address_response;
 
 /*
     Paging Structures Memory Layout for Quick Translation
@@ -18,7 +20,9 @@ int MAXPHYADDR;
     512 * 512 * 512 Page Tables
 */
 
-Page_Entry_t *set_page(void *phys_addr, void *vaddr, uint8_t pe_flags) {
+Page_Entry_t *map_4kb_page(void *phys_addr, void *vaddr, uint8_t pe_flags) {
+    // TODO: check to make sure 1GB mapping doesn't exist in PDPTe
+
     Page_Entry_t *pte = locate_page_entry(vaddr);
 
 	pte->phys = (uint64_t)(phys_addr);
@@ -56,7 +60,19 @@ Page_Entry_t *locate_page_entry(void *vaddr) {
     return &(*ALL_PT)[idcs.PML4i][idcs.PDPTi][idcs.PDi][idcs.PTi];
 }
 
-void setup_all_paging_structures() {}
+void setup_all_paging_structures() {
+    // designate a specific address for the strucure to begin
+    // start filling them pages (quad loop incoming!!)
+    // map the exact same way as the entry memory layout)
+    // THERE ARE CERTAIN REGIONS THAT MUST JUST BE KERNEL 1GB PAGING
+
+    // the rest is free game
+
+    kernel_address_response = *(kernel_address_request.response);
+
+    // let's just map the first GB
+
+}
 
 void initialize_paging() {
 	MAXPHYADDR = get_MAXPHYADDR();
