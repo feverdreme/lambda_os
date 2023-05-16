@@ -104,6 +104,10 @@ Page_Entry_t *locate_page_entry(void *vaddr) {
 }
 
 void setup_all_paging_structures() {
+
+}
+
+void setup_default_mapping() {
     kernel_address_response = *(kernel_address_request.response);
 
     hhdm_response = *(hhdm_request.response);

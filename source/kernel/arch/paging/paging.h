@@ -135,6 +135,12 @@ Page_Entry_t *locate_page_entry(void *vaddr);
 void setup_all_paging_structures();
 
 /**
+ * @brief Sets up the mapping supported by Limine.
+ * 
+ */
+void setup_default_mapping();
+
+/**
  * @brief Initializes all paging for the OS, including remapping the BOOTBOOT paging and modifying cr3.
  * 
  */
