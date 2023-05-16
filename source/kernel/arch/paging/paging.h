@@ -11,6 +11,10 @@
 
 // CR4.PCIDE = 0
 
+#define PT_PAGE_SIZE			(4<<10)	// 4 kib
+#define PD_PAGE_SIZE			(2<<20)	// 2 mib
+#define PDPT_PAGE_SIZE			(1<<30)	// 1 gib
+
 #define NUM_PDPT                (512)
 #define NUM_PAGE_DIRECTORIES    (512*512)
 #define NUM_PAGE_TABLES         (512*512*512)
@@ -29,6 +33,8 @@
 #define PE_MAPS_TO_PAGE			(1<<5)  // third bit
 #define PE_IS_PRESENT			(1<<6)  // fourth bit
 
+#define PDPT_ADDRESS_BITSHIFT	18
+#define PD_ADDRESS_BITSHIFT		9	
 typedef struct Page_Entry {
     int present : 1;
     int flags : 4;

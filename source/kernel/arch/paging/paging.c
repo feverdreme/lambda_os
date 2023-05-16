@@ -52,7 +52,7 @@ Page_Entry_t *map_2mb_page(void *phys_addr, void *vaddr) {
 
     Page_Entry_t *pde = ptrs.PDe;
 
-    pde->phys = (uint64_t)(phys_addr);
+    pde->phys = (uint64_t)(phys_addr) << PD_ADDRESS_BITSHIFT;
     pde->present = 1;
     pde->reserved = 1;
 
@@ -64,7 +64,7 @@ Page_Entry_t *map_1gb_page(void *phys_addr, void *vaddr) {
 
     Page_Entry_t *pdpte = ptrs.PDPTe;
 
-    pdpte->phys = (uint64_t)(phys_addr);
+    pdpte->phys = (uint64_t)(phys_addr) << PDPT_ADDRESS_BITSHIFT;
     pdpte->present = 1;
     pdpte->reserved = 1;
 
