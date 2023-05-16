@@ -72,9 +72,27 @@ uint8_t detect_page_entry_type(Page_Entry_t *pe);
  * 
  * @param phys_addr 
  * @param vaddr 
- * @return Page_Entry_t* 
+ * @return Page_Entry_t* The page table entry with the physical address.
  */
 Page_Entry_t *map_4kb_page(void *phys_addr, void *vaddr, uint8_t pe_flags);
+
+/**
+ * @brief Set a 2mb page table entry located at a virtual address, along with necesary heirarchical structures. If it already exists returns a pointer to the existing entry. Does not cascade enable. DOES NOT OVERRIDE 1GB MAPPING
+ * 
+ * @param phys_addr 
+ * @param vaddr 
+ * @return Page_Entry_t* The page directory entry with the physical address.
+ */
+Page_Entry_t *map_2mb_page(void *phys_addr, void *vaddr);
+
+/**
+ * @brief Set a 1gb page table entry located at a virtual address, along with necesary heirarchical structures. If it already exists returns a pointer to the existing entry. Does not cascade enable.
+ * 
+ * @param phys_addr 
+ * @param vaddr 
+ * @return Page_Entry_t* The page directory pointer table entry with the physical address.
+ */
+Page_Entry_t *map_1gb_page(void *phys_addr, void *vaddr);
 
 /**
  * @brief Sets the present bit on a page entry, cascading down hierarchical structures.
