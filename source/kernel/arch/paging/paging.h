@@ -22,7 +22,7 @@
 #define PE_READ_WRITE	        (1<<1)	// read/write
 #define PE_USER_SUPERVISOR	    (1<<2)	// user/supervisor
 #define PE_PLEVEL_WRITE_THROUGH	(1<<3)	// page-level write-through
-#define PE_PLEVEL_CACHE_DISABLE	(1<<4)	// page-level cache disable		
+#define PE_PLEVEL_CACHE_DISABLE	(1<<4)	// page-level cache disable
 
 // these type constants are defined by me
 
@@ -35,6 +35,14 @@
 
 #define PDPT_ADDRESS_BITSHIFT	18
 #define PD_ADDRESS_BITSHIFT		9	
+
+#define PAT_UC                  0x0     // uncacheable
+#define PAT_WC                  0x1     // write combining
+#define PAT_WT                  0x4     // write through
+#define PAT_WP                  0x5     // write protected
+#define PAT_WB                  0x6		// write back
+#define PAT_UNCACHED			0x7
+
 typedef struct Page_Entry {
     int present : 1;
     int flags : 4;
