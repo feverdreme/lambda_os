@@ -102,7 +102,23 @@ Page_Entry_t *locate_page_entry(void *vaddr) {
 }
 
 void setup_all_paging_structures() {
+    FULL_PAGING_STRUCTURE = (Full_Paging_Structure_t*)PAGING_PHYS_ADDRESS;
 
+    // set all PML4Te to not present and correct physical address
+    for (int PML4Ti=0; PML4Ti<512; PML4Ti++) {
+        Page_Entry_t *pe = &FULL_PAGING_STRUCTURE->PML4T[PML4Ti];
+
+        pe->present = 0;
+        pe->phys = (uint64_t)(PAGING_PHYS_ADDRESS) + sizeof(PML4_t) + PML4Ti * sizeof(PDPT_t);
+    }
+
+    // get the PML4i for the hhdm and kernel virtual addresses and set to present
+    // i'm not using get_vaddr_indices for this
+    uint64_t hhdm_pml4i = ((*(hhdm_request.response)).offset >> 39) & 0x1ff;
+    uint64_t kernel_pml4i = ((*(kernel_address_request.response)).virtual_base >> 39) & 0x1ff;
+
+    FULL_PAGING_STRUCTURE->PML4T[hhdm_pml4i].present = 1;
+    FULL_PAGING_STRUCTURE->PML4T[kernel_pml4i].present = 1;
 }
 
 void setup_default_mapping() {
