@@ -151,8 +151,8 @@ int kprints(const char *c, font_t *fnt) {
     return 0;
 }
 
-int kprintd(int d, font_t *fnt) {
-    char buf[21]; // max we'll need
+int kprintd(uint64_t d, font_t *fnt) {
+    char buf[31]; // max we'll need
     itoa(d, buf);
 
     return kprints(buf, fnt);
@@ -166,7 +166,7 @@ int prints(const char *c) {
     return kprints(c, DEFAULT_FONT);
 }
 
-int printd(int d) {
+int printd(uint64_t d) {
     return kprintd(d, DEFAULT_FONT);
 }
 

@@ -66,7 +66,7 @@ void reverse(char* begin, char* end)
     }
 }
 
-void itoa(int x, char* buf) {
+void itoa(uint64_t x, char* buf) {
     static const char* lookup = "0123456789";
 
     if (x == 0) {
