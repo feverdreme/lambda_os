@@ -11,9 +11,9 @@
 
 // CR4.PCIDE = 0
 
-#define PT_PAGE_SIZE			(4<<10)	// 4 kib
-#define PD_PAGE_SIZE			(2<<20)	// 2 mib
-#define PDPT_PAGE_SIZE			(1<<30)	// 1 gib
+#define PT_PAGE_SIZE			(uint64_t)(4<<10)	// 4 kib
+#define PD_PAGE_SIZE			(uint64_t)(2<<20)	// 2 mib
+#define PDPT_PAGE_SIZE			(uint64_t)(1<<30)	// 1 gib
 
 #define NUM_PDPT                (512)
 #define NUM_PAGE_DIRECTORIES    (512*512)
@@ -43,6 +43,9 @@
 #define PAT_WB                  0x6		// write back
 #define PAT_UNCACHED			0x7
 
+// TODO: SHOULD BE A LINKER VARIABLE
+#define PAGING_PHYS_ADDRESS		(0x20000)
+
 typedef struct Page_Entry {
     int present : 1;
     int flags : 4;
@@ -66,10 +69,14 @@ typedef PDPT_t 				Contiguous_PDPT_t[512];
 typedef Page_Directory_t	Contiguous_PD_t[512][512];
 typedef Page_Table_t		Contiguous_PT_t[512][512][512];
 
-extern PML4_t 				*PML4T;
-extern Contiguous_PDPT_t 	*ALL_PDPT;
-extern Contiguous_PD_t 		*ALL_PD;
-extern Contiguous_PT_t 		*ALL_PT;
+typedef struct Full_Paging_Structure {
+	PML4_t PML4T;
+	Contiguous_PDPT_t ALL_PDPT;
+	Contiguous_PD_t ALL_PD;
+	Contiguous_PT_t ALL_PT;
+} Full_Paging_Structure_t;
+
+extern Full_Paging_Structure_t *FULL_PAGING_STRUCTURE;
 
 /**
  * @brief Detects what type of paging structure a Page_Entry_t object is.

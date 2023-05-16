@@ -45,10 +45,10 @@ translated_vaddr_ptrs_t get_vaddr_paging_ptrs(void *vaddr) {
     translated_vaddr_t idcs = get_vaddr_indices(vaddr);
 
     translated_vaddr_ptrs_t ret = {
-        &(*PML4T)[idcs.PML4i],
-        &(*ALL_PDPT)[idcs.PML4i][idcs.PDPTi],
-        &(*ALL_PD)[idcs.PML4i][idcs.PDPTi][idcs.PDi],
-        &(*ALL_PT)[idcs.PML4i][idcs.PDPTi][idcs.PDi][idcs.PTi]
+        &(FULL_PAGING_STRUCTURE->PML4T)[idcs.PML4i],
+        &(FULL_PAGING_STRUCTURE->ALL_PDPT)[idcs.PML4i][idcs.PDPTi],
+        &(FULL_PAGING_STRUCTURE->ALL_PD)[idcs.PML4i][idcs.PDPTi][idcs.PDi],
+        &(FULL_PAGING_STRUCTURE->ALL_PT)[idcs.PML4i][idcs.PDPTi][idcs.PDi][idcs.PTi]
     };
 
     return ret;
@@ -59,7 +59,7 @@ void *get_vaddr_from_pte(Page_Entry_t *pte) {
     // 512 PDPTs * 512 PDs * 512 PTs * 512 PTes
 
     // TODO: implicit casting in pointer arithmetic is dangerous
-    uint64_t offset = (uint64_t)pte - (uint64_t)ALL_PT;
+    uint64_t offset = (uint64_t)pte - (uint64_t)(&FULL_PAGING_STRUCTURE->ALL_PT);
 
     if (offset >> 36) // if the offset > 512^4
         kpanic("INVALID PTE->VADDR DECODE:\n\tINDEX OUT OF BOUNDS");
