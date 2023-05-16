@@ -20,6 +20,15 @@
 #define PE_PLEVEL_WRITE_THROUGH	(1<<3)	// page-level write-through
 #define PE_PLEVEL_CACHE_DISABLE	(1<<4)	// page-level cache disable		
 
+// these type constants are defined by me
+
+#define PE_PML4E_TYPE           (1)
+#define PE_PDPTE_TYPE           (1<<2)
+#define PE_PDE_TYPE             (1<<3)
+#define PE_PTE_TYPE             (1<<4)
+#define PE_MAPS_TO_PAGE			(1<<5)  // third bit
+#define PE_IS_PRESENT			(1<<6)  // fourth bit
+
 typedef struct Page_Entry {
     int present : 1;
     int flags : 4;
@@ -49,6 +58,14 @@ extern Contiguous_PD_t 		*ALL_PD;
 extern Contiguous_PT_t 		*ALL_PT;
 
 extern struct limine_kernel_address_response kernel_address_response;
+
+/**
+ * @brief Detects what type of paging structure a Page_Entry_t object is.
+ * 
+ * @param pe A pointer to the page entry.
+ * @return Consult the PE_TYPE constants.
+ */
+uint8_t detect_page_entry_type(Page_Entry_t *pe);
 
 /**
  * @brief Set a 4kb page table entry located at a virtual address, along with necesary heirarchical structures. If it already exists returns a pointer to the existing entry. Does not cascade enable. DOES NOT OVERRIDE 1GB MAPPING
