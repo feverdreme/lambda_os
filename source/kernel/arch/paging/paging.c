@@ -122,7 +122,7 @@ void setup_default_mapping() {
     }
 
     // Map the kernel
-    map_1gb_page((void *)kernel_address_response.physical_address, (void *)kernel_address_response.virtual_address);
+    map_1gb_page((void *)kernel_address_response.physical_base, (void *)kernel_address_response.virtual_base);
 }
 
 void initialize_paging() {
