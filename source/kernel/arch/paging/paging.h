@@ -7,15 +7,6 @@
 
 // This can only map 4kb pages, other direct mappings are too complex right now
 
-static int get_MAXPHYADDR() {
-    int cpuid_code = 0x80000008; // EAX code for CPUID call
-
-    int eax, unused;
-    __get_cpuid(cpuid_code, &eax, &unused, &unused, &unused);
-
-    return eax & (0xff); // EAX[7:0]
-}
-
 #ifdef IA32E_PAGING
 
 // CR4.PCIDE = 0
@@ -68,8 +59,6 @@ extern struct limine_kernel_address_response kernel_address_response;
  * @param vaddr 
  * @return Page_Entry_t* 
  */
-Page_Entry_t *map_4kb_page(void *phys_addr, void *vaddr, uint8_t pe_flags);
-
 Page_Entry_t *map_4kb_page(void *phys_addr, void *vaddr, uint8_t pe_flags);
 
 /**
