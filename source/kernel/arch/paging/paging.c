@@ -40,8 +40,33 @@ Page_Entry_t *map_4kb_page(void *phys_addr, void *vaddr, uint8_t pe_flags) {
 
 	pte->phys = (uint64_t)(phys_addr);
 	pte->flags = pe_flags;
+    pte->present = 1;
 
 	return pte;
+}
+
+Page_Entry_t *map_2mb_page(void *phys_addr, void *vaddr) {
+    translated_vaddr_ptrs_t ptrs = get_vaddr_paging_ptrs(vaddr);
+
+    Page_Entry_t *pde = ptrs.PDe;
+
+    pde->phys = (uint64_t)(phys_addr);
+    pde->present = 1;
+    pde->reserved = 1;
+
+    return pde;
+}
+
+Page_Entry_t *map_1gb_page(void *phys_addr, void *vaddr) {
+    translated_vaddr_ptrs_t ptrs = get_vaddr_paging_ptrs(vaddr);
+
+    Page_Entry_t *pdpte = ptrs.PDPTe;
+
+    pdpte->phys = (uint64_t)(phys_addr);
+    pdpte->present = 1;
+    pdpte->reserved = 1;
+
+    return pdpte;
 }
 
 Page_Entry_t *enable_page_entry(void *vaddr) {
@@ -68,6 +93,7 @@ Page_Entry_t *disable_page_entry(void *vaddr) {
 }
 
 Page_Entry_t *locate_page_entry(void *vaddr) {
+    // TODO: add checks that this page entry is actually enabled. there might not be a direct mapping to this because a higher structure doesnt point to this
     translated_vaddr_t idcs = get_vaddr_indices(vaddr);
 
     return &(*ALL_PT)[idcs.PML4i][idcs.PDPTi][idcs.PDi][idcs.PTi];

@@ -68,7 +68,7 @@ extern struct limine_kernel_address_response kernel_address_response;
 uint8_t detect_page_entry_type(Page_Entry_t *pe);
 
 /**
- * @brief Set a 4kb page table entry located at a virtual address, along with necesary heirarchical structures. If it already exists returns a pointer to the existing entry. Does not cascade enable. DOES NOT OVERRIDE 1GB MAPPING
+ * @brief Set a 4kb page table entry located at a virtual address, along with necesary heirarchical structures. If it already exists returns a pointer to the existing entry. Sets present bit. Does not cascade enable. DOES NOT OVERRIDE 1GB MAPPING
  * 
  * @param phys_addr 
  * @param vaddr 
@@ -77,7 +77,7 @@ uint8_t detect_page_entry_type(Page_Entry_t *pe);
 Page_Entry_t *map_4kb_page(void *phys_addr, void *vaddr, uint8_t pe_flags);
 
 /**
- * @brief Set a 2mb page table entry located at a virtual address, along with necesary heirarchical structures. If it already exists returns a pointer to the existing entry. Does not cascade enable. DOES NOT OVERRIDE 1GB MAPPING
+ * @brief Set a 2mb page table entry located at a virtual address, along with necesary heirarchical structures. If it already exists returns a pointer to the existing entry. Sets present bit. Does not cascade enable. DOES NOT OVERRIDE 1GB MAPPING
  * 
  * @param phys_addr 
  * @param vaddr 
@@ -86,7 +86,7 @@ Page_Entry_t *map_4kb_page(void *phys_addr, void *vaddr, uint8_t pe_flags);
 Page_Entry_t *map_2mb_page(void *phys_addr, void *vaddr);
 
 /**
- * @brief Set a 1gb page table entry located at a virtual address, along with necesary heirarchical structures. If it already exists returns a pointer to the existing entry. Does not cascade enable.
+ * @brief Set a 1gb page table entry located at a virtual address, along with necesary heirarchical structures. If it already exists returns a pointer to the existing entry. Sets present bit. Does not cascade enable.
  * 
  * @param phys_addr 
  * @param vaddr 
