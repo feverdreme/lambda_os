@@ -55,7 +55,6 @@ void main() {
 
     // if (sizeof(Page_Entry_t) == 8)
     tile_draw(genesis_tile, 0, 0, 640, 400);
-    printd(get_MAXPHYADDR());
 
     return;
 }
