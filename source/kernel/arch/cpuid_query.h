@@ -10,4 +10,6 @@ static inline int get_MAXPHYADDR() {
     return eax & (0xff); // EAX[7:0]
 }
 
+extern int MAXPHYADDR;
+
 #endif
