@@ -57,8 +57,6 @@ extern Contiguous_PDPT_t 	*ALL_PDPT;
 extern Contiguous_PD_t 		*ALL_PD;
 extern Contiguous_PT_t 		*ALL_PT;
 
-extern struct limine_kernel_address_response kernel_address_response;
-
 /**
  * @brief Detects what type of paging structure a Page_Entry_t object is.
  * 

@@ -11,7 +11,9 @@ Contiguous_PD_t 	*ALL_PD;
 Contiguous_PT_t 	*ALL_PT;
 
 int MAXPHYADDR;
+
 struct limine_kernel_address_response kernel_address_response;
+struct limine_hhdm_response hhdm_response;
 
 uint8_t detect_page_entry_type(Page_Entry_t *pe) {
     // detect what type
