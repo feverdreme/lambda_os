@@ -20,6 +20,7 @@ uint8_t detect_page_entry_type(Page_Entry_t *pe) {
     int pe_type;
 
     // THIS ASSUME THIS IS SIGNED
+    // MAKE SURE THIS CONVERSION WORKS?? THE TYPE IS GONNA BE WEIRD
     if ((int64_t)pe >= (int64_t)ALL_PT) 
         pe_type = PE_PTE_TYPE;
     else if ((int64_t)pe >= (int64_t)ALL_PD)
@@ -56,6 +57,7 @@ Page_Entry_t *map_2mb_page(void *phys_addr, void *vaddr) {
     pde->present = 1;
     pde->reserved = 1;
 
+    
     return pde;
 }
 
@@ -102,12 +104,21 @@ Page_Entry_t *locate_page_entry(void *vaddr) {
 }
 
 void setup_all_paging_structures() {
-    // (signed)vaddr = (signed)paddr + offset
     kernel_address_response = *(kernel_address_request.response);
-    
-    uint64_t addr_offset = kernel_address_response.virtual_base - kernel_address_response.physical_base;
+
+    hhdm_response = *(hhdm_request.response);
+    uint64_t hhdm_offset = hhdm_response.offset;
+
+    // printd(kernel_address_response.physical_base);
+    // printd(hhdm_offset);
 
     // Map all physical memory
+    for (uint64_t offset = 0; offset < 4 * PDPT_PAGE_SIZE; offset += PDPT_PAGE_SIZE) {
+        map_1gb_page((void *)offset, (void*)(hhdm_offset + offset));
+    }
+
+    // Map the kernel
+    map_1gb_page((void *)kernel_address_response.physical_address, (void *)kernel_address_response.virtual_address);
 }
 
 void initialize_paging() {
