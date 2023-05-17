@@ -102,6 +102,8 @@ Page_Entry_t *locate_page_entry(void *vaddr) {
 }
 
 void setup_all_paging_structures() {
+    // TODO: IDENTITY MAP FIRST 4 GiB
+
     FULL_PAGING_STRUCTURE = (Full_Paging_Structure_t*)PAGING_PHYS_ADDRESS;
 
     // set all PML4Te to not present and correct physical address
@@ -110,6 +112,8 @@ void setup_all_paging_structures() {
 
         pe->present = 0;
         pe->phys = (uint64_t)(PAGING_PHYS_ADDRESS) + sizeof(PML4_t) + PML4Ti * sizeof(PDPT_t);
+        pe->flags = PE_READ_WRITE | PE_USER_SUPERVISOR;
+        pe->reserved = 0;
     }
 
     // get the PML4i for the hhdm and kernel virtual addresses and set to present
