@@ -19,10 +19,10 @@
 #define NUM_PAGE_DIRECTORIES    (512*512)
 #define NUM_PAGE_TABLES         (512*512*512)
 
-#define PE_READ_WRITE	        (1<<1)	// read/write
-#define PE_USER_SUPERVISOR	    (1<<2)	// user/supervisor
-#define PE_PLEVEL_WRITE_THROUGH	(1<<3)	// page-level write-through
-#define PE_PLEVEL_CACHE_DISABLE	(1<<4)	// page-level cache disable
+#define PE_READ_WRITE	        (1<<0)	// read/write
+#define PE_USER_SUPERVISOR	    (1<<1)	// user/supervisor
+#define PE_PLEVEL_WRITE_THROUGH	(1<<2)	// page-level write-through
+#define PE_PLEVEL_CACHE_DISABLE	(1<<3)	// page-level cache disable
 
 // these type constants are defined by me
 
