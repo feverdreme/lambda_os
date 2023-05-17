@@ -41,13 +41,8 @@
 #define PAGING_PHYS_ADDRESS		(0x20000)
 
 typedef struct Page_Entry {
-    int present : 1;
-    int flags : 4;
-    int accessed : 1;
-    int ignored : 1;
-    int reserved : 1;   // in non PML4, this indicates whether it maps a page or another paging structure
-    int avl : 4;        // up to me, ignored by MMU
-    uint64_t phys : 40; // includes M-1:12 and reserved bits
+	uint64_t phys : 51;
+	int reserved : 1;
     int avl2 : 11;
     int xd : 1;         // execute-disable
 } __attribute__((packed)) 	Page_Entry_t;
@@ -59,18 +54,7 @@ typedef Paging_Structure_t 	Page_Directory_t;
 typedef Paging_Structure_t 	PDPT_t;
 typedef Paging_Structure_t 	PML4_t;
 
-typedef PDPT_t 				Contiguous_PDPT_t[512];
-typedef Page_Directory_t	Contiguous_PD_t[512][512];
-typedef Page_Table_t		Contiguous_PT_t[512][512][512];
-
-typedef struct Full_Paging_Structure {
-	PML4_t PML4T;
-	Contiguous_PDPT_t ALL_PDPT;
-	Contiguous_PD_t ALL_PD;
-	Contiguous_PT_t ALL_PT;
-} Full_Paging_Structure_t;
-
-extern Full_Paging_Structure_t *FULL_PAGING_STRUCTURE;
+extern PMLT4_t *PML4T;
 
 /**
  * @brief Detects what type of paging structure a Page_Entry_t object is.
@@ -96,7 +80,7 @@ Page_Entry_t *map_4kb_page(void *phys_addr, void *vaddr, uint8_t pe_flags);
  * @param vaddr 
  * @return Page_Entry_t* The page directory entry with the physical address.
  */
-Page_Entry_t *map_2mb_page(void *phys_addr, void *vaddr);
+Page_Entry_t *map_2mb_page(void *phys_addr, void *vaddr, uint8_t flags);
 
 /**
  * @brief Set a 1gb page table entry located at a virtual address, along with necesary heirarchical structures. If it already exists returns a pointer to the existing entry. Sets present bit. Does not cascade enable.
@@ -105,29 +89,7 @@ Page_Entry_t *map_2mb_page(void *phys_addr, void *vaddr);
  * @param vaddr 
  * @return Page_Entry_t* The page directory pointer table entry with the physical address.
  */
-Page_Entry_t *map_1gb_page(void *phys_addr, void *vaddr);
-
-/**
- * @brief Sets the present bit on a page entry, cascading down hierarchical structures.
- * 
- * @param pte Page table entry
- */
-Page_Entry_t *enable_page_entry(void *vaddr);
-
-/**
- * @brief Disables the present bit on ONLY the page entry.
- * 
- * @param pte Page table entry
- */
-Page_Entry_t *disable_page_entry(void *vaddr);
-
-/**
- * @brief Locates the page entry that maps to a specific virtual address
- * 
- * @param vaddr The virtual address
- * @return Page_Entry_t* A pointer to the page entry
- */
-Page_Entry_t *locate_page_entry(void *vaddr);
+Page_Entry_t *map_1gb_page(void *phys_addr, void *vaddr, uint8_t flags);
 
 /**
  * @brief Sets up all the paging structures

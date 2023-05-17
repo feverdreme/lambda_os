@@ -2,7 +2,7 @@
 #define VIRTM_H
 
 #include <stdint.h>
-#include <arch/paging/paging.h>
+#include <memory/paging/paging.h>
 
 typedef struct translated_vaddr {
     uint8_t PML4i;

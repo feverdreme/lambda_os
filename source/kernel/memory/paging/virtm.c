@@ -1,7 +1,7 @@
 #include "virtm.h"
 
 #include <arch/debug/kpanic.h>
-#include <arch/paging/paging.h>
+#include <memory/paging/paging.h>
 
 /*
     64 bit address
@@ -41,6 +41,7 @@ translated_vaddr_t get_vaddr_indices(void *vaddr) {
     return ret;
 }
 
+// TODO: DEPRECATE THIS
 translated_vaddr_ptrs_t get_vaddr_paging_ptrs(void *vaddr) {
     translated_vaddr_t idcs = get_vaddr_indices(vaddr);
 
@@ -54,6 +55,7 @@ translated_vaddr_ptrs_t get_vaddr_paging_ptrs(void *vaddr) {
     return ret;
 }
 
+// TODO: DEPRECATE THIS
 void *get_vaddr_from_pte(Page_Entry_t *pte) {
     // This can all be calculated from its offset in the ALL_PT space
     // 512 PDPTs * 512 PDs * 512 PTs * 512 PTes

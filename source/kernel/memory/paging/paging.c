@@ -1,7 +1,7 @@
 #include "paging.h"
 
 #include <stdbool.h>
-#include <arch/paging/virtm.h>
+#include <memory/paging/virtm.h>
 #include <limine_requests.h>
 #include <arch/cpuid_query.h>
 
@@ -15,40 +15,44 @@ struct limine_hhdm_response hhdm_response;
 Page_Entry_t *map_4kb_page(void *phys_addr, void *vaddr, uint8_t pe_flags) {
     // TODO: check to make sure 1GB mapping doesn't exist in PDPTe
 
+
+    // FIXME: use PMM
     Page_Entry_t *pte = locate_page_entry(vaddr);
 
 	pte->phys = (uint64_t)(phys_addr);
-	pte->flags = pe_flags;
-    pte->present = 1;
+	pte->phys |= PE_PRESENT | PE_READ_WRITE | PE_USER_SUPERVISOR | pe_flags;
 
 	return pte;
 }
 
-Page_Entry_t *map_2mb_page(void *phys_addr, void *vaddr) {
+Page_Entry_t *map_2mb_page(void *phys_addr, void *vaddr, uint8_t flags) {
+    // TODO: USE DIFFERNET FUNCTION
     translated_vaddr_ptrs_t ptrs = get_vaddr_paging_ptrs(vaddr);
 
     Page_Entry_t *pde = ptrs.PDe;
 
     pde->phys = (uint64_t)(phys_addr) << PD_ADDRESS_BITSHIFT;
-    pde->present = 1;
-    pde->reserved = 1;
-
+    pde->phys |= PE_PRESENT | PE_READ_WRITE | PE_USER_SUPERVISOR | PE_SIZE | flags;
+    pde->reserved = 0;
+    pde->xd = 1;
     
     return pde;
 }
 
-Page_Entry_t *map_1gb_page(void *phys_addr, void *vaddr) {
+Page_Entry_t *map_1gb_page(void *phys_addr, void *vaddr, uint8_t flags) {
     translated_vaddr_ptrs_t ptrs = get_vaddr_paging_ptrs(vaddr);
 
     Page_Entry_t *pdpte = ptrs.PDPTe;
 
     pdpte->phys = (uint64_t)(phys_addr) << PDPT_ADDRESS_BITSHIFT;
-    pdpte->present = 1;
-    pdpte->reserved = 1;
+    pdpte->phys |= PE_PRESENT | PE_READ_WRITE | PE_USER_SUPERVISOR | PE_SIZE | flags;
+    pdpte->reserved = 0;
+    pdpte->xd = 0;
 
     return pdpte;
 }
 
+// FIXME: DOESNT WORK
 Page_Entry_t *enable_page_entry(void *vaddr) {
 	translated_vaddr_ptrs_t ptrs = get_vaddr_paging_ptrs(vaddr);
 
@@ -57,17 +61,17 @@ Page_Entry_t *enable_page_entry(void *vaddr) {
 	Page_Entry_t *pde = ptrs.PDe;
 	Page_Entry_t *pte = ptrs.PTe;
 
-	pml4te->present = 1;
-	pdpte->present = 1;
-	pde->present = 1;
-	pte->present = 1;
+	pml4te->phys |= PE_PRESENT;
+	pdpte->phys |= PE_PRESENT;
+	pde->phys |= PE_PRESENT;
+	pte->phys |= PE_PRESENT;
 
 	return pte;
 }
 
 Page_Entry_t *disable_page_entry(void *vaddr) {
     Page_Entry_t *pte = locate_page_entry(vaddr);
-    pte->present = 0;
+    pte->phys &= ~0x1; // set to non present
 
     return pte;
 }
@@ -88,9 +92,8 @@ void setup_all_paging_structures() {
     for (int PML4Ti=0; PML4Ti<512; PML4Ti++) {
         Page_Entry_t *pe = &FULL_PAGING_STRUCTURE->PML4T[PML4Ti];
 
-        pe->present = 0;
         pe->phys = (uint64_t)(PAGING_PHYS_ADDRESS) + sizeof(PML4_t) + PML4Ti * sizeof(PDPT_t);
-        pe->flags = PE_READ_WRITE | PE_USER_SUPERVISOR;
+        pe->phys |= PE_PRESENT | PE_READ_WRITE | PE_USER_SUPERVISOR;
         pe->reserved = 0;
         pe->xd = 0;
     }
@@ -107,25 +110,29 @@ void setup_default_mapping() {
 
     // Map all physical memory to higher half and identity map
     for (uint64_t offset = 0; offset < 4 * PDPT_PAGE_SIZE; offset += PDPT_PAGE_SIZE) {
-        map_1gb_page((void*)offset, (void*)(hhdm_offset + offset));
-        map_1gb_page((void*)offset, (void*)offset);
+        map_1gb_page((void*)offset, (void*)(hhdm_offset + offset), 0);
+        map_1gb_page((void*)offset, (void*)offset, 0);
     }
 
     // Map the kernel
-    map_1gb_page((void *)kernel_address_response.physical_base, (void *)kernel_address_response.virtual_base);
+    map_1gb_page((void *)kernel_address_response.physical_base, (void *)kernel_address_response.virtual_base, 0);
 
     // get the PML4i for the hhdm and kernel virtual addresses and set to present
     // i'm not using get_vaddr_indices for this
     uint64_t hhdm_pml4i = ((*(hhdm_request.response)).offset >> 39) & 0x1ff;
     uint64_t kernel_pml4i = ((*(kernel_address_request.response)).virtual_base >> 39) & 0x1ff;
 
-    FULL_PAGING_STRUCTURE->PML4T[hhdm_pml4i].present = 1;
-    FULL_PAGING_STRUCTURE->PML4T[kernel_pml4i].present = 1;
-    FULL_PAGING_STRUCTURE->PML4T[0].present = 1;
+    FULL_PAGING_STRUCTURE->PML4T[hhdm_pml4i].phys |= PE_PRESENT;
+    FULL_PAGING_STRUCTURE->PML4T[kernel_pml4i].phys |= PE_PRESENT;
+    FULL_PAGING_STRUCTURE->PML4T[0].phys |= PE_PRESENT;
 }
 
 void initialize_paging() {
 	MAXPHYADDR = get_MAXPHYADDR();
 	setup_all_paging_structures();
     setup_default_mapping();
+
+    //construct the cr3
+    uint64_t cr3 = (PAGING_PHYS_ADDRESS);
+    __asm__ volatile ("mov %0, %%cr3" : : "r"(cr3));
 }
