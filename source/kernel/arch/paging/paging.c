@@ -139,4 +139,5 @@ void setup_default_mapping() {
 void initialize_paging() {
 	MAXPHYADDR = get_MAXPHYADDR();
 	setup_all_paging_structures();
+    setup_default_mapping();
 }
