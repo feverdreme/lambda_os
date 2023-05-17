@@ -114,6 +114,7 @@ void setup_all_paging_structures() {
         pe->phys = (uint64_t)(PAGING_PHYS_ADDRESS) + sizeof(PML4_t) + PML4Ti * sizeof(PDPT_t);
         pe->flags = PE_READ_WRITE | PE_USER_SUPERVISOR;
         pe->reserved = 0;
+        pe->xd = 0;
     }
 }
 
