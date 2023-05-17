@@ -19,19 +19,13 @@
 #define NUM_PAGE_DIRECTORIES    (512*512)
 #define NUM_PAGE_TABLES         (512*512*512)
 
-#define PE_READ_WRITE	        (1<<0)	// read/write
-#define PE_USER_SUPERVISOR	    (1<<1)	// user/supervisor
-#define PE_PLEVEL_WRITE_THROUGH	(1<<2)	// page-level write-through
-#define PE_PLEVEL_CACHE_DISABLE	(1<<3)	// page-level cache disable
-
-// these type constants are defined by me
-
-#define PE_PML4E_TYPE           (1)
-#define PE_PDPTE_TYPE           (1<<2)
-#define PE_PDE_TYPE             (1<<3)
-#define PE_PTE_TYPE             (1<<4)
-#define PE_MAPS_TO_PAGE			(1<<5)  // third bit
-#define PE_IS_PRESENT			(1<<6)  // fourth bit
+#define PE_PRESENT				(1<<0)	// present bit
+#define PE_READ_WRITE	        (1<<1)	// read/write
+#define PE_USER_SUPERVISOR	    (1<<2)	// user/supervisor
+#define PE_PLEVEL_WRITE_THROUGH	(1<<3)	// page-level write-through
+#define PE_PLEVEL_CACHE_DISABLE	(1<<4)	// page-level cache disable
+#define PE_SIZE					(1<<7)	// reserved for PML4, 1 if maps to page, 0 if not
+#define PE_XD					(1<<63)	// execution disable
 
 #define PDPT_ADDRESS_BITSHIFT	18
 #define PD_ADDRESS_BITSHIFT		9	

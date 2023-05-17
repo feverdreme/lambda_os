@@ -12,28 +12,6 @@ int MAXPHYADDR;
 struct limine_kernel_address_response kernel_address_response;
 struct limine_hhdm_response hhdm_response;
 
-// FIXME: DOESNT WORK NAME COLLISIONS
-// uint8_t detect_page_entry_type(Page_Entry_t *pe) {
-//     // detect what type
-//     int pe_type;
-
-//     // THIS ASSUME THIS IS SIGNED
-//     // MAKE SURE THIS CONVERSION WORKS?? THE TYPE IS GONNA BE WEIRD
-//     if ((int64_t)pe >= (int64_t)ALL_PT) 
-//         pe_type = PE_PTE_TYPE;
-//     else if ((int64_t)pe >= (int64_t)ALL_PD)
-//         pe_type = PE_PDE_TYPE;
-//     else if ((int64_t)pe >= (int64_t)ALL_PDPT)
-//         pe_type = PE_PDPTE_TYPE;
-//     else
-//         pe_type = PE_PML4E_TYPE;
-    
-//     bool is_present = pe->present;
-//     bool maps_to_page = pe->reserved;
-
-//     return pe_type + (maps_to_page<<5) + (is_present<<6);
-// }
-
 Page_Entry_t *map_4kb_page(void *phys_addr, void *vaddr, uint8_t pe_flags) {
     // TODO: check to make sure 1GB mapping doesn't exist in PDPTe
 
