@@ -115,14 +115,6 @@ void setup_all_paging_structures() {
         pe->flags = PE_READ_WRITE | PE_USER_SUPERVISOR;
         pe->reserved = 0;
     }
-
-    // get the PML4i for the hhdm and kernel virtual addresses and set to present
-    // i'm not using get_vaddr_indices for this
-    uint64_t hhdm_pml4i = ((*(hhdm_request.response)).offset >> 39) & 0x1ff;
-    uint64_t kernel_pml4i = ((*(kernel_address_request.response)).virtual_base >> 39) & 0x1ff;
-
-    FULL_PAGING_STRUCTURE->PML4T[hhdm_pml4i].present = 1;
-    FULL_PAGING_STRUCTURE->PML4T[kernel_pml4i].present = 1;
 }
 
 void setup_default_mapping() {
@@ -142,6 +134,15 @@ void setup_default_mapping() {
 
     // Map the kernel
     map_1gb_page((void *)kernel_address_response.physical_base, (void *)kernel_address_response.virtual_base);
+
+    // get the PML4i for the hhdm and kernel virtual addresses and set to present
+    // i'm not using get_vaddr_indices for this
+    uint64_t hhdm_pml4i = ((*(hhdm_request.response)).offset >> 39) & 0x1ff;
+    uint64_t kernel_pml4i = ((*(kernel_address_request.response)).virtual_base >> 39) & 0x1ff;
+
+    FULL_PAGING_STRUCTURE->PML4T[hhdm_pml4i].present = 1;
+    FULL_PAGING_STRUCTURE->PML4T[kernel_pml4i].present = 1;
+    FULL_PAGING_STRUCTURE->PML4T[0].present = 1;
 }
 
 void initialize_paging() {
