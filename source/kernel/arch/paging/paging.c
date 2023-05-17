@@ -126,9 +126,10 @@ void setup_default_mapping() {
     // printd(kernel_address_response.physical_base);
     // printd(hhdm_offset);
 
-    // Map all physical memory
+    // Map all physical memory to higher half and identity map
     for (uint64_t offset = 0; offset < 4 * PDPT_PAGE_SIZE; offset += PDPT_PAGE_SIZE) {
-        map_1gb_page((void *)offset, (void*)(hhdm_offset + offset));
+        map_1gb_page((void*)offset, (void*)(hhdm_offset + offset));
+        map_1gb_page((void*)offset, (void*)offset);
     }
 
     // Map the kernel
