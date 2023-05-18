@@ -47,7 +47,7 @@
 typedef struct Page_Entry {
 	uint64_t phys : 51;
 	int reserved : 1;
-    int avl2 : 11;
+    int avl2 : 11;		// we're hijacking this for page structure detection
     int xd : 1;         // execute-disable
 } __attribute__((packed)) 	Page_Entry_t;
 
