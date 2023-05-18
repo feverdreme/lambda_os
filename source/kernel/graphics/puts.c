@@ -104,7 +104,7 @@ int putd(int d, int pos_x, int pos_y, pixel_color_t color) {
 
 
 int kprintc(char c, struct font *fnt) {
-    if (!fnt->is_printable[(ascii_code_t)c]) return 1;
+
 
     fontchar* fc = ctofc(c, fnt);
 
@@ -115,6 +115,8 @@ int kprintc(char c, struct font *fnt) {
         return 0;
     }
 
+    if (!fnt->is_printable[(ascii_code_t)c]) return 1;
+    
     // if it will write past the screen
     if (cursor.x + fnt->fc_width >= FB_WIDTH) {
         // reset the counter while controlling vars
@@ -122,6 +124,7 @@ int kprintc(char c, struct font *fnt) {
         cursor.prev_x = 0;
         cursor.y += 8;
     }
+    cursor.y %= FB_HEIGHT;
 
     for (uint64_t row = 0; row < fnt->fc_height; row++) {
         for (uint64_t col = 0; col < fnt->fc_width; col++) {
@@ -141,7 +144,6 @@ int kprintc(char c, struct font *fnt) {
     }
 
     cursor.prev_x = cursor.x;
-    
     return 0;
 }
 
