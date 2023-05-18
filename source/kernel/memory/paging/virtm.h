@@ -27,20 +27,4 @@ typedef struct translated_vaddr_ptrs {
  */
 translated_vaddr_t get_vaddr_indices(void *vaddr);
 
-/**
- * @brief Parses a virtual address and gets the corresponding page structure entries, regardless of whether hierarchical structures point to each other.
- * 
- * @param vaddr 64bit virtual address
- * @return A translated_vaddr_ptrs object 
- */
-translated_vaddr_ptrs_t get_vaddr_paging_ptrs(void *vaddr);
-
-/**
- * @brief Get the virtual address from a page table entry.
- * 
- * @param pte Page table entry.
- * @return void* 
- */
-void *get_vaddr_from_pte(Page_Entry_t *pte);
-
 #endif
