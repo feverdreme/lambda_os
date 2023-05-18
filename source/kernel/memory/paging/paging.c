@@ -12,6 +12,10 @@ int MAXPHYADDR;
 struct limine_kernel_address_response kernel_address_response;
 struct limine_hhdm_response hhdm_response;
 
+uint8_t detect_page_entry_type(Page_Entry_t *pe) {
+    return pe->avl2;
+}
+
 Page_Entry_t *map_4kb_page(void *phys_addr, void *vaddr, uint8_t pe_flags) {
     // TODO: check to make sure 1GB mapping doesn't exist in PDPTe
 

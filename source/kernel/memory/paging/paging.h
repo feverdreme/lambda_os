@@ -27,6 +27,10 @@
 #define PE_SIZE					(1<<7)	// reserved for PML4, 1 if maps to page, 0 if not
 #define PE_XD					(1<<63)	// execution disable
 
+#define PE_AVL_PDPT				(1<<0)	// for comparison checks
+#define PE_AVL_PD				(1<<1)
+#define PE_AVL_PT				(1<<2)
+
 #define PDPT_ADDRESS_BITSHIFT	18
 #define PD_ADDRESS_BITSHIFT		9	
 
