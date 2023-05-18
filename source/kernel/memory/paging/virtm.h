@@ -27,4 +27,13 @@ typedef struct translated_vaddr_ptrs {
  */
 translated_vaddr_t get_vaddr_indices(void *vaddr);
 
+/**
+ * @brief Returns an aligned version of the address by cutting off the bits least significant bits
+ * 
+ * @param addr The address
+ * @param bits Number of least significant bits to mask
+ * @return void* The aligned address.
+ */
+void *align_address(void *addr, int bits);
+
 #endif

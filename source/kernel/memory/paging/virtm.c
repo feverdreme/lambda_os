@@ -40,3 +40,7 @@ translated_vaddr_t get_vaddr_indices(void *vaddr) {
     
     return ret;
 }
+
+void *align_address(void *addr, int bits) {
+    return ((uint64_t)addr >> bits) << bits;
+}
