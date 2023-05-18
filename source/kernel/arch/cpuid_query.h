@@ -1,6 +1,8 @@
 #ifndef CPUID_QUERY_H
 #define CPUID_QUERY_H
 
+#include <stdbool.h>
+
 static inline int get_MAXPHYADDR() {
     int cpuid_code = 0x80000008; // EAX code for CPUID call
 
@@ -11,5 +13,14 @@ static inline int get_MAXPHYADDR() {
 }
 
 extern int MAXPHYADDR;
+
+static inline bool supports_1gb_pages() {
+    int cpuid_code = 0x80000001;
+
+    int edx, unused;
+    __get_cpuid(cpuid_code, &unused, &unused, &unused, &edx);
+
+    return edx & (1<<26);
+}
 
 #endif
