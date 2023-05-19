@@ -5,16 +5,18 @@
 #include <envvars.h>
 
 #include <arch/idt/idt.h>
-#include <arch/paging/paging.h>
 
+// #include <arch/cpuid_query.h>
 #include <memory/kmalloc.h>
 #include <memory/mem.h>
+#include <memory/pmm/pmm.h>
 #include <graphics/fb.h>
 #include <graphics/putpixel.h>
 #include <graphics/puts.h>
 #include <arch/debug/kpanic.h>
 #include <wmgr/window.h>
 #include <wmgr/tile.h>
+#include <memory/paging/paging.h>
 
 // TODO: make libc and fonts shared static libraries to be linked last
 
@@ -23,6 +25,7 @@ void main() {
     idt_init();
     init_mem_model();
     init_genesis_window();
+    pmm_init();
     
     Tile_t *genesis_tile = init_genesis_tile();
     // // putrect(0, 0, FB_WIDTH, FB_HEIGHT, WHITE);
@@ -53,8 +56,14 @@ void main() {
     tile_change_parent(t3, genesis_tile);
     tile_add_child_tile(genesis_tile, t4);
 
+    // printd(sizeof(Paging_Structure_t));
+
     // if (sizeof(Page_Entry_t) == 8)
-    tile_draw(genesis_tile, 0, 0, 640, 400);
+    // tile_draw(genesis_tile, 0, 0, 640, 400);
+    initialize_paging();
+    // printd(supports_1gb_pages());
+    // setup_all_paging_structures();
+    prints("Paging works");
 
     return;
 }

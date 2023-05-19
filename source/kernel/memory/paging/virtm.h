@@ -4,11 +4,15 @@
 #include <stdint.h>
 #include <memory/paging/paging.h>
 
+#define ALIGNED_4KB	& 0xfffffffffffff000
+#define ALIGNED_2MB & 0xffffffffffe00000
+#define ALIGNED_1GB & 0xffffffffc0000000
+
 typedef struct translated_vaddr {
-    uint8_t PML4i;
-    uint8_t PDPTi;
-    uint8_t PDi;
-    uint8_t PTi;
+    uint16_t PML4i;
+    uint16_t PDPTi;
+    uint16_t PDi;
+    uint16_t PTi;
     uint16_t PHYS;
 } translated_vaddr_t;
 
@@ -25,7 +29,7 @@ typedef struct translated_vaddr_ptrs {
  * @param vaddr 64bit virtual address
  * @return A translated indices object
  */
-translated_vaddr_t get_vaddr_indices(void *vaddr);
+translated_vaddr_t get_vaddr_indices(uint64_t vaddr);
 
 /**
  * @brief Returns an aligned version of the address by cutting off the bits least significant bits

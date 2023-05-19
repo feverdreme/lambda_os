@@ -61,6 +61,25 @@ void *pmm_alloc_page() {
     return (void*)found_addr;
 }
 
+void *pmm_alloc_2mb_aligned_page() {
+    uint64_t found_addr = 0;
+    
+    for (uint64_t addr = 4096; addr < MAX_MEMORY_SIZE; addr += (2<<20)) {
+        if (pmm_addr_access_bit(pmm_page_bitmap_usable, addr) &&  !pmm_addr_access_bit(pmm_page_bitmap_used, addr)) {
+            found_addr = addr;
+            break;
+        }
+    }
+
+    if (found_addr == 0) {
+        kpanic("NO FREE PAGE FOUND: ALL MEMORY USED");
+        return NULL;
+    }
+
+    mark_pmm_bitmap(pmm_page_bitmap_used, found_addr, true);
+    return (void*)found_addr;
+}
+
 void pmm_free_page(void *addr) {
     mark_pmm_bitmap(pmm_page_bitmap_used, (uint64_t)addr, false);
 }

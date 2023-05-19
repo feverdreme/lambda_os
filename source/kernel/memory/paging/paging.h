@@ -11,9 +11,9 @@
 
 // CR4.PCIDE = 0
 
-#define PT_PAGE_SIZE			(uint64_t)(4<<10)	// 4 kib
-#define PD_PAGE_SIZE			(uint64_t)(2<<20)	// 2 mib
-#define PDPT_PAGE_SIZE			(uint64_t)(1<<30)	// 1 gib
+#define PT_PAGE_SIZE			0x1000		// 4 kib
+#define PD_PAGE_SIZE			0x200000	// 2 mib
+#define PDPT_PAGE_SIZE			0x40000000	// 1 gib
 
 #define NUM_PDPT                (512)
 #define NUM_PAGE_DIRECTORIES    (512*512)
@@ -53,12 +53,12 @@ typedef struct Page_Entry {
 
 typedef Page_Entry_t 		Paging_Structure_t[512];
 
-typedef Paging_Structure_t 	Page_Table_t;
-typedef Paging_Structure_t 	Page_Directory_t;
-typedef Paging_Structure_t 	PDPT_t;
-typedef Paging_Structure_t 	PML4_t;
+typedef Page_Entry_t		*Page_Table_t;
+typedef Page_Entry_t		*Page_Directory_t;
+typedef Page_Entry_t		*PDPT_t;
+typedef Page_Entry_t		*PML4_t;
 
-extern PMLT4_t *PML4T;
+extern PML4_t PML4T;
 
 /**
  * @brief Detects what type of paging structure a Page_Entry_t object is.
@@ -75,7 +75,7 @@ uint8_t detect_page_entry_type(Page_Entry_t *pe);
  * @param vaddr 
  * @return Page_Entry_t* The page table entry with the physical address.
  */
-Page_Entry_t *map_4kb_page(void *phys_addr, void *vaddr, uint8_t pe_flags);
+Page_Entry_t *map_4kb_page(uint64_t phys_addr, uint64_t vaddr, uint8_t pe_flags);
 
 /**
  * @brief Set a 2mb page table entry located at a virtual address, along with necesary heirarchical structures. If it already exists returns a pointer to the existing entry. Sets present bit. Does not cascade enable. DOES NOT OVERRIDE 1GB MAPPING
@@ -84,7 +84,7 @@ Page_Entry_t *map_4kb_page(void *phys_addr, void *vaddr, uint8_t pe_flags);
  * @param vaddr 
  * @return Page_Entry_t* The page directory entry with the physical address.
  */
-Page_Entry_t *map_2mb_page(void *phys_addr, void *vaddr, uint8_t flags);
+Page_Entry_t *map_2mb_page(uint64_t phys_addr, uint64_t vaddr, uint8_t flags);
 
 /**
  * @brief Set a 1gb page table entry located at a virtual address, along with necesary heirarchical structures. If it already exists returns a pointer to the existing entry. Sets present bit. Does not cascade enable.

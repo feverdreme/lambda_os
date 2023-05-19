@@ -38,6 +38,13 @@ bool pmm_addr_access_bit(uint64_t *bitmap, uint64_t addr);
 void *pmm_alloc_page();
 
 /**
+ * @brief Allocates a 2mb aligned page
+ * 
+ * @return void* 
+ */
+void *pmm_alloc_2mb_aligned_page();
+
+/**
  * @brief Frees the 4KiB-aligned page at an address
  * 
  * @param addr The address.

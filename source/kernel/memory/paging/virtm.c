@@ -28,12 +28,12 @@
     PML4[39:47] (index for the PML4)
 */
 
-translated_vaddr_t get_vaddr_indices(void *vaddr) {
-    int PHYS = (uint64_t)vaddr & 0xfff,
-        PTi = ((uint64_t)vaddr >> 12) & 0x1ff,  // 9 bit mask
-        PDi = ((uint64_t)vaddr >> 21) & 0x1ff,
-        PDPTi = ((uint64_t)vaddr >> 30) & 0x1ff,
-        PML4i = ((uint64_t)vaddr >> 39) & 0x1ff;
+translated_vaddr_t get_vaddr_indices(uint64_t vaddr) {
+    int PHYS = vaddr & 0xfff,
+        PTi = (vaddr >> 12) & 0x1ff,  // 9 bit mask
+        PDi = (vaddr >> 21) & 0x1ff,
+        PDPTi = (vaddr >> 30) & 0x1ff,
+        PML4i = (vaddr >> 39) & 0x1ff;
 
     translated_vaddr_t ret = {PML4i, PDPTi, PDi, PTi,
                               PHYS};
