@@ -27,20 +27,6 @@
 #define PE_SIZE					(1<<7)	// reserved for PML4, 1 if maps to page, 0 if not
 #define PE_XD					(1<<63)	// execution disable
 
-#define PE_AVL_PDPT				(1<<0)	// for comparison checks
-#define PE_AVL_PD				(1<<1)
-#define PE_AVL_PT				(1<<2)
-
-#define PDPT_ADDRESS_BITSHIFT	18
-#define PD_ADDRESS_BITSHIFT		9	
-
-#define PAT_UC                  0x0     // uncacheable
-#define PAT_WC                  0x1     // write combining
-#define PAT_WT                  0x4     // write through
-#define PAT_WP                  0x5     // write protected
-#define PAT_WB                  0x6		// write back
-#define PAT_UNCACHED			0x7
-
 typedef uint64_t		 	Page_Entry_t;
 
 typedef Page_Entry_t 		Paging_Structure_t[512];
