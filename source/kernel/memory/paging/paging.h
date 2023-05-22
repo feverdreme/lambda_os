@@ -41,15 +41,7 @@
 #define PAT_WB                  0x6		// write back
 #define PAT_UNCACHED			0x7
 
-// TODO: SHOULD BE A LINKER VARIABLE
-#define PAGING_PHYS_ADDRESS		(0x20000)
-
-typedef struct Page_Entry {
-	uint64_t phys : 51;
-	int reserved : 1;
-    int avl2 : 11;		// we're hijacking this for page structure detection
-    int xd : 1;         // execute-disable
-} __attribute__((packed)) 	Page_Entry_t;
+typedef uint64_t		 	Page_Entry_t;
 
 typedef Page_Entry_t 		Paging_Structure_t[512];
 
@@ -75,7 +67,7 @@ uint8_t detect_page_entry_type(Page_Entry_t *pe);
  * @param vaddr 
  * @return Page_Entry_t* The page table entry with the physical address.
  */
-Page_Entry_t *map_4kb_page(uint64_t phys_addr, uint64_t vaddr, uint8_t pe_flags);
+Page_Entry_t *map_4kb_page(uint64_t phys_addr, uint64_t vaddr, uint8_t flags);
 
 /**
  * @brief Set a 2mb page table entry located at a virtual address, along with necesary heirarchical structures. If it already exists returns a pointer to the existing entry. Sets present bit. Does not cascade enable. DOES NOT OVERRIDE 1GB MAPPING
@@ -85,15 +77,6 @@ Page_Entry_t *map_4kb_page(uint64_t phys_addr, uint64_t vaddr, uint8_t pe_flags)
  * @return Page_Entry_t* The page directory entry with the physical address.
  */
 Page_Entry_t *map_2mb_page(uint64_t phys_addr, uint64_t vaddr, uint8_t flags);
-
-/**
- * @brief Set a 1gb page table entry located at a virtual address, along with necesary heirarchical structures. If it already exists returns a pointer to the existing entry. Sets present bit. Does not cascade enable.
- * 
- * @param phys_addr 
- * @param vaddr 
- * @return Page_Entry_t* The page directory pointer table entry with the physical address.
- */
-Page_Entry_t *map_1gb_page(void *phys_addr, void *vaddr, uint8_t flags);
 
 /**
  * @brief Sets up all the paging structures
