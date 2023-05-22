@@ -14,18 +14,6 @@ int MAXPHYADDR;
 struct limine_kernel_address_response kernel_address_response;
 struct limine_hhdm_response hhdm_response;
 
-Page_Entry_t edit_entry(Page_Entry_t *pe, uint64_t phys_addr, uint8_t flags) {
-    if (phys_addr % 0x1000 != 0)
-        kpanic("PAGING ERROR: PHYSICAL ADDRESS NOT ALIGNED");
-    
-    *pe = phys_addr | flags;
-    return *pe;
-}
-
-uint64_t next_aligned_addr(uint64_t addr, uint64_t alignment) {
-    return alignment * (addr / alignment + 1);
-}
-
 Page_Entry_t *map_4kb_page(uint64_t phys_addr, uint64_t vaddr, uint8_t flags) {
     translated_vaddr_t idcs = get_vaddr_indices(vaddr);
     uint16_t PML4i = idcs.PML4i;
@@ -105,7 +93,7 @@ Page_Entry_t *map_2mb_page(uint64_t phys_addr, uint64_t vaddr, uint8_t flags) {
     return PDe;
 }
 
-void setup_all_paging_structures() {
+void init_PML4T() {
     // alloc a page frame for PML4
     PML4T = (Page_Entry_t*)pmm_alloc_page();
     memset(PML4T, 0, sizeof(Paging_Structure_t));
@@ -125,11 +113,6 @@ void setup_default_mapping() {
         map_2mb_page(offset, offset, 0);
     }
 
-    printh(kernel_pbase);
-    println();
-    printh(kernel_vbase);
-    println();
-
     // Map the unaligned kernel address base
     for (uint64_t offset=0; offset < PT_PAGE_SIZE * 100; offset += PT_PAGE_SIZE){
         map_4kb_page(kernel_pbase + offset, kernel_vbase + offset, 0);
@@ -138,7 +121,7 @@ void setup_default_mapping() {
 
 void initialize_paging() {
 	MAXPHYADDR = get_MAXPHYADDR();
-	setup_all_paging_structures();
+	init_PML4T();
     setup_default_mapping();
 
     //construct the cr3

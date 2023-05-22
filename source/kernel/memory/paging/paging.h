@@ -39,14 +39,6 @@ typedef Page_Entry_t		*PML4_t;
 extern PML4_t PML4T;
 
 /**
- * @brief Detects what type of paging structure a Page_Entry_t object is.
- * 
- * @param pe A pointer to the page entry.
- * @return Consult the PE_TYPE constants.
- */
-uint8_t detect_page_entry_type(Page_Entry_t *pe);
-
-/**
  * @brief Set a 4kb page table entry located at a virtual address, along with necesary heirarchical structures. If it already exists returns a pointer to the existing entry. Sets present bit. Does not cascade enable. DOES NOT OVERRIDE 1GB MAPPING
  * 
  * @param phys_addr 
@@ -68,7 +60,7 @@ Page_Entry_t *map_2mb_page(uint64_t phys_addr, uint64_t vaddr, uint8_t flags);
  * @brief Sets up all the paging structures
  * 
  */
-void setup_all_paging_structures();
+void init_PML4T();
 
 /**
  * @brief Sets up the mapping supported by Limine.
