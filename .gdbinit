@@ -1,5 +1,5 @@
 target remote localhost:1234
 set disassembly-flavor intel
-set debug-file-directory source/bin
+add-symbol-file source/kernel.elf
 
 break main
