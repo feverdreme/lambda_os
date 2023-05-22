@@ -3,13 +3,10 @@
 #include <stdbool.h>
 #include <memory/paging/virtm.h>
 #include <limine_requests.h>
-#include <arch/cpuid_query.h>
 #include <memory/pmm/pmm.h>
 #include <memory/mem.h>
 
 Page_Entry_t* PML4T;
-
-int MAXPHYADDR;
 
 struct limine_kernel_address_response kernel_address_response;
 struct limine_hhdm_response hhdm_response;
@@ -120,7 +117,6 @@ void setup_default_mapping() {
 }
 
 void initialize_paging() {
-	MAXPHYADDR = get_MAXPHYADDR();
 	init_PML4T();
     setup_default_mapping();
 
