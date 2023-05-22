@@ -143,32 +143,5 @@ void initialize_paging() {
 
     //construct the cr3
     uint64_t cr3 = (uint64_t)PML4T;
-    // PML4_t PML4T2 = (PML4_t)pmm_alloc_page();
-
-    // cr3 0x7ff60000
-    // PML4e addr 0x7ff5f027
-    // PDPTe addr 0x7ff5e027
-    // PDe addr 0x7ff5d027
-    // PTe addr 0x7fded021 (84 entries)
-
-    // cr3 0x7ff60000
-    // PML4e addr 0x7ff5c027
-    // PDPTe addr 0x7ff5b027
-    // PDe addr 0x7ff5a027
-    // PDE 2mb addr 0x200083
-
-    // PML4T2[0].phys = 0x7ff5907;
-    // PML4T2[1].phys = 0x7ff4b007;
-    // PML4T2[256].phys = 0x7ff5c027;
-    // PML4T2[257].phys = 0x7ff49007;
-    // PML4T2[511].phys = 0x7ff5f027;
-
-    // uint64_t cr3 = 0x530000;
-    // println();
-    // printd((uint64_t)PML4T);
-    // uint64_t cr3 = (uint64_t)PML4T2;
-    // printd((uint64_t)PML4T2);
-    // printd(cr3);
-    __asm__ volatile ("mov $0xdeadbeef, %ebx");
     __asm__ volatile ("mov %0, %%cr3" : : "a"(cr3));
 }
