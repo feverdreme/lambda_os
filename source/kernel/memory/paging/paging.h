@@ -11,9 +11,12 @@
 
 // CR4.PCIDE = 0
 
-#define PT_PAGE_SIZE			0x1000		// 4 kib
-#define PD_PAGE_SIZE			0x200000	// 2 mib
-#define PDPT_PAGE_SIZE			0x40000000	// 1 gib
+#define KiB						0x400ULL
+#define MiB						0x100000ULL
+#define GiB						0x40000000ULL
+
+#define PT_PAGE_SIZE			(4*KiB)
+#define PD_PAGE_SIZE			(2*MiB)
 
 #define NUM_PDPT                (512)
 #define NUM_PAGE_DIRECTORIES    (512*512)

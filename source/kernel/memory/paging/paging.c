@@ -108,13 +108,13 @@ void setup_default_mapping() {
     uint64_t hhdm_offset = hhdm_response.offset;
 
     // Identity map and Higher Half map
-    for (uint64_t offset = 0; offset < (4ULL << 30); offset += PD_PAGE_SIZE) {
+    for (uint64_t offset = 0; offset < 4*GiB; offset += PD_PAGE_SIZE) {
         map_2mb_page(offset, hhdm_offset + offset, 0);
         map_2mb_page(offset, offset, 0);
     }
 
     // Map the unaligned kernel address base
-    for (uint64_t offset=0; offset < PT_PAGE_SIZE * 100; offset += PT_PAGE_SIZE){
+    for (uint64_t offset=0; offset < 100*PT_PAGE_SIZE; offset += PT_PAGE_SIZE){
         map_4kb_page(kernel_pbase + offset, kernel_vbase + offset, 0);
     }
 }
