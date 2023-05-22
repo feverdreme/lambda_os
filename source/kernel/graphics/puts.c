@@ -160,6 +160,13 @@ int kprintd(uint64_t d, font_t *fnt) {
     return kprints(buf, fnt);
 }
 
+int kprinth(uint64_t h, font_t *fnt) {
+    char buf[31]; // max we'll need
+    hex(h, buf);
+
+    return kprints(buf, fnt);
+}
+
 int printc(char c) {
     return kprintc(c, DEFAULT_FONT);
 }
@@ -170,6 +177,10 @@ int prints(const char *c) {
 
 int printd(uint64_t d) {
     return kprintd(d, DEFAULT_FONT);
+}
+
+int printh(uint64_t h) {
+    return kprinth(h, DEFAULT_FONT);
 }
 
 int println() {

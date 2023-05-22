@@ -21,4 +21,6 @@ void reverse(char* s, int len);
 
 void itoa(uint64_t x, char* buffer);
 
+void hex(uint64_t x, char* buffer);
+
 #endif

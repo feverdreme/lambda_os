@@ -33,10 +33,12 @@ int putd(int d, int pos_x, int pos_y, pixel_color_t color);
 int kprintc(char c, font_t *fnt);
 int kprints(const char *c, font_t *fnt);
 int kprintd(uint64_t d, font_t *fnt);
+int kprinth(uint64_t h, font_t *fnt);
 
 int printc(char c);
 int prints(const char *c);
 int printd(uint64_t d);
+int printh(uint64_t h);
 
 int println();
 

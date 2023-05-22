@@ -91,3 +91,29 @@ void itoa(uint64_t x, char* buf) {
 
     reverse(start, buf - 1);
 }
+
+void hex(uint64_t x, char* buffer) {
+    static const char* lookup = "0123456789abcdef";
+
+    if (x == 0) {
+        buffer[0] = '0';
+        return;
+    }
+
+    if (x < 0) {
+        *buffer = '-';
+        x *= -1;
+        buffer++;
+    }
+
+    char* start = buffer;
+    while (x != 0) {
+        *buffer = lookup[x % 16];
+        x /= 16;
+        buffer++;
+    }
+
+    *buffer = '\0';
+
+    reverse(start, buffer - 1);    
+}
