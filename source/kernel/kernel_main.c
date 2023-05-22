@@ -24,8 +24,9 @@ void main() {
     initialize_fb();
     idt_init();
     init_mem_model();
-    init_genesis_window();
     pmm_init();
+    initialize_paging();
+    init_genesis_window();
     
     Tile_t *genesis_tile = init_genesis_tile();
     // // putrect(0, 0, FB_WIDTH, FB_HEIGHT, WHITE);
@@ -57,13 +58,13 @@ void main() {
     tile_add_child_tile(genesis_tile, t4);
 
     // printd(sizeof(Paging_Structure_t));
+    // window_draw_window(create_window(0, 0, 640, 400, "Calculator", 20, BLACK, ""));
+    // draw_calculator();
 
     // if (sizeof(Page_Entry_t) == 8)
     // tile_draw(genesis_tile, 0, 0, 640, 400);
-    initialize_paging();
     // printd(supports_1gb_pages());
-    // setup_all_paging_structures();
-    prints("Paging works");
+    // init_PML4T();
 
     return;
 }
