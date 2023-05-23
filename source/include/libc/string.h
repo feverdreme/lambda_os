@@ -17,6 +17,14 @@ const char* findc(const char* src, const char* c);
 // returns end of string (null byte) if not found
 const char* finds(const char* src, const char* s);
 
+/**
+ * @brief Compares two strings up to a length.
+ * 
+ * @param a First string.
+ * @param b Second string.
+ * @param n The amount of characters to check.
+ * @return bool True if they differ.
+ */
 bool strncmp(char *a, char* b, size_t n);
 
 void reverse(char* s, int len);
