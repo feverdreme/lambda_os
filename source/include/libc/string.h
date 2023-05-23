@@ -1,8 +1,8 @@
 #ifndef STRING_H
 #define STRING_H
 
-#include <stdbool.h>
 #include "typedef.h"
+#include <stdbool.h>
 
 // Returns length of null terminated string
 size_t strlen(const char* str);
@@ -28,7 +28,7 @@ const char* finds(const char* src, const char* s);
  */
 bool strncmp(char *a, char* b, size_t n);
 
-void reverse(char* s, int len);
+void reverse(char* begin, char* end);
 
 void itoa(uint64_t x, char* buffer);
 

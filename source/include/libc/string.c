@@ -1,3 +1,4 @@
+#include "string.h"
 #include "typedef.h"
 
 // Returns length of null terminated string
