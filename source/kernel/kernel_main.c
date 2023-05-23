@@ -5,6 +5,7 @@
 #include <envvars.h>
 
 #include <arch/idt/idt.h>
+#include <arch/apic/apic.h>
 
 // #include <arch/cpuid_query.h>
 #include <memory/kmalloc.h>
@@ -65,6 +66,7 @@ void main() {
     // tile_draw(genesis_tile, 0, 0, 640, 400);
     // printd(supports_1gb_pages());
     // init_PML4T();
+    printh(get_apic_base());
 
     return;
 }
