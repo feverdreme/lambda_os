@@ -28,7 +28,8 @@ void main() {
     pmm_init();
     initialize_paging();
     init_genesis_window();
-    
+    initialize_lapic();
+
     Tile_t *genesis_tile = init_genesis_tile();
     // // putrect(0, 0, FB_WIDTH, FB_HEIGHT, WHITE);
 
@@ -66,7 +67,6 @@ void main() {
     // tile_draw(genesis_tile, 0, 0, 640, 400);
     // printd(supports_1gb_pages());
     // init_PML4T();
-    printh(get_apic_base());
 
     return;
 }
