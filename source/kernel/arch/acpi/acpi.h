@@ -38,8 +38,8 @@ typedef struct ACPI_SDT_Header {
 } ACPI_SDT_Header_t;
 
 typedef struct RSDT {
-    struct ACPISDTHeader header;
-    uint32_t SDT_pointers[(header.length - sizeof(header)) / 4];
+    ACPI_SDT_Header_t header;
+    uint32_t *SDT_pointers;
 } RSDT_t;
 
 /**
@@ -48,5 +48,13 @@ typedef struct RSDT {
  * @return int The revision number of the RSDP.
  */
 int detect_rsdp_revision();
+
+/**
+ * @brief Finds the desired SDT based on the signature.
+ * 
+ * @param rsdt_addr Pointer to the RSDT
+ * @return void* The address of the SDT.
+ */
+void *find_sdt(RSDT_t *rsdt_ptr, const char *signature);
 
 #endif
