@@ -17,6 +17,8 @@ const char* findc(const char* src, const char* c);
 // returns end of string (null byte) if not found
 const char* finds(const char* src, const char* s);
 
+bool strncmp(char *a, char* b, size_t n);
+
 void reverse(char* s, int len);
 
 void itoa(uint64_t x, char* buffer);
