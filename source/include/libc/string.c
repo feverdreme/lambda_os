@@ -54,6 +54,16 @@ const char* finds(const char* src, const char* s) {
     }
 }
 
+bool strncmp(char *a, char* b, size_t n) {
+    for (size_t i=0; i<n; i++) {
+        if (*a != *b) return false;
+        a++;
+        b++;
+    }
+
+    return true;
+}
+
 void reverse(char* begin, char* end)
 {
     while (begin < end) {
