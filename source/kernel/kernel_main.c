@@ -6,7 +6,7 @@
 
 #include <arch/idt/idt.h>
 #include <arch/apic/apic.h>
-#include <arch/acpi/acpi.h>
+#include <arch/acpi/madt.h>
 
 // #include <arch/cpuid_query.h>
 #include <memory/kmalloc.h>
@@ -68,7 +68,7 @@ void main() {
     // tile_draw(genesis_tile, 0, 0, 640, 400);
     // printd(supports_1gb_pages());
     // init_PML4T();
-    printd(detect_rsdp_revision());
+    // printd(detect_rsdp_revision());
 
     return;
 }
