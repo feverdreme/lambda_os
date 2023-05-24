@@ -12,8 +12,10 @@ int detect_rsdp_revision() {
     return rsdp.revision;
 }
 
-void *find_sdt(RSDT_t *rsdt_ptr, const char *signature) {
-    int rsdt_num_entries = (rsdt_ptr->header.length - sizeof(rsdt_ptr->header)) / 4;
+RSDT_t *find_rsdt() {
+    rsdp_response = *(rsdp_request.response);
+    return (RSDP_Descriptor_t*)rsdp_response.address;
+}
 
     for (int i=0; i<rsdt_num_entries; i++) {
         ACPI_SDT_Header_t *acpi_sdt_header = (ACPI_SDT_Header_t*)(rsdt_ptr->SDT_pointers[i]);

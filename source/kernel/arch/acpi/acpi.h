@@ -50,6 +50,13 @@ typedef struct RSDT {
 int detect_rsdp_revision();
 
 /**
+ * @brief Locates the RSDT from the RSDP
+ * 
+ * @return void* 
+ */
+RSDT_t* find_rsdt();
+
+/**
  * @brief Finds the desired SDT based on the signature.
  * 
  * @param rsdt_addr Pointer to the RSDT
