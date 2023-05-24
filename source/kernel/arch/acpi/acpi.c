@@ -17,7 +17,13 @@ RSDT_t *find_rsdt() {
     return (RSDP_Descriptor_t*)rsdp_response.address;
 }
 
-    for (int i=0; i<rsdt_num_entries; i++) {
+void *find_sdt(const char *signature) {
+    RSDT_t *rsdt_ptr = find_rsdt();
+
+    int rsdt_num_entries = (rsdt_ptr->header.length - sizeof(ACPI_SDT_Header_t)) / 4;
+
+    // The first entry is the RSDT header so we can skip that
+    for (int i=1; i<rsdt_num_entries; i++) {
         ACPI_SDT_Header_t *acpi_sdt_header = (ACPI_SDT_Header_t*)(rsdt_ptr->SDT_pointers[i]);
 
         if(!strncmp(acpi_sdt_header->signature, signature, 4))

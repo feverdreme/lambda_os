@@ -3,6 +3,18 @@
 
 #include <stdint.h>
 
+typedef struct ACPI_SDT_Header {
+    char signature[4];
+    uint32_t length;
+    uint8_t revision;
+    uint8_t checksum;
+    char OEMID[6];
+    char OEMTableID[8];
+    uint32_t OEM_revision;
+    uint32_t creator_id;
+    uint32_t creator_revision;
+} ACPI_SDT_Header_t;
+
 typedef struct RSDP_Descriptor {
     char signature[8];
     uint8_t checksum;
@@ -24,18 +36,6 @@ typedef struct Extended_RSDP_Descriptor {
     uint8_t extended_checksum;
     uint8_t reserved[3];
 } __attribute__ ((packed)) Extended_RSDP_Descriptor_t;
-
-typedef struct ACPI_SDT_Header {
-    char signature[4];
-    uint32_t length;
-    uint8_t revision;
-    uint8_t checksum;
-    char OEMID[6];
-    char OEMTableID[8];
-    uint32_t OEM_revision;
-    uint32_t creator_id;
-    uint32_t creator_revision;
-} ACPI_SDT_Header_t;
 
 typedef struct RSDT {
     ACPI_SDT_Header_t header;
@@ -62,6 +62,6 @@ RSDT_t* find_rsdt();
  * @param rsdt_addr Pointer to the RSDT
  * @return void* The address of the SDT.
  */
-void *find_sdt(RSDT_t *rsdt_ptr, const char *signature);
+void *find_sdt(const char *signature);
 
 #endif
