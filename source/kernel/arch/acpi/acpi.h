@@ -13,7 +13,7 @@ typedef struct ACPI_SDT_Header {
     uint32_t OEM_revision;
     uint32_t creator_id;
     uint32_t creator_revision;
-} ACPI_SDT_Header_t;
+} __attribute__((packed)) ACPI_SDT_Header_t;
 
 typedef struct RSDP_Descriptor {
     char signature[8];
@@ -21,7 +21,7 @@ typedef struct RSDP_Descriptor {
     char OEMID[6];
     uint8_t revision;
     uint32_t rsdt_address;
-} __attribute__ ((packed)) RSDP_Descriptor_t;
+} __attribute__((packed)) RSDP_Descriptor_t;
 
 typedef struct Extended_RSDP_Descriptor {
     char signature[8];
@@ -39,7 +39,7 @@ typedef struct Extended_RSDP_Descriptor {
 
 typedef struct RSDT {
     ACPI_SDT_Header_t header;
-    uint32_t *SDT_pointers;
+    uint32_t SDT_pointers[];    // NOTE: MUST BE CAST TO ADDRESS, DO NOT INDEX DIRECTLY
 } RSDT_t;
 
 /**

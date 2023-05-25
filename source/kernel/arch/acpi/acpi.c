@@ -14,20 +14,21 @@ int detect_rsdp_revision() {
 
 RSDT_t *find_rsdt() {
     rsdp_response = *(rsdp_request.response);
-    return (RSDP_Descriptor_t*)rsdp_response.address;
+    RSDP_Descriptor_t* rsdp = (RSDP_Descriptor_t*)(rsdp_response.address);
+    return (RSDT_t*)(rsdp->rsdt_address);
 }
 
 void *find_sdt(const char *signature) {
     RSDT_t *rsdt_ptr = find_rsdt();
 
-    int rsdt_num_entries = (rsdt_ptr->header.length - sizeof(ACPI_SDT_Header_t)) / 4;
+    int rsdt_num_entries = (rsdt_ptr->header.length - sizeof(ACPI_SDT_Header_t)) / sizeof(uint32_t);
+    uint32_t *SDT = &rsdt_ptr->SDT_pointers;
 
-    // The first entry is the RSDT header so we can skip that
-    for (int i=1; i<rsdt_num_entries; i++) {
-        ACPI_SDT_Header_t *acpi_sdt_header = (ACPI_SDT_Header_t*)(rsdt_ptr->SDT_pointers[i]);
+    for (int i=0; i<rsdt_num_entries; i++) {
+        ACPI_SDT_Header_t *acpi_sdt_header = (ACPI_SDT_Header_t*)(SDT[i]);
 
         if(!strncmp(acpi_sdt_header->signature, signature, 4))
-            return (void*)(rsdt_ptr->SDT_pointers[i]);
+            return (void*)(acpi_sdt_header);
     }
 
     return NULL;
