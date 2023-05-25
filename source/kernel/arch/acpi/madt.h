@@ -8,7 +8,7 @@
 typedef struct MADT_Entry {
     uint8_t type;
     uint8_t length;
-    uint8_t *data;
+    uint8_t data[]; // NOTE: TAKE THE ADDRESS OF THIS AND THEN CAST BACK TO UINT8_T ARRAY. THIS VALUE IS NOT THE POINTER
 } __attribute__((packed)) MADT_Entry_t;
 
 typedef struct MADT {
