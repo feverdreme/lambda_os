@@ -82,6 +82,7 @@ void itoa(uint64_t x, char* buf) {
 
     if (x == 0) {
         buf[0] = '0';
+        buf[1] = '\0';
         return;
     }
 
@@ -108,6 +109,7 @@ void hex(uint64_t x, char* buffer) {
 
     if (x == 0) {
         buffer[0] = '0';
+        buffer[1] = '\0';
         return;
     }
 
