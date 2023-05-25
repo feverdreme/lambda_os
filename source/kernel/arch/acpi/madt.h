@@ -63,6 +63,14 @@ typedef struct LAPIC_OVERRIDE_DESCRIPTOR {
  * 
  * @return MADT_t* The address to the MADT.
  */
-MADT_t *find_madt();
+static inline MADT_t *find_madt() {
+    return (MADT_t*)find_sdt(MADT_SIGNATURE);
+}
+
+/**
+ * @brief Parses the MADT entries.
+ * 
+ */
+void parse_madt();
 
 #endif
