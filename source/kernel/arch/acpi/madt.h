@@ -15,7 +15,7 @@ typedef struct MADT {
     ACPI_SDT_Header_t header;
     uint32_t lapic_address;
     uint32_t flags;
-    MADT_Entry_t *entries;
+    MADT_Entry_t entries[];
 } __attribute__((packed)) MADT_t;
 
 typedef struct MADT_LAPIC_DESCRIPTOR {
@@ -72,5 +72,12 @@ static inline MADT_t *find_madt() {
  * 
  */
 void parse_madt();
+
+void handle_lapic_descriptor(MADT_Entry_t *entry);
+void handle_ioapic_descriptor(MADT_Entry_t *entry);
+void handle_ioapic_irq_override_descriptor(MADT_Entry_t *entry);
+void handle_ioapic_nmi_descriptor(MADT_Entry_t *entry);
+void handle_lapic_nmi_descriptor(MADT_Entry_t *entry);
+void handle_lapic_override_descriptor(MADT_Entry_t *entry);
 
 #endif
