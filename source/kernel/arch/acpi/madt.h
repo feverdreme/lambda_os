@@ -27,8 +27,8 @@ typedef struct MADT_LAPIC_DESCRIPTOR {
 typedef struct MADT_IOAPIC_DESCRIPTOR {
     uint8_t ioapic_id;
     uint8_t reserved;
-    uint8_t ioapic_address;
-    uint8_t gsi_base;
+    uint32_t ioapic_address;
+    uint32_t gsi_base;
 } __attribute__((packed)) MADT_IOAPIC_DESCRIPTOR_t;
 
 typedef struct MADT_IOAPIC_IRQ_OVERRIDE_DESCRIPTOR {

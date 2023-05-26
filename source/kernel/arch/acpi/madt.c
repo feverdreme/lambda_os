@@ -37,3 +37,33 @@ void parse_madt() {
         madt_entry = (MADT_t*)madt_entry_addr;
     }
 }
+
+void handle_lapic_descriptor(MADT_Entry_t *entry) {
+    kdmsg("FOUND LAPIC IN MADT");
+}
+
+void handle_ioapic_descriptor(MADT_Entry_t *entry) {
+    kdmsg("FOUND IOAPIC IN MADT");
+
+    MADT_IOAPIC_DESCRIPTOR_t *data = &entry->data;
+    printh(data->ioapic_address);
+    println();
+}
+
+void handle_ioapic_irq_override_descriptor(MADT_Entry_t *entry) {
+    kdmsg("FOUND IRQ OVERRIDE IN MADT");
+
+    MADT_IOAPIC_IRQ_OVERRIDE_DESCRIPTOR_t *data = &entry->data;
+}
+
+void handle_ioapic_nmi_descriptor(MADT_Entry_t *entry) {
+    kdmsg("FOUND IOAPIC NMI IN MADT");
+}
+
+void handle_lapic_nmi_descriptor(MADT_Entry_t *entry) {
+    kdmsg("FOUND LAPIC NMI IN MADT");
+}
+
+void handle_lapic_override_descriptor(MADT_Entry_t *entry) {
+    kdmsg("FOUND LAPIC ADDRESS OVERRIDE IN MADT");
+}
