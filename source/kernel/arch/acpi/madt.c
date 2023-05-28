@@ -54,6 +54,11 @@ void handle_ioapic_irq_override_descriptor(MADT_Entry_t *entry) {
     kdmsg("FOUND IRQ OVERRIDE IN MADT");
 
     MADT_IOAPIC_IRQ_OVERRIDE_DESCRIPTOR_t *data = &entry->data;
+    
+    printd(data->irq_source);
+    prints("->");
+    printd(data->gsi);
+    println();
 }
 
 void handle_ioapic_nmi_descriptor(MADT_Entry_t *entry) {
