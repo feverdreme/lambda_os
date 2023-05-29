@@ -82,7 +82,9 @@ void main() {
 
     // __asm__ volatile("int $0x21");
 
-    while (true);
+    for(;;) {
+        asm("hlt");
+    }
     prints("\nPROGRAM FINISHED");
 
     return;
