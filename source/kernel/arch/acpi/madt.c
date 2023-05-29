@@ -1,6 +1,7 @@
 #include "madt.h"
 
 #include <arch/debug/kdmsg.h>
+#include <arch/apic/ioapic.h>
 
 void parse_madt() {
     MADT_t *madt = find_madt();
@@ -48,6 +49,8 @@ void handle_ioapic_descriptor(MADT_Entry_t *entry) {
     MADT_IOAPIC_DESCRIPTOR_t *data = &entry->data;
     printh(data->ioapic_address);
     println();
+
+    IOAPIC_ADDRESS = (void*)(data->ioapic_address);
 }
 
 void handle_ioapic_irq_override_descriptor(MADT_Entry_t *entry) {

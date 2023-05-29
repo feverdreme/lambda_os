@@ -7,6 +7,7 @@
 #include <arch/idt/idt.h>
 #include <arch/apic/apic.h>
 #include <arch/acpi/madt.h>
+#include <arch/apic/ioapic.h>
 
 // #include <arch/cpuid_query.h>
 #include <memory/kmalloc.h>
@@ -30,6 +31,7 @@ void main() {
     init_mem_model();
     init_genesis_window();
     initialize_lapic();
+    ioapic_init();
 
     Tile_t *genesis_tile = init_genesis_tile();
     // // // putrect(0, 0, FB_WIDTH, FB_HEIGHT, WHITE);
@@ -72,8 +74,6 @@ void main() {
     // printd(detect_rsdp_revision());
 
     // find_sdt("0000");
-    // parse_madt();
-
     prints("\nPROGRAM FINISHED");
 
     return;
