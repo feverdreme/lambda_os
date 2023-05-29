@@ -10,6 +10,6 @@ typedef struct MSR_Response {
 
 MSR_Response_t cpu_read_msr(uint32_t msr);
 
-MSR_Response_t cpu_write_msr(uint32_t msr, uint32_t low, uint32_t high);
+void cpu_write_msr(uint32_t msr, uint32_t low, uint32_t high);
 
 #endif

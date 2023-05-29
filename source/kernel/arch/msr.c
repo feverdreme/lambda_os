@@ -7,6 +7,6 @@ MSR_Response_t cpu_read_msr(uint32_t msr) {
     return ret;
 }
 
-MSR_Response_t cpu_write_msr(uint32_t msr, uint32_t low, uint32_t high) {
+void cpu_write_msr(uint32_t msr, uint32_t low, uint32_t high) {
     __asm__ volatile ("wrmsr" : : "a"(low), "d"(high), "c"(msr));
 }
