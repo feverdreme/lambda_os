@@ -21,13 +21,8 @@ void idt_register_isr(uint8_t index, uint64_t offset) {
 }
 
 void idt_init() {
-
     idtp.limit = (uint16_t)sizeof(idt_gate_t) * 256 - 1;
     idtp.base = (uint64_t)(&idt[0]);
-
-    prints("IDT: ");
-    printh(idtp.limit);
-    println();
 
     for (uint8_t vector = 0; vector < 32; vector++) {
         idt_register_isr(vector, isr_stub_table[vector]);

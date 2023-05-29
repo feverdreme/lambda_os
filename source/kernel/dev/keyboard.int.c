@@ -8,7 +8,7 @@
 __attribute__((interrupt))
 void keyboard_handler(interrupt_frame_t* frame) {
     // __asm__ volatile ("movl $0xdeadbeef, %ebx");
-    // prints("KEYBOARD\n");
+    prints("KEYBOARD\n");
 }
 
 void isr_keyboard_register() {
