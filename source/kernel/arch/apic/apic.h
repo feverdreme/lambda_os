@@ -7,6 +7,7 @@
 #define IA32_APIC_BASE_MSR_ENABLE   (1<<11)
 #define IA32_APIC_BASE_MSR_BSP      (1<<8)
 
+#define APIC_EOI_REG                0xB0
 #define APIC_SPURIOUS_INT_REG       0xF0
 
 extern uint64_t APIC_PHYSICAL_ADDRESS;
@@ -39,6 +40,12 @@ uint32_t read_lapic_register(int offset);
  * @param data 
  */
 void write_lapic_register(int offset, uint32_t data);
+
+/**
+ * @brief Sends the EOI signal to the LAPIC.
+ * 
+ */
+void send_lapic_eoi();
 
 /**
  * @brief Initializes the Local APIC.
