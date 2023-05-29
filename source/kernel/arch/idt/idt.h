@@ -4,43 +4,37 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#define IDT_TASK_GATE       0x5
-#define IDT_INT16_GATE      0x6
-#define IDT_TRAP16_GATE     0x7
-#define IDT_INT32_GATE      0xE
-#define IDT_TRAP32_GATE     0xF
+#define IDT_INTERRUPT_GATE  0xE
+#define IDT_TRAP_GATE       0xF
+#define IDT_PRESENT         (1<<7)
 
-#define IDT_DPL_RING0       (0x0 << 1)
-#define IDT_DPL_RING3       (0x3 << 1)
+#define IDT_DPL_RING0       (0x0 << 5)
+#define IDT_DPL_RING3       (0x3 << 5)
 #define IDT_PRESENT_FLAG    0b1000        
 
 #define GDT_KERNEL_CODE_SELECTOR (0x03 * 8)  // Third index, entries are 8 bytes
 
-struct idt_entry {
+typedef struct idt_gate {
     uint16_t offset_low;
-    uint16_t seg_selector;
-    int IST : 3;
-    uint8_t reserved;
-    int gate_type : 4;
-    int type_attributes : 4;
-    uint16_t offset_middle;
+    uint16_t segment_selector;
+    uint8_t IST;
+    uint8_t attributes;
+    uint16_t offset_mid;
     uint32_t offset_high;
-    uint32_t zero;
-} __attribute__((packed));
+    uint32_t reserved;
+} __attribute__((packed)) idt_gate_t;
 
-struct idt_ptr {
+static struct idt_ptr {
     uint16_t limit;
     struct idt_entry* base;
-};
+} idtp;
 
 __attribute__((aligned(0x10)))
-static struct idt_entry idt[256];
-
-static struct idt_ptr idtp;
-
-void idt_set_gate(uint8_t index, uint64_t offset, uint16_t segment_selector, int IST, uint8_t gate_type, int type_attributes);
+static idt_gate_t idt[256];
 
 extern void* isr_stub_table[];
+
+void idt_set_gate(uint8_t index, uint64_t offset, uint16_t segment_selector, uint8_t IST, uint8_t attributes);
 
 void idt_init();
 
