@@ -1,6 +1,7 @@
 #include "apic.h"
 
 #include <arch/msr.h>
+#include <graphics/puts.h>
 
 uint64_t APIC_PHYSICAL_ADDRESS;
 
@@ -10,6 +11,10 @@ uint64_t get_apic_base() {
 	uint64_t apic_addr = (apic_base_msr.low & 0xfffff000) | ((uint64_t)apic_base_msr.high << 32);
 
 	APIC_PHYSICAL_ADDRESS = apic_addr;
+
+    prints("APIC PHYSICAL ADDRESS: ");
+    printh(APIC_PHYSICAL_ADDRESS);
+    println();
 
 	return apic_addr;
 }
@@ -34,6 +39,7 @@ void write_lapic_register(int offset, uint32_t data) {
 }
 
 void initialize_lapic() {
+    get_apic_base();
 	enable_apic_base();
 
 	// configure spurious interrupts
