@@ -111,6 +111,10 @@ limine.h:
 $(KERNEL): $(OBJ)
 	$(LD) $(OBJ) $(LDFLAGS) -o $@
 
+# Compilation rules for *.int.c files
+%.int.c.o: %.int.c limine.h
+	$(CC) $(CFLAGS) $(CPPFLAGS) -mgeneral-regs-only -c $< -o $@
+
 # Compilation rules for *.c files.
 %.c.o: %.c limine.h
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@

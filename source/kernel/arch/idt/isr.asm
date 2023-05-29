@@ -1,19 +1,14 @@
 %macro isr_err_stub 1
 isr_stub_%+%1:
-    pushad
-    cld
-    call exception_handler
-    popad
-    iretq
+    call interrupt_handler
 %endmacro
 
 %macro isr_no_err_stub 1
 isr_stub_%+%1:
-    call exception_handler
-    iretq
+    call interrupt_handler
 %endmacro
 
-[extern exception_handler]
+[extern interrupt_handler]
 
 isr_no_err_stub 0
 isr_no_err_stub 1
