@@ -12,7 +12,7 @@
 #define IDT_DPL_RING3       (0x3 << 5)
 #define IDT_PRESENT_FLAG    0b1000        
 
-#define GDT_KERNEL_CODE_SELECTOR (0x03 * 8)  // Third index, entries are 8 bytes
+#define GDT_KERNEL_CODE_SELECTOR (0x05 * 8)  // Fifth index, entries are 8 bytes
 
 typedef struct idt_gate {
     uint16_t offset_low;
@@ -24,10 +24,12 @@ typedef struct idt_gate {
     uint32_t reserved;
 } __attribute__((packed)) idt_gate_t;
 
-static struct idt_ptr {
+struct idt_ptr {
     uint16_t limit;
-    idt_gate_t *base;
-} idtp;
+    uint64_t base;
+} __attribute__((packed));
+
+static struct idt_ptr idtp;
 
 __attribute__((aligned(0x10)))
 static idt_gate_t idt[256];
