@@ -20,6 +20,7 @@
 #include <wmgr/window.h>
 #include <wmgr/tile.h>
 #include <memory/paging/paging.h>
+#include <dev/keyboard.h>
 
 // TODO: make libc and fonts shared static libraries to be linked last
 
@@ -32,6 +33,8 @@ void main() {
     init_genesis_window();
     initialize_lapic();
     ioapic_init();
+
+    isr_keyboard_register();
 
     Tile_t *genesis_tile = init_genesis_tile();
     // // // putrect(0, 0, FB_WIDTH, FB_HEIGHT, WHITE);
@@ -74,6 +77,12 @@ void main() {
     // printd(detect_rsdp_revision());
 
     // find_sdt("0000");
+
+    // __asm__ volatile("int $0x21");
+
+    // __asm__ volatile("int $0x21");
+
+    while (true);
     prints("\nPROGRAM FINISHED");
 
     return;
