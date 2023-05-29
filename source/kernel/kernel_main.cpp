@@ -17,13 +17,14 @@
 #include <graphics/putpixel.h>
 #include <graphics/puts.h>
 #include <arch/debug/kpanic.h>
-#include <wmgr/window.h>
-#include <wmgr/tile.h>
+#include <wmgr/window.hpp>
+// #include <wmgr/tile.h>
 #include <memory/paging/paging.h>
 #include <dev/keyboard.h>
 
 // TODO: make libc and fonts shared static libraries to be linked last
 
+extern "C" {
 void main() {
     initialize_fb();
     idt_init();
@@ -34,7 +35,7 @@ void main() {
     ioapic_init();
     isr_keyboard_register();
 
-    Tile_t *genesis_tile = init_genesis_tile();
+    // Tile_t *genesis_tile = init_genesis_tile();
     
 
     for(;;) {
@@ -43,4 +44,4 @@ void main() {
     prints("\nPROGRAM FINISHED");
 
     return;
-}
+}}

@@ -96,9 +96,10 @@ override NASMFLAGS += \
     -f elf64
 
 override CFILES := $(shell find -L kernel include -type f -name '*.c')
+override CPPFILES := $(shell find -L kernel include -type f -name '*.cpp')
 override NASMFILES := $(shell find -L kernel include -type f -name '*.asm')
-override OBJ := $(CFILES:.c=.c.o) $(NASMFILES:.asm=.asm.o)
-override HEADER_DEPS := $(CFILES:.c=.c.d)
+override OBJ := $(CFILES:.c=.c.o) $(CPPFILES:.cpp=.cpp.o) $(NASMFILES:.asm=.asm.o)
+override HEADER_DEPS := $(CFILES:.c=.c.d) $(CPPFILES:.cpp=.cpp.d)
 
 # Default target.
 .PHONY: all
@@ -117,6 +118,9 @@ $(KERNEL): $(OBJ)
 
 # Compilation rules for *.c files.
 %.c.o: %.c limine.h
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
+
+%.cpp.o: %.cpp limine.h
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 
 # Compilation rules for *.asm (nasm) files.
