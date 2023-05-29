@@ -4,6 +4,7 @@
 #include <libc/math.h>
 #include <arch/debug/kpanic.h>
 #include <graphics/puts.h>
+#include <memory/pmm/pmm.h>
 #include <memory/paging/paging.h>
 
 int memused = 0;
@@ -19,13 +20,18 @@ const MAT_section_t MAT_section_NULL =
 MAT_entry_t MAT[MAT_SIZE];
 
 void init_mem_model() {
-
     // for each block, update with values assuming all blocks are free
     for (int mb_ind = 0; mb_ind < MAT_SIZE; mb_ind++) {
         MAT[mb_ind].memid = FREE_BLOCK;
         MAT[mb_ind].prev_free_ind = 0;
         MAT[mb_ind].next_free_ind = MAT_END;
     }
+
+    // Allocate the 4KiB pages
+    for (uint64_t offset = 0; offset < BSS_SIZE; offset += PT_PAGE_SIZE) {
+        uint64_t addr = (uint64_t)pmm_alloc_page();
+        map_4kb_page(addr, BSS_BEGIN + offset, 0);
+    } 
 }
 
 void* kmalloc(int req_size) {

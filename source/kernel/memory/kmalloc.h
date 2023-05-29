@@ -10,7 +10,7 @@
 #define FREE_BLOCK 0
 
 // #define BSS_BEGIN ((int32_t)0x1000)
-#define BSS_BEGIN 0xfffffe8000000000 // (510, 0, 0, 0)
+#define BSS_BEGIN 0xfffffe8000000000ULL // (510, 0, 0, 0)
 
 #define BSS_SIZE 0x10000
 #define MBLOCK_SIZE 16
