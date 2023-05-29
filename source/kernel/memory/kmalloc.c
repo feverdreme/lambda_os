@@ -4,6 +4,7 @@
 #include <libc/math.h>
 #include <arch/debug/kpanic.h>
 #include <graphics/puts.h>
+#include <memory/paging/paging.h>
 
 int memused = 0;
 int memblocksleft = MAT_SIZE;
@@ -17,14 +18,7 @@ const MAT_section_t MAT_section_NULL =
 
 MAT_entry_t MAT[MAT_SIZE];
 
-void possible_memid_sanity_check() {
-#if MAT_SIZE > OS_MAXUINT - 1
-    kpanic("CAN'T GARUNTEE NEXT_MEM_ID (PIGEONHOLE PRINCIPLE)");
-#endif
-}
-
 void init_mem_model() {
-    possible_memid_sanity_check();
 
     // for each block, update with values assuming all blocks are free
     for (int mb_ind = 0; mb_ind < MAT_SIZE; mb_ind++) {

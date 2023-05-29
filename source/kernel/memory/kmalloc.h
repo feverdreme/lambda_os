@@ -9,8 +9,10 @@
 
 #define FREE_BLOCK 0
 
+// #define BSS_BEGIN ((int32_t)0x1000)
+#define BSS_BEGIN 0xfffffe8000000000 // (510, 0, 0, 0)
+
 #define BSS_SIZE 0x10000
-#define BSS_BEGIN ((int32_t)0x1000)
 #define MBLOCK_SIZE 16
 #define MAT_SIZE (BSS_SIZE / MBLOCK_SIZE + 1)
 #define MAT_END (MAT_SIZE - 1)
@@ -126,11 +128,5 @@ void MAT_floodfill_memid(int flood_ind, int new_memid);
 void MAT_floodfill_prev_free_ind(int flood_ind, int new_prev_free_ind);
 
 void MAT_floodfill_next_free_ind(int flood_ind, int new_next_free_ind);
-
-/**
- * @brief Sanity check to make sure available memory size doesn't exceed possible mem_ids
- * 
- */
-void possible_memid_sanity_check();
 
 #endif
