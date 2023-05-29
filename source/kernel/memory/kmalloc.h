@@ -9,8 +9,6 @@
 
 #define FREE_BLOCK 0
 
-extern uint8_t mmio;
-
 #define BSS_SIZE 0x10000
 #define BSS_BEGIN ((int32_t)0x1000)
 #define MBLOCK_SIZE 16
