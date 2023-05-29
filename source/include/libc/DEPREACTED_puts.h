@@ -2,6 +2,9 @@
 
 #ifndef PUTS_H
 #define PUTS_H
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include "../libc/typedef.h"
 #include <libc/string.h>

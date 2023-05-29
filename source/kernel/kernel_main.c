@@ -30,10 +30,12 @@ void main() {
     pmm_init();
     initialize_paging();
     init_mem_model();
-    init_genesis_window();
     initialize_lapic();
     ioapic_init();
     isr_keyboard_register();
+
+    Tile_t *genesis_tile = init_genesis_tile();
+    
 
     for(;;) {
         asm("hlt");

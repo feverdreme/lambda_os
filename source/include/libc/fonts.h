@@ -1,5 +1,8 @@
 #ifndef FONTS_H
 #define FONTS_H
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include <libc/typedef.h>
 #include <stdbool.h>
@@ -36,4 +39,7 @@ fontchar* ctofc(char c, font_t *fnt);
  */
 int font_strlen(const char *str, font_t *fnt, int kerning);
 
+#ifdef __cplusplus
+}
+#endif
 #endif

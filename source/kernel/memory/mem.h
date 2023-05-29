@@ -1,5 +1,8 @@
 #ifndef MEM_H
 #define MEM_H
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include <envvars.h>
 #include <stddef.h>
@@ -54,4 +57,7 @@ static inline uint8_t inb(uint16_t port) {
     return ret;
 }
 
+#ifdef __cplusplus
+}
+#endif
 #endif

@@ -1,5 +1,8 @@
 #ifndef KEYBOARD_H
 #define KEYBOARD_H
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include <arch/idt/isr.h>
 
@@ -16,4 +19,7 @@ void keyboard_handler(interrupt_frame_t* frame);
  */
 void isr_keyboard_register();
 
+#ifdef __cplusplus
+}
+#endif
 #endif

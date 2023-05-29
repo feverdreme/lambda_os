@@ -1,5 +1,8 @@
 #ifndef ACPI_H
 #define ACPI_H
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include <stdint.h>
 
@@ -64,4 +67,7 @@ RSDT_t* find_rsdt();
  */
 void *find_sdt(const char *signature);
 
+#ifdef __cplusplus
+}
+#endif
 #endif

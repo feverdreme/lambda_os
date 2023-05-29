@@ -1,5 +1,8 @@
 #ifndef STRING_H
 #define STRING_H
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include "typedef.h"
 #include <stdbool.h>
@@ -34,4 +37,7 @@ void itoa(uint64_t x, char* buffer);
 
 void hex(uint64_t x, char* buffer);
 
+#ifdef __cplusplus
+}
+#endif
 #endif

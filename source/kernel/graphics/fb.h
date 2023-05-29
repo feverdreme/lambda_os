@@ -1,5 +1,8 @@
 #ifndef FB_H
 #define FB_H
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include <stdint.h>
 
@@ -16,4 +19,7 @@ void initialize_fb();
 
 vga_ptr calc_fb_location(int x, int y);
 
+#ifdef __cplusplus
+}
+#endif
 #endif

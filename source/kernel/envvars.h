@@ -1,5 +1,8 @@
 #ifndef ENVVARS_H
 #define ENVVARS_H
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -43,4 +46,7 @@ typedef char** GENERIC_PTR_ARRAY;
 
 #define IA32E_PAGING
 
+#ifdef __cplusplus
+}
+#endif
 #endif

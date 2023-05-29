@@ -1,5 +1,8 @@
 #ifndef TILE_H
 #define TILE_H
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include <envvars.h>
 
@@ -134,4 +137,7 @@ void tile_draw_rowcol(Tile_t *this, int x, int y, int width, int height);
 /* -------------------------------------------------------------------------- */
 bool tile_has_child_tile(Tile_t *this, Tile_t *child);
 
+#ifdef __cplusplus
+}
+#endif
 #endif

@@ -1,5 +1,8 @@
 #ifndef MADT_H
 #define MADT_H
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include <arch/acpi/acpi.h>
 
@@ -80,4 +83,8 @@ void handle_ioapic_nmi_descriptor(MADT_Entry_t *entry);
 void handle_lapic_nmi_descriptor(MADT_Entry_t *entry);
 void handle_lapic_override_descriptor(MADT_Entry_t *entry);
 
+
+#ifdef __cplusplus
+}
+#endif
 #endif

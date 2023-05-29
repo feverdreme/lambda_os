@@ -1,5 +1,8 @@
 #ifndef KMALLOC_H
 #define KMALLOC_H
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include <envvars.h>
 
@@ -129,4 +132,7 @@ void MAT_floodfill_prev_free_ind(int flood_ind, int new_prev_free_ind);
 
 void MAT_floodfill_next_free_ind(int flood_ind, int new_next_free_ind);
 
+#ifdef __cplusplus
+}
+#endif
 #endif

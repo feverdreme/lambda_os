@@ -1,5 +1,8 @@
 #ifndef VIRTM_H
 #define VIRTM_H
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include <stdint.h>
 #include <memory/paging/paging.h>
@@ -40,4 +43,7 @@ translated_vaddr_t get_vaddr_indices(uint64_t vaddr);
  */
 void *align_address(void *addr, int bits);
 
+#ifdef __cplusplus
+}
+#endif
 #endif

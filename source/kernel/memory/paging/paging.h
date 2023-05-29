@@ -1,5 +1,8 @@
 #ifndef PAGING_H
 #define PAGING_H
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include <cpuid.h>
 #include <envvars.h>
@@ -79,4 +82,7 @@ void initialize_paging();
 
 #endif
 
+#ifdef __cplusplus
+}
+#endif
 #endif

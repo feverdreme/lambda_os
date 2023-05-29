@@ -1,5 +1,8 @@
 #ifndef IDT_H
 #define IDT_H
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -57,4 +60,7 @@ void idt_register_isr(uint8_t index, uint64_t offset);
 
 void idt_init();
 
+#ifdef __cplusplus
+}
+#endif
 #endif

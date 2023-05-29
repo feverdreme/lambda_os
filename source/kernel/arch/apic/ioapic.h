@@ -1,5 +1,8 @@
 #ifndef IOAPIC_H
 #define IOAPIC_H
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include <stdint.h>
 
@@ -61,4 +64,7 @@ void ioapic_write_entry(int index, uint8_t vector, uint32_t flags, uint32_t dest
  */
 void ioapic_init();
 
+#ifdef __cplusplus
+}
+#endif
 #endif

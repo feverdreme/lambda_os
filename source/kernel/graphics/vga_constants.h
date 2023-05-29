@@ -1,5 +1,8 @@
 #ifndef VGA_CONSTANTS_H
 #define VGA_CONSTANTS_H
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include <envvars.h>
 
@@ -51,4 +54,7 @@ enum VGA_COLOR {
 
 #endif
 
+#ifdef __cplusplus
+}
+#endif
 #endif

@@ -1,5 +1,8 @@
 #ifndef WINDOW_H
 #define WINDOW_H
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include <graphics/putpixel.h>
 
@@ -55,4 +58,7 @@ void window_draw_border(Window_t* w);
 
 void window_update_xywh(Window_t* w, int x, int y, int width, int height);
 
+#ifdef __cplusplus
+}
+#endif
 #endif

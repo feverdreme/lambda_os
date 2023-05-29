@@ -1,5 +1,8 @@
 #ifndef CPUID_QUERY_H
 #define CPUID_QUERY_H
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include <stdbool.h>
 
@@ -23,4 +26,7 @@ static inline bool supports_1gb_pages() {
     return edx & (1<<26);
 }
 
+#ifdef __cplusplus
+}
+#endif
 #endif

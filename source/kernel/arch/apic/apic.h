@@ -1,5 +1,8 @@
 #ifndef APIC_H
 #define APIC_H
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include <stdint.h>
 
@@ -60,4 +63,7 @@ void send_lapic_eoi();
  */
 void initialize_lapic();
 
+#ifdef __cplusplus
+}
+#endif
 #endif

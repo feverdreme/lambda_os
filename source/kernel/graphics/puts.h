@@ -1,5 +1,8 @@
 #ifndef PUTS_H
 #define PUTS_H
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include <libc/fonts.h>
 #include <libc/string.h>
@@ -42,4 +45,7 @@ int printh(uint64_t h);
 
 int println();
 
+#ifdef __cplusplus
+}
+#endif
 #endif

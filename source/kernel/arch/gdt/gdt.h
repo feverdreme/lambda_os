@@ -1,5 +1,8 @@
 #ifndef GDT_H
 #define GDT_H
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include <stdint.h>
 
@@ -76,4 +79,7 @@ void gdt_set_gate(int num, uint32_t base, uint32_t limit, uint8_t access, uint8_
 *  new segment registers */
 void gdt_install();
 
+#ifdef __cplusplus
+}
+#endif
 #endif

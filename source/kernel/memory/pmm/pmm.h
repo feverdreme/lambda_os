@@ -1,5 +1,8 @@
 #ifndef PMM_H
 #define PMM_H
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -53,4 +56,7 @@ void pmm_free_page(void *addr);
 
 void pmm_init();
 
+#ifdef __cplusplus
+}
+#endif
 #endif
