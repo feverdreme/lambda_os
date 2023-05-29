@@ -34,7 +34,24 @@ static idt_gate_t idt[256];
 
 extern void* isr_stub_table[];
 
+/**
+ * @brief Fine-tuned control of the IDT entries.
+ * 
+ * @param index Index in the IDT.
+ * @param offset 64bit address to the ISR.
+ * @param segment_selector What segment selector to use.
+ * @param IST Interrupt Stack Table
+ * @param attributes Other Attributes
+ */
 void idt_set_gate(uint8_t index, uint64_t offset, uint16_t segment_selector, uint8_t IST, uint8_t attributes);
+
+/**
+ * @brief Configures an IDT entry for the ISR, as well as marking it present.
+ * 
+ * @param index 
+ * @param offset 
+ */
+void idt_register_isr(uint8_t index, uint64_t offset);
 
 void idt_init();
 

@@ -12,16 +12,20 @@ void idt_set_gate(uint8_t index, uint64_t offset, uint16_t segment_selector, uin
     gate->reserved = 0;
 }
 
+void idt_register_isr(uint8_t index, uint64_t offset) {
+    idt_set_gate(index,
+                offset,
+                GDT_KERNEL_CODE_SELECTOR,
+                IDT_DPL_RING0,
+                IDT_INTERRUPT_GATE | IDT_PRESENT);
+}
+
 void idt_init() {
     idtp.base = &idt[0];
     idtp.limit = (uint16_t)sizeof(idt_gate_t) * 256 - 1;
 
     for (uint8_t vector = 0; vector < 32; vector++) {
-        idt_set_gate(vector,
-                    isr_stub_table[vector],
-                    GDT_KERNEL_CODE_SELECTOR,
-                    IDT_DPL_RING0,
-                    IDT_INTERRUPT_GATE | IDT_PRESENT);
+        idt_register_isr(vector, isr_stub_table[vector]);
     }
 
     __asm__ volatile("lidt %0" : : "m"(idtp));  // load the new IDT
