@@ -26,7 +26,7 @@ typedef struct idt_gate {
 
 static struct idt_ptr {
     uint16_t limit;
-    struct idt_entry* base;
+    idt_gate_t *base;
 } idtp;
 
 __attribute__((aligned(0x10)))
