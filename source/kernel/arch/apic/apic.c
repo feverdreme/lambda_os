@@ -38,6 +38,10 @@ void write_lapic_register(int offset, uint32_t data) {
 	*(uint32_t*)(APIC_PHYSICAL_ADDRESS + offset) = data;
 }
 
+uint32_t get_lapic_id() {
+    return read_lapic_register(0x20);
+}
+
 void send_lapic_eoi() {
     write_lapic_register(APIC_EOI_REG, 0);
 }

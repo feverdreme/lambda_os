@@ -18,5 +18,5 @@ void keyboard_handler(interrupt_frame_t* frame) {
 
 void isr_keyboard_register() {
     idt_register_isr(33, &keyboard_handler);
-    ioapic_write_entry(1, 33, IOREDTBL_FIXED, read_lapic_register(0x20));
+    ioapic_write_entry(1, 33, IOREDTBL_FIXED, get_lapic_id());
 }

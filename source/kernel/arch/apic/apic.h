@@ -42,6 +42,13 @@ uint32_t read_lapic_register(int offset);
 void write_lapic_register(int offset, uint32_t data);
 
 /**
+ * @brief Gets the lapic id.
+ * 
+ * @return uint32_t 
+ */
+uint32_t get_lapic_id();
+
+/**
  * @brief Sends the EOI signal to the LAPIC.
  * 
  */
