@@ -65,7 +65,7 @@ override CFLAGS += \
     -mno-sse \
     -mno-sse2 \
     -mno-red-zone \
-    -mcmodel=kernel
+    -mcmodel=kernel \
 
 # special include paths
 override CFLAGS += -isystem include -isystem kernel
@@ -76,6 +76,10 @@ override CPPFLAGS := \
     $(CPPFLAGS) \
     -MMD \
     -MP
+
+# override CPPFLAGS += \
+# 	-fno-rtti \
+# 	-fno-exceptions
 
 # Internal linker flags that should not be changed by the user.
 override LDFLAGS += \
@@ -121,7 +125,7 @@ $(KERNEL): $(OBJ)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 
 %.cpp.o: %.cpp limine.h
-	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(CPPFLAGS) -fno-rtti -fno-exceptions -c $< -o $@
 
 # Compilation rules for *.asm (nasm) files.
 %.asm.o: %.asm

@@ -36,12 +36,16 @@ void main() {
     isr_keyboard_register();
 
     // Tile_t *genesis_tile = init_genesis_tile();
-    
+    Window *w = new Window();
+
+    inb(0x60);
+    // __asm__ volatile("int $0x21");
 
     for(;;) {
-        asm("hlt");
+        __asm__ volatile("hlt");
     }
     prints("\nPROGRAM FINISHED");
 
     return;
-}}
+}
+}
