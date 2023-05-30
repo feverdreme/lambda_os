@@ -35,10 +35,13 @@ void main() {
     ioapic_init();
     isr_keyboard_register();
 
-    // Tile_t *genesis_tile = init_genesis_tile();
-    Window *w = new Window();
-
     inb(0x60);
+
+    putrect(0, 0, FB_WIDTH, FB_HEIGHT, BLACK);
+
+    // Tile_t *genesis_tile = init_genesis_tile();
+    Window *w = new Window(0, 0, FB_WIDTH, FB_HEIGHT, "Shell", LIGHTCYAN, BLACK);
+    w->draw();
     // __asm__ volatile("int $0x21");
 
     for(;;) {
